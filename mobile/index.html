@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="warm" data-mode="auto">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#f6f1e8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="移动后台">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>移动后台</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<!-- ===== 启动遮罩 ===== -->
+<div id="boot" class="boot">
+  <div class="boot-logo">后</div>
+  <div class="boot-name">移动后台</div>
+  <div class="boot-spin"></div>
+</div>
+
+<!-- ===== 首次初始化 / 连接配置 ===== -->
+<div id="setup" class="lock hidden">
+  <div class="lock-box">
+    <div class="lock-ic">🔗</div>
+    <h1 class="lock-title">连接你的数据库</h1>
+    <p class="lock-sub">凭据只保存在这台手机上，不会上传到任何服务器。</p>
+    <div id="setup-conns"></div>
+    <button class="btn btn-primary btn-block" id="setup-save">保存并进入</button>
+    <button class="btn btn-ghost btn-block" id="setup-skip">暂时跳过</button>
+  </div>
+</div>
+
+<!-- ===== PIN 锁屏 ===== -->
+<div id="lock" class="lock hidden">
+  <div class="lock-box">
+    <div class="lock-ic">🔒</div>
+    <h1 class="lock-title" id="lock-title">输入应用密码</h1>
+    <p class="lock-sub" id="lock-sub">用于保护本机保存的密钥</p>
+    <div class="pin-dots" id="pin-dots"></div>
+    <div class="pin-pad" id="pin-pad"></div>
+    <button class="btn btn-ghost btn-block btn-sm" id="lock-forget">忘记密码，清除本机数据</button>
+  </div>
+</div>
+
+<!-- ===== 主框架 ===== -->
+<div id="app" class="app hidden">
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo" id="top-logo">后</span>
+      <div>
+        <div class="topbar-title" id="top-title">仪表盘</div>
+        <div class="topbar-sub" id="top-sub"></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" id="btn-refresh" title="刷新">⟳</button>
+      <button class="icon-btn" id="btn-settings" title="设置">⚙</button>
+    </div>
+  </header>
+
+  <nav class="subtabs" id="subtabs"></nav>
+
+  <main class="content" id="content"></main>
+
+  <nav class="tabbar" id="tabbar"></nav>
+</div>
+
+<!-- ===== 弹层容器 ===== -->
+<div id="overlays"></div>
+<div id="toasts" class="toasts"></div>
+
+<script src="app.js"></script>
+<script src="modules/pr.js"></script>
+<script src="modules/scan.js"></script>
+<script src="modules/xhy.js"></script>
+</body>
+</html>
