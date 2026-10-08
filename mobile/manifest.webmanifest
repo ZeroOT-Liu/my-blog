@@ -1,0 +1,26 @@
+{
+  "name": "移动后台 · 手机端管理台",
+  "short_name": "移动后台",
+  "description": "手机端管理 CAD 授权、XHY Toolbox 授权与项目进度",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#f6f1e8",
+  "theme_color": "#f6f1e8",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "CAD 授权", "url": "./index.html#scan", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "XHY 授权", "url": "./index.html#xhy", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "项目后台", "url": "./index.html#pr", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}
