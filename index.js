@@ -116,13 +116,13 @@
   // CDN 配置：图片/文档用 Gitee（国内快），静态文件用 GitHub
   var CDN_IMG = [  // 图片+文档 CDN：Gitee 优先
     'https://gitee.com/LYT666999-luck/my-blog/raw/master',
-    'https://ghproxy.net/https://github.com/LYT-6-666/my-blog/raw/main',
-    'https://cdn.jsdelivr.net/gh/LYT-6-666/my-blog@main'
+    'https://ghproxy.net/https://github.com/ZeroOT-Liu/my-blog/raw/main',
+    'https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main'
   ];
   var CDN_STATIC = [  // 静态文件 CDN：GitHub 优先
-    'https://ghproxy.net/https://github.com/LYT-6-666/my-blog/raw/main',
+    'https://ghproxy.net/https://github.com/ZeroOT-Liu/my-blog/raw/main',
     'https://gitee.com/LYT666999-luck/my-blog/raw/master',
-    'https://cdn.jsdelivr.net/gh/LYT-6-666/my-blog@main'
+    'https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main'
   ];
   var CDN_IMG_PRIMARY = CDN_IMG[0];
   var CDN_STATIC_PRIMARY = CDN_STATIC[0];
@@ -1252,9 +1252,9 @@
         urls.push(fullUrl);
       } else {
         // jsDelivr 首选：免费、支持 CORS、速度快
-        urls.push('https://cdn.jsdelivr.net/gh/LYT-6-666/my-blog@main/' + docUrl);
+        urls.push('https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main/' + docUrl);
         // GitHub raw 备用（也支持 CORS）
-        urls.push('https://raw.githubusercontent.com/LYT-6-666/my-blog/main/' + docUrl);
+        urls.push('https://raw.githubusercontent.com/ZeroOT-Liu/my-blog/main/' + docUrl);
         // 同源加载备用（GitHub Pages 自身）
         urls.push(location.origin + (BASE ? BASE + '/' : '/') + docUrl);
       }
