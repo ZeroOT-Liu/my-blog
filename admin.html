@@ -28,6 +28,7 @@
     --danger: #b35e57;
     --shadow: 0 14px 40px rgba(57, 44, 28, 0.08);
     --shadow-md: 0 4px 20px rgba(57, 44, 28, 0.08);
+    --shadow-sm: 0 2px 10px rgba(57, 44, 28, 0.06);
     --shadow-strong: 0 22px 60px rgba(57, 44, 28, 0.14);
     --radius: 16px;
     --radius-sm: 12px;
@@ -37,6 +38,10 @@
     --glow: 0 4px 15px rgba(139,109,74,0.18);
     --g1: linear-gradient(135deg, #8b6d4a, #b39b7a);
     --g2: linear-gradient(135deg, var(--text), color-mix(in srgb, var(--accent) 58%, var(--text)));
+    --success-bg: rgba(93,132,108,0.12);
+    --danger-bg: rgba(179,94,87,0.12);
+    --warn-bg: rgba(181,138,61,0.14);
+    --err: var(--danger);
   }
   /* ===== 主题系统：青瓷（清新办公绿） ===== */
   [data-theme="青瓷"] {
@@ -563,7 +568,239 @@
     0%, 100% { box-shadow: 0 0 0 6px rgba(138,106,58,0.08); }
     50% { box-shadow: 0 0 0 10px rgba(138,106,58,0.04); }
   }
+  /* ===== 主题系统：茉莉（淡黄白花） ===== */
+  [data-theme="茉莉"] {
+    --bg: #f7f4e8;
+    --bg2: #f0ebd8;
+    --accent: #b8a04a;
+    --accent2: #d4be6a;
+    --accent3: #9a8838;
+    --accent-bg: rgba(184,160,74,0.08);
+    --success: #6a9a5a;
+    --warn: #c4a05e;
+    --danger: #c47a6a;
+    --shadow: 0 14px 40px rgba(140,120,40,0.08);
+    --shadow-md: 0 4px 20px rgba(140,120,40,0.08);
+    --shadow-strong: 0 22px 60px rgba(140,120,40,0.14);
+    --g1: linear-gradient(135deg, #b8a04a, #d4be6a);
+    --g2: linear-gradient(135deg, #9a8838, #b8a04a);
+    --glow: 0 4px 15px rgba(184,160,74,0.18);
+  }
+  [data-theme="茉莉"] body {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(184,160,74,0.10), transparent 26%),
+      radial-gradient(circle at 82% 16%, rgba(212,190,106,0.10), transparent 22%),
+      radial-gradient(circle at 50% 100%, rgba(154,136,56,0.08), transparent 28%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  }
+  [data-theme="茉莉"] .blob.one { background: rgba(184,160,74,.20); }
+  [data-theme="茉莉"] .blob.two { background: rgba(212,190,106,.18); }
+  [data-theme="茉莉"] .blob.three { background: rgba(154,136,56,.16); }
+  [data-theme="茉莉"] @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(184,160,74,0.08); }
+    50% { box-shadow: 0 0 0 10px rgba(184,160,74,0.04); }
+  }
+  /* ===== 主题系统：珊瑚（暖珊瑚红） ===== */
+  [data-theme="珊瑚"] {
+    --bg: #fdf0ed;
+    --bg2: #f8e0dc;
+    --accent: #d46a5a;
+    --accent2: #e89a8a;
+    --accent3: #b85a4a;
+    --accent-bg: rgba(212,106,90,0.08);
+    --success: #6a9a6a;
+    --warn: #c4a05e;
+    --danger: #c45a4a;
+    --shadow: 0 14px 40px rgba(180,80,60,0.08);
+    --shadow-md: 0 4px 20px rgba(180,80,60,0.08);
+    --shadow-strong: 0 22px 60px rgba(180,80,60,0.14);
+    --g1: linear-gradient(135deg, #d46a5a, #e89a8a);
+    --g2: linear-gradient(135deg, #b85a4a, #d46a5a);
+    --glow: 0 4px 15px rgba(212,106,90,0.20);
+  }
+  [data-theme="珊瑚"] body {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(212,106,90,0.10), transparent 26%),
+      radial-gradient(circle at 82% 16%, rgba(232,154,138,0.10), transparent 22%),
+      radial-gradient(circle at 50% 100%, rgba(184,90,74,0.08), transparent 28%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  }
+  [data-theme="珊瑚"] .blob.one { background: rgba(212,106,90,.20); }
+  [data-theme="珊瑚"] .blob.two { background: rgba(232,154,138,.18); }
+  [data-theme="珊瑚"] .blob.three { background: rgba(184,90,74,.16); }
+  [data-theme="珊瑚"] @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(212,106,90,0.08); }
+    50% { box-shadow: 0 0 0 10px rgba(212,106,90,0.04); }
+  }
+  /* ===== 主题系统：薰衣草（淡紫） ===== */
+  [data-theme="薰衣草"] {
+    --bg: #f4f0f8;
+    --bg2: #ebe4f0;
+    --accent: #8a6ab8;
+    --accent2: #aa8ad4;
+    --accent3: #6a5a9a;
+    --accent-bg: rgba(138,106,184,0.08);
+    --success: #6a9a7a;
+    --warn: #c4a05e;
+    --danger: #c46a8a;
+    --shadow: 0 14px 40px rgba(100,70,150,0.08);
+    --shadow-md: 0 4px 20px rgba(100,70,150,0.08);
+    --shadow-strong: 0 22px 60px rgba(100,70,150,0.14);
+    --g1: linear-gradient(135deg, #8a6ab8, #aa8ad4);
+    --g2: linear-gradient(135deg, #6a5a9a, #8a6ab8);
+    --glow: 0 4px 15px rgba(138,106,184,0.18);
+  }
+  [data-theme="薰衣草"] body {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(138,106,184,0.10), transparent 26%),
+      radial-gradient(circle at 82% 16%, rgba(170,138,212,0.10), transparent 22%),
+      radial-gradient(circle at 50% 100%, rgba(106,90,154,0.08), transparent 28%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  }
+  [data-theme="薰衣草"] .blob.one { background: rgba(138,106,184,.20); }
+  [data-theme="薰衣草"] .blob.two { background: rgba(170,138,212,.18); }
+  [data-theme="薰衣草"] .blob.three { background: rgba(106,90,154,.16); }
+  [data-theme="薰衣草"] @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(138,106,184,0.08); }
+    50% { box-shadow: 0 0 0 10px rgba(138,106,184,0.04); }
+  }
+  /* ===== 主题系统：钛灰（冷灰） ===== */
+  [data-theme="钛灰"] {
+    --bg: #eef0f2;
+    --bg2: #e2e6ea;
+    --accent: #5a6878;
+    --accent2: #7a8898;
+    --accent3: #4a5868;
+    --accent-bg: rgba(90,104,120,0.08);
+    --success: #5a8a6a;
+    --warn: #c4a05e;
+    --danger: #c46a6a;
+    --shadow: 0 14px 40px rgba(60,70,85,0.08);
+    --shadow-md: 0 4px 20px rgba(60,70,85,0.08);
+    --shadow-strong: 0 22px 60px rgba(60,70,85,0.14);
+    --g1: linear-gradient(135deg, #5a6878, #7a8898);
+    --g2: linear-gradient(135deg, #4a5868, #5a6878);
+    --glow: 0 4px 15px rgba(90,104,120,0.16);
+  }
+  [data-theme="钛灰"] body {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(90,104,120,0.10), transparent 26%),
+      radial-gradient(circle at 82% 16%, rgba(122,136,152,0.10), transparent 22%),
+      radial-gradient(circle at 50% 100%, rgba(74,88,104,0.08), transparent 28%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  }
+  [data-theme="钛灰"] .blob.one { background: rgba(90,104,120,.20); }
+  [data-theme="钛灰"] .blob.two { background: rgba(122,136,152,.18); }
+  [data-theme="钛灰"] .blob.three { background: rgba(74,88,104,.16); }
+  [data-theme="钛灰"] @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(90,104,120,0.08); }
+    50% { box-shadow: 0 0 0 10px rgba(90,104,120,0.04); }
+  }
+  /* ===== 主题系统：翡翠（深翡翠绿暗色） ===== */
+  [data-theme="翡翠"] {
+    --bg: #0a2018;
+    --bg2: #123028;
+    --panel: rgba(18,48,40,0.82);
+    --panel-strong: rgba(26,62,52,0.94);
+    --card: rgba(26,62,52,0.86);
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.13);
+    --text: #dceee4;
+    --text2: #8ac0a8;
+    --muted: #6a9888;
+    --accent: #3ac8a0;
+    --accent2: #5adab8;
+    --accent3: #2a9a80;
+    --accent-bg: rgba(58,200,160,0.1);
+    --success: #3ac8a0;
+    --warn: #d9b95c;
+    --danger: #d07a6a;
+    --shadow: 0 14px 40px rgba(0,0,0,0.26);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.26);
+    --shadow-strong: 0 24px 70px rgba(0,0,0,0.36);
+    --g1: linear-gradient(135deg, #2a9a80, #3ac8a0);
+    --g2: linear-gradient(135deg, #dceee4, #2a9a80);
+    --glow: 0 4px 15px rgba(58,200,160,0.22);
+  }
+  [data-theme="翡翠"] body {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(58,200,160,0.10), transparent 26%),
+      radial-gradient(circle at 82% 16%, rgba(42,154,128,0.08), transparent 22%),
+      radial-gradient(circle at 50% 100%, rgba(90,218,184,0.07), transparent 28%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  }
+  [data-theme="翡翠"] body::before {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    opacity: .6;
+  }
+  [data-theme="翡翠"] .sidebar { background: rgba(10,32,24,0.72); }
+  [data-theme="翡翠"] .sidebar-topbar { background: rgba(14,42,32,0.65); }
+  [data-theme="翡翠"] .blob.one { background: rgba(58,200,160,.18); }
+  [data-theme="翡翠"] .blob.two { background: rgba(42,154,128,.15); }
+  [data-theme="翡翠"] .blob.three { background: rgba(90,218,184,.13); }
+  [data-theme="翡翠"] @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(58,200,160,0.10); }
+    50% { box-shadow: 0 0 0 10px rgba(58,200,160,0.05); }
+  }
+  /* ===== 主题系统：琥珀（深琥珀金暗色） ===== */
+  [data-theme="琥珀"] {
+    --bg: #1a1408;
+    --bg2: #2a2010;
+    --panel: rgba(42,32,16,0.82);
+    --panel-strong: rgba(54,42,22,0.94);
+    --card: rgba(54,42,22,0.86);
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.13);
+    --text: #f0e4c8;
+    --text2: #c8a868;
+    --muted: #a08848;
+    --accent: #d9a838;
+    --accent2: #e8c058;
+    --accent3: #b88828;
+    --accent-bg: rgba(217,168,56,0.1);
+    --success: #8aaa6a;
+    --warn: #d9b95c;
+    --danger: #d07a4a;
+    --shadow: 0 14px 40px rgba(0,0,0,0.26);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.26);
+    --shadow-strong: 0 24px 70px rgba(0,0,0,0.36);
+    --g1: linear-gradient(135deg, #b88828, #d9a838);
+    --g2: linear-gradient(135deg, #f0e4c8, #b88828);
+    --glow: 0 4px 15px rgba(217,168,56,0.22);
+  }
+  [data-theme="琥珀"] body {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(217,168,56,0.10), transparent 26%),
+      radial-gradient(circle at 82% 16%, rgba(184,136,40,0.08), transparent 22%),
+      radial-gradient(circle at 50% 100%, rgba(232,192,88,0.07), transparent 28%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  }
+  [data-theme="琥珀"] body::before {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    opacity: .6;
+  }
+  [data-theme="琥珀"] .sidebar { background: rgba(26,20,8,0.72); }
+  [data-theme="琥珀"] .sidebar-topbar { background: rgba(32,26,12,0.65); }
+  [data-theme="琥珀"] .blob.one { background: rgba(217,168,56,.18); }
+  [data-theme="琥珀"] .blob.two { background: rgba(184,136,40,.15); }
+  [data-theme="琥珀"] .blob.three { background: rgba(232,192,88,.13); }
+  [data-theme="琥珀"] @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(217,168,56,0.10); }
+    50% { box-shadow: 0 0 0 10px rgba(217,168,56,0.05); }
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* 主题切换全局过渡 */
+  body, .sidebar, .sidebar-topbar, .panel, .card, .modal-card, .theme-panel,
+  .dash-hero, .wb-hero, .project-card, .pr-detail-card, .pr-task-item,
+  .btn, .icon-btn, .theme-cat-btn, .theme-card, .input, textarea, select,
+  .dash-stat, .wb-stat, .wb-module, .chip, .badge, .tag, .pill,
+  .pr-tab-btn, .mod-tab, .sub-nav-item, .avatar-chip {
+    transition: background-color .4s ease, border-color .4s ease, color .4s ease, box-shadow .4s ease;
+  }
   html, body { height: 100%; }
   body {
     font-family: var(--font);
@@ -643,14 +880,14 @@
     width: 260px;
     height: 100vh;
     border-right: 1px solid var(--border);
-    background: rgba(255,255,255,0.38);
+    background: var(--panel);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     z-index: 100;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    box-shadow: inset -1px 0 0 rgba(255,255,255,0.2);
+    box-shadow: inset -1px 0 0 var(--border);
   }
   .sidebar::-webkit-scrollbar { width: 0; }
   .sidebar h2 {
@@ -688,7 +925,7 @@
     position: relative;
   }
   .sidebar-nav a:hover {
-    background: rgba(255,255,255,0.55);
+    background: var(--accent-bg);
     color: var(--text);
     transform: translateX(2px);
   }
@@ -703,7 +940,7 @@
     background: var(--panel-strong);
     color: var(--accent);
     font-weight: 600;
-    box-shadow: 0 6px 20px rgba(57,44,28,0.08);
+    box-shadow: var(--shadow-md);
   }
   .sidebar-nav a.active::before {
     content: "";
@@ -718,7 +955,7 @@
   }
   .sidebar-nav a.active svg { opacity: 1; color: var(--accent); }
 
-  .sidebar-bottom { padding: 14px 16px; border-top: 1px solid var(--border); }
+  .sidebar-bottom { padding: 14px 16px; border-top: 1px solid var(--border); margin-top: auto; }
   .sidebar-bottom a {
     display: flex;
     align-items: center;
@@ -821,7 +1058,7 @@
     border-radius: var(--radius-sm);
     font-size: 13.5px;
     font-family: inherit;
-    background: rgba(255,255,255,0.72);
+    background: var(--panel);
     color: var(--text);
     transition: all .25s ease;
     outline: none;
@@ -830,13 +1067,13 @@
     border-color: var(--border-strong);
   }
   .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
-    border-color: color-mix(in srgb, var(--accent) 72%, white 0%);
-    box-shadow: 0 0 0 3px rgba(139,109,74,0.10);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
   }
   .form-field textarea { resize: vertical; min-height: 80px; }
   .form-field span {
     padding: 11px 14px;
-    background: rgba(0,0,0,0.02);
+    background: var(--accent-bg);
     color: var(--text2);
     border-color: var(--border);
   }
@@ -858,11 +1095,11 @@
     transition: all .25s cubic-bezier(.16,1,.3,1);
     position: relative;
     overflow: hidden;
-    background: rgba(255,255,255,0.70);
+    background: var(--panel);
     color: var(--text);
     font-family: inherit;
   }
-  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(57,44,28,0.08); }
+  .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
   .btn:active { transform: translateY(0) scale(.985); }
   .btn-primary {
     background: var(--g2);
@@ -892,7 +1129,7 @@
     box-shadow: 0 2px 10px rgba(179,94,87,.22);
   }
   .btn-outline {
-    background: rgba(255,255,255,0.55);
+    background: var(--panel);
     color: var(--text);
   }
   .btn-outline:hover {
@@ -902,12 +1139,12 @@
   }
   .btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 10px; }
   .btn-secondary {
-    background: rgba(139,109,74,0.1);
+    background: var(--accent-bg);
     color: var(--accent);
-    border-color: rgba(139,109,74,0.2);
+    border-color: color-mix(in srgb, var(--accent) 22%, transparent);
   }
   .btn-secondary:hover {
-    background: rgba(139,109,74,0.18);
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
     border-color: var(--accent);
   }
   .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
@@ -929,7 +1166,7 @@
   }
   .data-table th, .data-table td { padding: 13px 16px; text-align: left; }
   .data-table thead th {
-    background: rgba(139,109,74,0.04);
+    background: var(--accent-bg);
     font-weight: 600;
     color: var(--muted);
     font-size: 11.5px;
@@ -938,7 +1175,7 @@
     border-bottom: 1px solid var(--border);
   }
   .data-table tbody tr { transition: background .2s ease; }
-  .data-table tbody tr:hover { background: rgba(139,109,74,0.03); }
+  .data-table tbody tr:hover { background: var(--accent-bg); }
   .data-table tbody td { border-bottom: 1px solid var(--border); }
   .data-table tr:last-child td { border-bottom: none; }
   .empty-row {
@@ -958,10 +1195,10 @@
     font-size: 11px;
     font-weight: 600;
   }
-  .tag-blue { background: rgba(99,102,241,0.10); color: #5d6fc0; }
-  .tag-green { background: rgba(93,132,108,0.12); color: var(--success); }
-  .tag-gray { background: rgba(0,0,0,0.04); color: var(--muted); }
-  .tag-red { background: rgba(179,94,87,0.10); color: var(--danger); }
+  .tag-blue { background: color-mix(in srgb, var(--accent3) 14%, transparent); color: var(--accent3); }
+  .tag-green { background: color-mix(in srgb, var(--success) 14%, transparent); color: var(--success); }
+  .tag-gray { background: var(--accent-bg); color: var(--muted); }
+  .tag-red { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
 
   /* ===== Toast ===== */
   #toast {
@@ -1314,8 +1551,8 @@
     font-size: 13px;
   }
 
-  /* ===== 时间线编辑 ===== */
-  .timeline-item {
+  /* ===== 关于我-经历时间线编辑 ===== */
+  .tl-edit-item {
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 16px;
@@ -1324,11 +1561,11 @@
     transition: all .25s;
     background: rgba(255,255,255,0.5);
   }
-  .timeline-item:hover {
+  .tl-edit-item:hover {
     border-color: rgba(139,109,74,0.3);
     box-shadow: 0 6px 20px rgba(57,44,28,0.06);
   }
-  .timeline-item .del-tl {
+  .tl-edit-item .del-tl {
     position: absolute;
     top: 14px;
     right: 14px;
@@ -1338,8 +1575,8 @@
     opacity: .5;
     transition: opacity .2s;
   }
-  .timeline-item .del-tl:hover { opacity: 1; }
-  .timeline-item input, .timeline-item textarea {
+  .tl-edit-item .del-tl:hover { opacity: 1; }
+  .tl-edit-item input, .tl-edit-item textarea {
     width: 100%;
     padding: 9px 12px;
     border: 1px solid var(--border);
@@ -1348,14 +1585,15 @@
     outline: none;
     margin-bottom: 8px;
     transition: border .2s;
-    background: rgba(255,255,255,0.7);
+    background: var(--panel);
     color: var(--text);
     font-family: inherit;
+    box-sizing: border-box;
   }
-  .timeline-item input:focus, .timeline-item textarea:focus {
-    border-color: color-mix(in srgb, var(--accent) 72%, white 0%);
+  .tl-edit-item input:focus, .tl-edit-item textarea:focus {
+    border-color: var(--accent);
   }
-  .timeline-item textarea { min-height: 55px; resize: vertical; }
+  .tl-edit-item textarea { min-height: 55px; resize: vertical; }
 
   /* ===== 联系方式卡片 ===== */
   .contact-card-row {
@@ -1372,12 +1610,12 @@
     font-size: 13px;
     outline: none;
     transition: border .2s;
-    background: rgba(255,255,255,0.7);
+    background: var(--panel);
     color: var(--text);
     font-family: inherit;
   }
   .contact-card-row input:focus {
-    border-color: color-mix(in srgb, var(--accent) 72%, white 0%);
+    border-color: var(--accent);
   }
   .contact-card-row .icon-pick {
     font-size: 20px;
@@ -1400,12 +1638,12 @@
     font-size: 13px;
     outline: none;
     transition: border .2s;
-    background: rgba(255,255,255,0.7);
+    background: var(--panel);
     color: var(--text);
     font-family: inherit;
   }
   .stat-row input:focus {
-    border-color: color-mix(in srgb, var(--accent) 72%, white 0%);
+    border-color: var(--accent);
   }
 
   /* ===== 加载状态 ===== */
@@ -1414,6 +1652,32 @@
     padding: 40px;
     color: var(--text2);
     font-size: 14px;
+  }
+  /* 骨架屏 shimmer */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton {
+    background: linear-gradient(90deg, var(--card) 25%, var(--border) 50%, var(--card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-sm);
+    pointer-events: none;
+  }
+  .skeleton-line { height: 14px; margin-bottom: 8px; border-radius: 4px; }
+  .skeleton-line.short { width: 60%; }
+  .skeleton-card {
+    height: 120px; border-radius: var(--radius);
+    background: linear-gradient(90deg, var(--card) 25%, var(--border) 50%, var(--card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  .skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
   }
   .saving { color: var(--warn) !important; }
 
@@ -1654,7 +1918,7 @@
   }
   .sync-log-box.hidden { display: none !important; }
   .sync-log-line { white-space: pre-wrap; word-break: break-all; }
-  .sync-log-line .log-time { color: #8b8175; margin-right: 8px; }
+  .sync-log-line .log-time { color: var(--muted); margin-right: 8px; }
   .sync-file-item {
     display: flex;
     align-items: center;
@@ -1688,14 +1952,14 @@
     border-radius: 999px;
     flex-shrink: 0;
   }
-  .status-uploading { background: rgba(99,102,241,0.10); color: #5d6fc0; }
-  .status-ok { background: rgba(93,132,108,0.12); color: var(--success); }
-  .status-error { background: rgba(179,94,87,0.10); color: var(--danger); }
-  .status-skipped { background: rgba(0,0,0,0.04); color: var(--muted); }
+  .status-uploading { background: color-mix(in srgb, var(--accent3) 14%, transparent); color: var(--accent3); }
+  .status-ok { background: color-mix(in srgb, var(--success) 14%, transparent); color: var(--success); }
+  .status-error { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
+  .status-skipped { background: var(--accent-bg); color: var(--muted); }
   .sync-summary {
     padding: 16px 20px;
     border-top: 1px solid var(--border);
-    background: rgba(139,109,74,0.03);
+    background: var(--accent-bg);
   }
   .sync-summary.hidden { display: none !important; }
   .sync-summary-title {
@@ -1935,13 +2199,13 @@
   /* ===== 数据大屏 ===== */
   .dash-hero {
     background:
-      radial-gradient(circle at 80% 20%, rgba(179,155,122,0.18), transparent 40%),
-      radial-gradient(circle at 15% 80%, rgba(127,143,135,0.16), transparent 45%),
-      linear-gradient(135deg, #2a231c 0%, #1f1a16 100%);
+      radial-gradient(circle at 80% 20%, var(--accent-bg), transparent 40%),
+      radial-gradient(circle at 15% 80%, rgba(127,143,135,0.10), transparent 45%),
+      var(--g2);
     border-radius: var(--radius-lg);
     padding: 32px 34px;
     margin-bottom: 24px;
-    color: #f3ede3;
+    color: var(--text);
     position: relative;
     overflow: hidden;
   }
@@ -1952,7 +2216,7 @@
     right: -15%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(139,109,74,0.22) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--accent-bg) 0%, transparent 70%);
     border-radius: 50%;
   }
   .dash-hero::after {
@@ -1962,7 +2226,7 @@
     left: -5%;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(127,143,135,0.20) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--accent-bg) 0%, transparent 70%);
     border-radius: 50%;
   }
   .dash-hero-title {
@@ -1976,7 +2240,7 @@
   }
   .dash-hero-sub {
     font-size: 13px;
-    color: rgba(243,237,227,0.55);
+    color: var(--text2);
     position: relative;
     z-index: 1;
   }
@@ -2015,12 +2279,12 @@
     height: 3px;
     border-radius: 3px 3px 0 0;
   }
-  .dash-stat:nth-child(1)::after { background: linear-gradient(90deg, #8b6d4a, #b39b7a); }
-  .dash-stat:nth-child(2)::after { background: linear-gradient(90deg, #5d846c, #7fa08a); }
-  .dash-stat:nth-child(3)::after { background: linear-gradient(90deg, #b58a3d, #c9a65a); }
-  .dash-stat:nth-child(4)::after { background: linear-gradient(90deg, #a65e6a, #c6828a); }
-  .dash-stat:nth-child(5)::after { background: linear-gradient(90deg, #7f8f87, #9ba8a1); }
-  .dash-stat:nth-child(6)::after { background: linear-gradient(90deg, #7c6d8e, #9c8db0); }
+  .dash-stat:nth-child(1)::after { background: var(--g1); }
+  .dash-stat:nth-child(2)::after { background: linear-gradient(90deg, var(--success), color-mix(in srgb, var(--success) 60%, white)); }
+  .dash-stat:nth-child(3)::after { background: linear-gradient(90deg, var(--warn), color-mix(in srgb, var(--warn) 60%, white)); }
+  .dash-stat:nth-child(4)::after { background: linear-gradient(90deg, var(--danger), color-mix(in srgb, var(--danger) 60%, white)); }
+  .dash-stat:nth-child(5)::after { background: linear-gradient(90deg, var(--accent3), var(--accent2)); }
+  .dash-stat:nth-child(6)::after { background: linear-gradient(90deg, var(--accent2), var(--accent)); }
   .dash-stat-icon {
     width: 48px;
     height: 48px;
@@ -2031,12 +2295,12 @@
     font-size: 22px;
     margin: 0 auto 12px;
   }
-  .dash-stat:nth-child(1) .dash-stat-icon { background: linear-gradient(135deg, rgba(139,109,74,.12), rgba(139,109,74,.04)); }
-  .dash-stat:nth-child(2) .dash-stat-icon { background: linear-gradient(135deg, rgba(93,132,108,.12), rgba(93,132,108,.04)); }
-  .dash-stat:nth-child(3) .dash-stat-icon { background: linear-gradient(135deg, rgba(181,138,61,.12), rgba(181,138,61,.04)); }
-  .dash-stat:nth-child(4) .dash-stat-icon { background: linear-gradient(135deg, rgba(179,94,87,.12), rgba(179,94,87,.04)); }
-  .dash-stat:nth-child(5) .dash-stat-icon { background: linear-gradient(135deg, rgba(127,143,135,.12), rgba(127,143,135,.04)); }
-  .dash-stat:nth-child(6) .dash-stat-icon { background: linear-gradient(135deg, rgba(124,109,142,.12), rgba(124,109,142,.04)); }
+  .dash-stat:nth-child(1) .dash-stat-icon { background: var(--accent-bg); }
+  .dash-stat:nth-child(2) .dash-stat-icon { background: rgba(var(--success-rgb, 122,160,130),0.10); }
+  .dash-stat:nth-child(3) .dash-stat-icon { background: rgba(var(--warn-rgb, 196,160,94),0.10); }
+  .dash-stat:nth-child(4) .dash-stat-icon { background: rgba(var(--danger-rgb, 196,122,106),0.10); }
+  .dash-stat:nth-child(5) .dash-stat-icon { background: var(--accent-bg); }
+  .dash-stat:nth-child(6) .dash-stat-icon { background: var(--accent-bg); }
   .dash-stat-num {
     font-size: 28px;
     font-weight: 800;
@@ -2333,7 +2597,7 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 14px 18px;
     border-bottom: 1px solid var(--border);
-    background: rgba(255,255,255,0.4);
+    background: var(--panel);
     backdrop-filter: blur(18px);
   }
   [data-theme="深夜"] .sidebar-topbar { background: rgba(28,25,22,0.65); }
@@ -2553,6 +2817,26 @@
   .theme-card[data-theme="宣纸"] .theme-preview { background: linear-gradient(135deg, #f5ede0, #ece0cc); }
   .theme-card[data-theme="宣纸"] .tp-blob-a { background: rgba(138,106,58,.45); }
   .theme-card[data-theme="宣纸"] .tp-blob-b { background: rgba(170,138,90,.4); }
+  .theme-card[data-theme="茉莉"] .theme-preview { background: linear-gradient(135deg, #f7f4e8, #f0ebd8); }
+  .theme-card[data-theme="茉莉"] .tp-blob-a { background: rgba(184,160,74,.45); }
+  .theme-card[data-theme="茉莉"] .tp-blob-b { background: rgba(212,190,106,.4); }
+  .theme-card[data-theme="珊瑚"] .theme-preview { background: linear-gradient(135deg, #fdf0ed, #f8e0dc); }
+  .theme-card[data-theme="珊瑚"] .tp-blob-a { background: rgba(212,106,90,.45); }
+  .theme-card[data-theme="珊瑚"] .tp-blob-b { background: rgba(232,154,138,.4); }
+  .theme-card[data-theme="薰衣草"] .theme-preview { background: linear-gradient(135deg, #f4f0f8, #ebe4f0); }
+  .theme-card[data-theme="薰衣草"] .tp-blob-a { background: rgba(138,106,184,.45); }
+  .theme-card[data-theme="薰衣草"] .tp-blob-b { background: rgba(170,138,212,.4); }
+  .theme-card[data-theme="钛灰"] .theme-preview { background: linear-gradient(135deg, #eef0f2, #e2e6ea); }
+  .theme-card[data-theme="钛灰"] .tp-blob-a { background: rgba(90,104,120,.45); }
+  .theme-card[data-theme="钛灰"] .tp-blob-b { background: rgba(122,136,152,.4); }
+  .theme-card[data-theme="翡翠"] .theme-preview { background: linear-gradient(135deg, #0a2018, #123028); }
+  .theme-card[data-theme="翡翠"] .tp-blob-a { background: rgba(58,200,160,.45); }
+  .theme-card[data-theme="翡翠"] .tp-blob-b { background: rgba(42,154,128,.4); }
+  .theme-card[data-theme="翡翠"] .tp-side, .theme-card[data-theme="翡翠"] .tp-top, .theme-card[data-theme="翡翠"] .tp-card { background: rgba(26,62,52,0.7); border-color: rgba(255,255,255,0.08); }
+  .theme-card[data-theme="琥珀"] .theme-preview { background: linear-gradient(135deg, #1a1408, #2a2010); }
+  .theme-card[data-theme="琥珀"] .tp-blob-a { background: rgba(217,168,56,.45); }
+  .theme-card[data-theme="琥珀"] .tp-blob-b { background: rgba(184,136,40,.4); }
+  .theme-card[data-theme="琥珀"] .tp-side, .theme-card[data-theme="琥珀"] .tp-top, .theme-card[data-theme="琥珀"] .tp-card { background: rgba(54,42,22,0.7); border-color: rgba(255,255,255,0.08); }
   .theme-name { font-size: 14px; font-weight: 700; }
   .theme-desc { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
   .theme-actions {
@@ -3134,6 +3418,19 @@
     gap: 16px;
   }
   @media (max-width: 980px) { .wb-two-col { grid-template-columns: 1fr; } }
+  /* 项目管理两栏布局响应式：覆盖内联 grid-template-columns */
+  @media (max-width: 980px) {
+    #tab-pr-admin .wb-two-col { grid-template-columns: 1fr !important; }
+    #tab-pr-admin .wb-two-col > section { min-height: auto !important; }
+  }
+  @media (max-width: 640px) {
+    .project-list { grid-template-columns: 1fr !important; }
+    .detail-grid { grid-template-columns: 1fr !important; }
+    .ring-wrap { flex-direction: column; align-items: center; }
+    .hero-top { flex-direction: column; align-items: flex-start; }
+    .hero-actions { width: 100%; }
+    .hero-actions .btn { flex: 1; }
+  }
   .wb-panel {
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -3235,6 +3532,7 @@
   }
   .wb-module[data-mod="blog"] .m-ic { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
   .wb-module[data-mod="pr"] .m-ic { background: linear-gradient(135deg, var(--accent3), var(--accent2)); }
+  .wb-module[data-mod="xhy"] .m-ic { background: linear-gradient(135deg, var(--danger), var(--warn)); }
   .wb-module[data-mod="calendar"] .m-ic { background: linear-gradient(135deg, var(--warn), var(--accent2)); }
   .wb-module[data-mod="finance"] .m-ic { background: linear-gradient(135deg, var(--success), var(--accent3)); }
   .wb-module[data-mod="tools"] .m-ic { background: linear-gradient(135deg, var(--danger), var(--accent)); }
@@ -3247,6 +3545,108 @@
     .hero-actions { width: 100%; }
     .hero-actions .btn { flex: 1; justify-content: center; }
   }
+
+  /* ===== XHY Toolbox 授权管理 ===== */
+  .xhy-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:18px; }
+  .xhy-stat {
+    padding:18px 20px; border-radius:var(--radius); border:1px solid var(--border);
+    background:var(--card); box-shadow:var(--shadow-sm); transition:transform .2s,box-shadow .2s;
+  }
+  .xhy-stat:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+  .xhy-stat .lbl { font-size:12px; color:var(--muted); margin-bottom:6px; }
+  .xhy-stat .val { font-size:26px; font-weight:700; font-family:var(--font-display); }
+  .xhy-stat .sub { font-size:11px; color:var(--muted); margin-top:4px; }
+  .xhy-stat.blue .val { color:var(--accent); }
+  .xhy-stat.green .val { color:var(--success); }
+  .xhy-stat.red .val { color:var(--danger); }
+  .xhy-stat.yellow .val { color:var(--warn); }
+
+  .xhy-card {
+    border-radius:var(--radius); border:1px solid var(--border);
+    background:var(--card); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:16px;
+  }
+  .xhy-card-head {
+    padding:14px 18px; display:flex; justify-content:space-between; align-items:center;
+    border-bottom:1px solid var(--border); gap:10px; flex-wrap:wrap;
+  }
+  .xhy-card-head h3 { font-size:14px; font-weight:700; margin:0; color:var(--text); }
+  .xhy-card-body { padding:0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+  .xhy-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .xhy-table thead th {
+    background:var(--accent-bg); padding:10px 14px; text-align:left; font-weight:600;
+    color:var(--muted); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap;
+  }
+  .xhy-table tbody td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
+  .xhy-table tbody tr:last-child td { border-bottom:none; }
+  .xhy-table tbody tr { transition:background .2s; }
+  .xhy-table tbody tr:hover { background:var(--accent-bg); }
+
+  .xhy-badge {
+    display:inline-block; padding:2px 9px; border-radius:999px;
+    font-size:11px; font-weight:600; line-height:1.6;
+  }
+  .xhy-badge.success { background:color-mix(in srgb, var(--success) 14%, transparent); color:var(--success); }
+  .xhy-badge.danger { background:color-mix(in srgb, var(--danger) 12%, transparent); color:var(--danger); }
+  .xhy-badge.warn { background:color-mix(in srgb, var(--warn) 16%, transparent); color:var(--warn); }
+  .xhy-badge.gray { background:var(--accent-bg); color:var(--muted); }
+
+  .xhy-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .xhy-dot.online { background:var(--success); box-shadow:0 0 0 3px color-mix(in srgb, var(--success) 20%, transparent); }
+  .xhy-dot.offline { background:var(--muted); }
+  .xhy-dot.expired { background:var(--danger); }
+
+  .xhy-filter { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+  .xhy-chip {
+    padding:6px 14px; border:1px solid var(--border); border-radius:999px;
+    font-size:12px; cursor:pointer; background:var(--panel); color:var(--text2);
+    transition:all .2s; font-family:inherit;
+  }
+  .xhy-chip:hover { border-color:var(--accent); color:var(--accent); }
+  .xhy-chip.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+  .xhy-search {
+    padding:7px 12px; border:1px solid var(--border); border-radius:var(--radius-sm);
+    font-size:13px; width:220px; background:var(--panel); color:var(--text); outline:none; font-family:inherit;
+  }
+  .xhy-search:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg); }
+
+  .xhy-pagination {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 18px; border-top:1px solid var(--border);
+  }
+  .xhy-page-info { font-size:12.5px; color:var(--muted); }
+  .xhy-page-btns { display:flex; gap:4px; }
+  .xhy-page-btn {
+    padding:5px 10px; border:1px solid var(--border); border-radius:6px;
+    background:var(--panel); cursor:pointer; font-size:12.5px; color:var(--text2); font-family:inherit;
+  }
+  .xhy-page-btn:hover:not(:disabled) { background:var(--accent-bg); border-color:var(--accent); }
+  .xhy-page-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .xhy-page-btn:disabled { opacity:.4; cursor:not-allowed; }
+
+  .xhy-empty { text-align:center; padding:50px 20px; color:var(--muted); }
+  .xhy-empty .ic { font-size:42px; margin-bottom:10px; }
+  .xhy-empty p { font-size:13px; }
+
+  .xhy-spinner {
+    display:inline-block; width:16px; height:16px;
+    border:2px solid var(--border); border-top-color:var(--accent);
+    border-radius:50%; animation:spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  .xhy-detail-grid { display:grid; grid-template-columns:110px 1fr; gap:10px; margin-bottom:10px; }
+  .xhy-detail-label { font-size:12.5px; color:var(--muted); font-weight:500; }
+  .xhy-detail-value { font-size:12.5px; color:var(--text); word-break:break-all; }
+
+  .xhy-danger-box {
+    background:color-mix(in srgb, var(--danger) 8%, transparent);
+    border:1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+    border-radius:8px; padding:12px 14px; margin-bottom:14px;
+  }
+  .xhy-danger-box strong { color:var(--danger); }
+  .xhy-danger-box p { color:var(--text2); margin-top:6px; font-size:12.5px; }
 </style>
 
 <!-- 管理后台主体 -->
@@ -3272,6 +3672,14 @@
       <div class="mod-tab" data-mod="projects" onclick="switchModule('projects', this)">
         <span class="mod-ic">📊</span><span>项目管理</span>
         <span class="mod-badge" id="pr-mod-badge">DevO</span>
+      </div>
+      <div class="mod-tab" data-mod="xhy" onclick="switchModule('xhy', this)">
+        <span class="mod-ic">🔐</span><span>XHY Toolbox</span>
+        <span class="mod-badge">授权</span>
+      </div>
+      <div class="mod-tab" data-mod="scan" onclick="switchModule('scan', this)">
+        <span class="mod-ic">📡</span><span>散线转文字</span>
+        <span class="mod-badge" id="scan-mod-badge">CAD</span>
       </div>
       <div class="mod-tab" data-mod="more" onclick="switchModule('more', this)">
         <span class="mod-ic">✨</span><span>更多模块</span>
@@ -3319,6 +3727,45 @@
       <a style="opacity:.55;pointer-events:none"><span class="nav-ic">💰</span>个人账本</a>
       <a style="opacity:.55;pointer-events:none"><span class="nav-ic">📓</span>随手笔记</a>
       <a style="opacity:.55;pointer-events:none"><span class="nav-ic">🛠️</span>工具箱</a>
+    </div>
+
+    <!-- 二级子菜单：XHY Toolbox 授权管理 -->
+    <div class="sub-nav" id="sub-xhy">
+      <div class="sub-nav-title">授权管理</div>
+      <a class="active" onclick="xhyNavigate('dashboard', this)"><span class="nav-ic">📊</span>仪表盘</a>
+      <a onclick="xhyNavigate('licenses', this)"><span class="nav-ic">🔑</span>授权管理</a>
+      <a onclick="xhyNavigate('devices', this)"><span class="nav-ic">💻</span>设备管理</a>
+      <a onclick="xhyNavigate('activations', this)"><span class="nav-ic">📋</span>激活日志</a>
+      <a onclick="xhyNavigate('versions', this)"><span class="nav-ic">🚀</span>版本管理</a>
+      <div class="sub-nav-title">系统</div>
+      <a onclick="xhyNavigate('settings', this)"><span class="nav-ic">⚙️</span>连接配置</a>
+    </div>
+
+    <!-- 二级子菜单：散线转文字 CAD授权管理 -->
+    <div class="sub-nav" id="sub-scan">
+      <div class="sub-nav-title">运营数据</div>
+      <a class="active" onclick="scanNavigate('dashboard', this)"><span class="nav-ic">📊</span>仪表盘</a>
+      <a onclick="scanNavigate('revenue', this)"><span class="nav-ic">💰</span>收入统计</a>
+      <div class="sub-nav-title">用户与授权</div>
+      <a onclick="scanNavigate('users', this)"><span class="nav-ic">👥</span>用户管理</a>
+      <a onclick="scanNavigate('licenses', this)"><span class="nav-ic">🔑</span>授权管理</a>
+      <a onclick="scanNavigate('orders', this)"><span class="nav-ic">🧾</span>订单管理</a>
+      <a onclick="scanNavigate('packages', this)"><span class="nav-ic">📦</span>套餐管理</a>
+      <a onclick="scanNavigate('blacklist', this)"><span class="nav-ic">🚫</span>黑名单</a>
+      <div class="sub-nav-title">运维管理</div>
+      <a onclick="scanNavigate('adminUsers', this)"><span class="nav-ic">🛡️</span>管理员</a>
+      <a onclick="scanNavigate('verification', this)"><span class="nav-ic">🔢</span>验证码</a>
+      <a onclick="scanNavigate('activeDevices', this)"><span class="nav-ic">💻</span>活跃设备</a>
+      <div class="sub-nav-title">日志审计</div>
+      <a onclick="scanNavigate('loginLogs', this)"><span class="nav-ic">🟢</span>登录日志</a>
+      <a onclick="scanNavigate('verifyLogs', this)"><span class="nav-ic">✅</span>授权日志</a>
+      <a onclick="scanNavigate('emailLogs', this)"><span class="nav-ic">📧</span>邮件日志</a>
+      <a onclick="scanNavigate('auditLogs', this)"><span class="nav-ic">📜</span>操作审计</a>
+      <div class="sub-nav-title">系统维护</div>
+      <a onclick="scanNavigate('dbmonitor', this)"><span class="nav-ic">🗄️</span>数据库监控</a>
+      <a onclick="scanNavigate('recycleBin', this)"><span class="nav-ic">🗑️</span>回收站</a>
+      <div class="sub-nav-title">系统</div>
+      <a onclick="scanNavigate('settings', this)"><span class="nav-ic">⚙️</span>连接配置</a>
     </div>
 
     <div class="sidebar-bottom">
@@ -3453,6 +3900,16 @@
                 <div class="m-ic"><i class="fa-solid fa-briefcase"></i></div>
                 <div class="m-name">项目管理</div>
                 <div class="m-desc">客户项目登记、任务拆解、回款、笔记与代码片段。</div>
+              </div>
+              <div class="wb-module" data-mod="xhy" onclick="switchModule('xhy');switchTab('xhy-admin')">
+                <div class="m-ic"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="m-name">XHY Toolbox</div>
+                <div class="m-desc">软件授权、设备激活、版本发布管理（Supabase）。</div>
+              </div>
+              <div class="wb-module" data-mod="scan" onclick="switchModule('scan');switchTab('scan-admin')">
+                <div class="m-ic" style="background:linear-gradient(135deg,#6366f1,#06b6d4)">📡</div>
+                <div class="m-name">散线转文字</div>
+                <div class="m-desc">CAD 自动描图授权系统：用户、项目、积分、订单全链路管理。</div>
               </div>
               <div class="wb-module locked" data-mod="calendar">
                 <span class="m-tag">规划中</span>
@@ -3593,7 +4050,6 @@
           <div class="form-field"><label>图片标题</label><input type="text" id="gal-title" placeholder="图片标题"></div>
           <div class="form-field"><label>分类</label>
             <select id="gal-category"></select>
-            </select>
           </div>
         </div>
         <div class="form-field"><label>描述</label><input type="text" id="gal-desc" placeholder="图片描述"></div>
@@ -3607,7 +4063,7 @@
       </div>
       <div class="card">
         <div class="card-title">📋 已上传图片（点击删除）</div>
-        <div id="gallery-list" class="loading">加载中...</div>
+        <div id="gallery-list"><div class="skeleton-grid" style="grid-template-columns:repeat(4,1fr)"><div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div></div></div>
       </div>
     </div>
 
@@ -3616,7 +4072,7 @@
       <div class="page-title">📄 文章管理</div>
       <div class="card">
         <div class="card-title">📝 文章列表</div>
-        <div id="articles-list" class="loading">加载中...</div>
+        <div id="articles-list"><div class="skeleton" style="height:80px;margin-bottom:10px"></div><div class="skeleton" style="height:80px;margin-bottom:10px"></div><div class="skeleton" style="height:80px"></div></div>
       </div>
       <div class="card">
         <div class="card-title">✏️ 写/编辑文章</div>
@@ -3626,7 +4082,6 @@
           <div class="form-field"><label>文章标题</label><input type="text" id="art-title" placeholder="文章标题"></div>
           <div class="form-field"><label>分类</label>
             <select id="art-category"></select>
-            </select>
           </div>
         </div>
         <div class="form-row">
@@ -3943,7 +4398,7 @@
     </div>
 
     <!-- ===== 数据大屏 ===== -->
-    <div id="tab-dashboard" class="tab-content">
+    <div id="tab-dashboard" class="tab-content hidden">
       <!-- 深色头部 -->
       <div class="dash-hero">
         <div class="dash-hero-title">📊 博客数据概览</div>
@@ -4189,6 +4644,120 @@
         </section>
       </div>
     </div>
+
+    <!-- ===== XHY Toolbox 授权管理 ===== -->
+    <div id="tab-xhy-admin" class="tab-content hidden">
+      <!-- 未连接时显示配置面板 -->
+      <div id="xhy-setup" class="panel" style="max-width:560px;margin:40px auto;padding:32px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-md)">
+        <div style="text-align:center;margin-bottom:24px">
+          <div style="font-size:48px;margin-bottom:8px">🔐</div>
+          <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text)">XHY Toolbox 授权管理</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">连接 Supabase 数据库以管理软件授权</div>
+        </div>
+
+        <!-- 快速连接按钮 -->
+        <div style="background:linear-gradient(135deg,var(--accent-bg),var(--panel));border:1px dashed var(--accent);border-radius:var(--radius-sm);padding:14px;margin-bottom:18px;text-align:center">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">⚡ 快速连接（已预填默认凭据）</div>
+          <div style="display:flex;gap:8px;justify-content:center">
+            <button class="btn btn-outline btn-sm" onclick="xhyQuickConnect('anon')" style="font-size:12px"><i class="fa-solid fa-eye"></i> 只读模式（anon）</button>
+            <button class="btn btn-primary btn-sm" onclick="xhyQuickConnect('service_role')" style="font-size:12px"><i class="fa-solid fa-shield-halved"></i> 管理模式（service_role）</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">点击按钮自动填入凭据，只需输入管理密码 <code style="background:var(--accent-bg);padding:1px 5px;border-radius:3px;font-family:monospace">admin123</code> 即可连接</div>
+        </div>
+
+        <div class="form-field" style="margin-bottom:14px">
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">Supabase URL</label>
+          <input type="text" id="xhy-url" value="https://ofdouqimwsplrhjcfdbv.supabase.co" placeholder="https://xxx.supabase.co" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit">
+        </div>
+        <div class="form-field" style="margin-bottom:14px">
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">API Key 类型</label>
+          <select id="xhy-key-type" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit">
+            <option value="anon">anon key（只读/受限写入）</option>
+            <option value="service_role">service_role key（完全管理）</option>
+          </select>
+        </div>
+        <div class="form-field" style="margin-bottom:14px">
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">API Key</label>
+          <input type="password" id="xhy-key" placeholder="粘贴你的 API Key（或点击上方快速连接自动填入）" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit">
+        </div>
+        <div class="form-field" style="margin-bottom:20px">
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">管理密码</label>
+          <input type="password" id="xhy-pwd" placeholder="输入管理密码" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit">
+        </div>
+        <div id="xhy-login-error" style="font-size:13px;color:var(--danger);text-align:center;margin-bottom:12px;min-height:20px"></div>
+        <button class="btn btn-primary" id="xhy-login-btn" style="width:100%;justify-content:center" onclick="xhyLogin()">连接数据库</button>
+        <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.8">
+          管理密码：<code style="background:var(--accent-bg);padding:2px 6px;border-radius:4px;font-family:monospace">admin123</code><br>
+          凭据将保存在浏览器 localStorage，下次自动填充
+        </div>
+      </div>
+
+      <!-- 已连接时显示工作区 -->
+      <div id="xhy-workspace" style="display:none">
+        <!-- 顶部状态条 -->
+        <div class="panel" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;margin-bottom:16px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-sm)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="font-family:var(--font-display);font-size:17px;font-weight:700" id="xhy-page-title">仪表盘</div>
+            <span class="chip" id="xhy-conn-status" style="background:var(--success-bg);color:var(--success)">● 已连接</span>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm" onclick="xhyShowSettings()"><i class="fa-solid fa-gear"></i> 配置</button>
+            <button class="btn btn-outline btn-sm" onclick="xhyLogout()"><i class="fa-solid fa-right-from-bracket"></i> 断开</button>
+          </div>
+        </div>
+        <!-- 动态内容区 -->
+        <div id="xhy-content"></div>
+      </div>
+
+      <!-- XHY 模块专用 Modal -->
+      <div class="modal" id="xhy-modal" onclick="if(event.target===this)closeModal('xhy-modal')">
+        <div class="modal-card" id="xhy-modal-card" style="max-width:560px"></div>
+      </div>
+    </div>
+
+    <!-- ===== 散线转文字 CAD授权管理 ===== -->
+    <div id="tab-scan-admin" class="tab-content hidden">
+      <!-- 未连接时显示配置面板 -->
+      <div id="scan-setup" class="panel" style="max-width:560px;margin:40px auto;padding:32px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-md)">
+        <div style="text-align:center;margin-bottom:24px">
+          <div style="font-size:48px;margin-bottom:8px">📡</div>
+          <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text)">散线转文字 CAD 授权管理</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">连接 Supabase 数据库以管理用户、授权、订单等</div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--accent-bg),var(--panel));border:1px dashed var(--accent);border-radius:var(--radius-sm);padding:14px;margin-bottom:18px;text-align:center">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">⚡ 快速连接（已预填默认凭据）</div>
+          <div style="display:flex;gap:8px;justify-content:center">
+            <button class="btn btn-outline btn-sm" onclick="scanQuickConnect('anon')" style="font-size:12px"><i class="fa-solid fa-eye"></i> 只读模式</button>
+            <button class="btn btn-primary btn-sm" onclick="scanQuickConnect('service_role')" style="font-size:12px"><i class="fa-solid fa-shield-halved"></i> 管理模式</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">点击按钮自动填入凭据，输入管理密码 <code style="background:var(--accent-bg);padding:1px 5px;border-radius:3px;font-family:monospace">admin123</code> 连接</div>
+        </div>
+        <div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">Supabase URL</label><input type="text" id="scan-url" value="https://uwgqflcjuixmdhgzlvmb.supabase.co" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>
+        <div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">API Key 类型</label><select id="scan-key-type" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"><option value="anon">anon key（只读）</option><option value="service_role">service_role key（完全管理）</option></select></div>
+        <div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">API Key</label><input type="password" id="scan-key" placeholder="点击上方快速连接自动填入" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>
+        <div class="form-field" style="margin-bottom:20px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">管理密码</label><input type="password" id="scan-pwd" placeholder="输入管理密码" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>
+        <div id="scan-login-error" style="font-size:13px;color:var(--danger);text-align:center;margin-bottom:12px;min-height:20px"></div>
+        <button class="btn btn-primary" id="scan-login-btn" style="width:100%;justify-content:center" onclick="scanLogin()">连接数据库</button>
+        <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.8">管理密码：<code style="background:var(--accent-bg);padding:2px 6px;border-radius:4px;font-family:monospace">admin123</code></div>
+      </div>
+      <!-- 已连接时显示工作区 -->
+      <div id="scan-workspace" style="display:none">
+        <div class="panel" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;margin-bottom:16px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-sm)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="font-family:var(--font-display);font-size:17px;font-weight:700" id="scan-page-title">仪表盘</div>
+            <span class="chip" id="scan-conn-status" style="background:var(--success-bg);color:var(--success)">● 已连接</span>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm" onclick="scanShowSettings()"><i class="fa-solid fa-gear"></i> 配置</button>
+            <button class="btn btn-outline btn-sm" onclick="scanLogout()"><i class="fa-solid fa-right-from-bracket"></i> 断开</button>
+          </div>
+        </div>
+        <div id="scan-content"></div>
+      </div>
+      <div class="modal" id="scan-modal" onclick="if(event.target===this)closeModal('scan-modal')">
+        <div class="modal-card" id="scan-modal-card" style="max-width:560px"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -4315,6 +4884,54 @@
         <div class="theme-name">📜 宣纸 · 书卷</div>
         <div class="theme-desc">米黄书卷色，古朴文雅，翰墨飘香。</div>
       </div>
+      <div class="theme-card" data-theme="茉莉" onclick="applyTheme('茉莉', this)">
+        <div class="theme-preview">
+          <div class="tp-blob-a"></div><div class="tp-blob-b"></div>
+          <div class="tp-side"></div><div class="tp-top"></div><div class="tp-card"></div>
+        </div>
+        <div class="theme-name">🌼 茉莉 · 淡黄</div>
+        <div class="theme-desc">淡黄白花色，清新淡雅，素净温婉。</div>
+      </div>
+      <div class="theme-card" data-theme="珊瑚" onclick="applyTheme('珊瑚', this)">
+        <div class="theme-preview">
+          <div class="tp-blob-a"></div><div class="tp-blob-b"></div>
+          <div class="tp-side"></div><div class="tp-top"></div><div class="tp-card"></div>
+        </div>
+        <div class="theme-name">🪸 珊瑚 · 暖红</div>
+        <div class="theme-desc">暖珊瑚红，热情洋溢，生机勃勃。</div>
+      </div>
+      <div class="theme-card" data-theme="薰衣草" onclick="applyTheme('薰衣草', this)">
+        <div class="theme-preview">
+          <div class="tp-blob-a"></div><div class="tp-blob-b"></div>
+          <div class="tp-side"></div><div class="tp-top"></div><div class="tp-card"></div>
+        </div>
+        <div class="theme-name">💐 薰衣草 · 淡紫</div>
+        <div class="theme-desc">淡紫薰衣草，浪漫宁静，优雅从容。</div>
+      </div>
+      <div class="theme-card" data-theme="钛灰" onclick="applyTheme('钛灰', this)">
+        <div class="theme-preview">
+          <div class="tp-blob-a"></div><div class="tp-blob-b"></div>
+          <div class="tp-side"></div><div class="tp-top"></div><div class="tp-card"></div>
+        </div>
+        <div class="theme-name">⚙️ 钛灰 · 冷灰</div>
+        <div class="theme-desc">冷灰金属色，理性克制，专业沉稳。</div>
+      </div>
+      <div class="theme-card" data-theme="翡翠" onclick="applyTheme('翡翠', this)">
+        <div class="theme-preview">
+          <div class="tp-blob-a"></div><div class="tp-blob-b"></div>
+          <div class="tp-side"></div><div class="tp-top"></div><div class="tp-card"></div>
+        </div>
+        <div class="theme-name">💎 翡翠 · 翠绿</div>
+        <div class="theme-desc">深翡翠绿暗色，碧绿通透，奢华典雅。</div>
+      </div>
+      <div class="theme-card" data-theme="琥珀" onclick="applyTheme('琥珀', this)">
+        <div class="theme-preview">
+          <div class="tp-blob-a"></div><div class="tp-blob-b"></div>
+          <div class="tp-side"></div><div class="tp-top"></div><div class="tp-card"></div>
+        </div>
+        <div class="theme-name">🟡 琥珀 · 金黄</div>
+        <div class="theme-desc">深琥珀金暗色，温润如玉，岁月沉淀。</div>
+      </div>
     </div>
     <div class="theme-pager" id="theme-pager">
       <button id="theme-prev" onclick="themePage(-1)" title="上一页"><i class="fa-solid fa-chevron-left"></i></button>
@@ -4326,6 +4943,39 @@
     </div>
   </div>
 </div>
+
+<!-- ===== 通用确认弹窗 ===== -->
+<div class="modal" id="confirm-modal" onclick="if(event.target===this)closeConfirm(false)">
+  <div class="modal-card" style="max-width:420px;text-align:center">
+    <div id="confirm-icon" style="font-size:42px;margin-bottom:14px">⚠️</div>
+    <div id="confirm-title" style="font-size:17px;font-weight:700;margin-bottom:8px"></div>
+    <div id="confirm-msg" style="font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.6"></div>
+    <div style="display:flex;gap:12px;justify-content:center">
+      <button class="btn btn-outline" id="confirm-cancel-btn" onclick="closeConfirm(false)">取消</button>
+      <button class="btn btn-danger" id="confirm-ok-btn" onclick="closeConfirm(true)">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 通用输入弹窗（替代 prompt） ===== -->
+<div class="modal" id="prompt-modal" onclick="if(event.target===this)closePrompt(null)">
+  <div class="modal-card" style="max-width:440px">
+    <div class="modal-head">
+      <h2 id="prompt-title">输入</h2>
+      <button class="icon-btn" onclick="closePrompt(null)"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div id="prompt-msg" style="font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.6"></div>
+      <input id="prompt-input" type="text" class="form-field" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:var(--panel);color:var(--text);outline:none;font-family:inherit" onkeydown="if(event.key==='Enter')closePrompt(this.value);if(event.key==='Escape')closePrompt(null)">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closePrompt(null)">取消</button>
+      <button class="btn btn-primary" id="prompt-ok-btn" onclick="closePrompt(document.getElementById('prompt-input').value)">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== XHY Toolbox 授权管理（已移入 .main 容器内） ===== -->
 
 <!-- ===== 项目管理 Modals ===== -->
 <div class="modal" id="pr-project-modal" aria-hidden="true" onclick="if(event.target===this)prCloseModal('pr-project-modal')">
@@ -4424,6 +5074,7 @@ async function doLogin() {
     $("login-err").style.display = "block";
     return;
   }
+  var serverRejected = false;
   try {
     // 优先通过服务端验证
     var res = await fetch(API_BASE + "/login", {
@@ -4438,9 +5089,16 @@ async function doLogin() {
         enterApp();
         return;
       }
+      serverRejected = true; // 服务端已明确响应：密码错误
     }
   } catch(e) {}
-  // 服务端不可用时降级为本地默认密码
+  if (serverRejected) {
+    // 服务端明确拒绝时不再降级到本地默认密码
+    $("login-err").textContent = "密码错误，请重试";
+    $("login-err").style.display = "block";
+    return;
+  }
+  // 仅服务端不可用时降级为本地默认密码
   if (pwd === DEFAULT_PWD) {
     localStorage.setItem(AUTH_KEY, "1");
     enterApp();
@@ -4450,8 +5108,8 @@ async function doLogin() {
   $("login-err").style.display = "block";
 }
 
-function logout() {
-  if (!confirm("确定要退出登录吗？")) return;
+async function logout() {
+  if (!await showConfirm({icon:'🚪',title:'退出登录',msg:'确定要退出登录吗？',okText:'退出',danger:false})) return;
   try { localStorage.removeItem(AUTH_KEY); } catch(e) {}
   document.body.classList.add("logged-out");
   $("admin-password").value = "";
@@ -4542,8 +5200,8 @@ function updateSwImageLabel(idx, val) {
   }
 }
 
-function removeSwImage(idx) {
-  if (!confirm("确定删除这张图片吗？")) return;
+async function removeSwImage(idx) {
+  if (!await showConfirm({icon:'🖼️',title:'删除图片',msg:'确定删除这张图片吗？'})) return;
   swImageList.splice(idx, 1);
   renderSwImageList();
 }
@@ -4600,9 +5258,9 @@ async function uploadSwImages(input) {
   input.value = "";
 }
 
-function addSwImageManual() {
-  var url = prompt("请输入图片链接：");
-  if (!url) return;
+async function addSwImageManual() {
+  var url = await showPrompt({title:'添加图片',msg:'请输入图片链接：',placeholder:'https://...'});
+  if (!url || !url.trim()) return;
   swImageList.push({ url: url.trim(), label: "" });
   renderSwImageList();
 }
@@ -4632,12 +5290,7 @@ async function saveSoftware() {
 }
 
 // ==================== Tab 切换 ====================
-function switchTab(tab, el) {
-  document.querySelectorAll(".sidebar-nav a").forEach(a => a.classList.remove("active"));
-  if (el) el.classList.add("active");
-  document.querySelectorAll(".tab-content").forEach(t => t.classList.add("hidden"));
-  document.getElementById("tab-" + tab).classList.remove("hidden");
-}
+// switchTab 已在扩展逻辑中统一定义
 
 // ==================== 本地 API ====================
 async function getFile(path) {
@@ -4667,7 +5320,8 @@ var syncAbortCtrl = null;
 function syncToGitHub() {
   var btn = $("btn-sync");
   btn.disabled = true;
-  btn.textContent = "⏳ 同步中...";
+  btn.classList.add("loading");
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 同步中...';
 
   // 显示流程面板
   var panel = $("sync-panel");
@@ -4830,7 +5484,8 @@ function syncToGitHub() {
               summary.innerHTML = html;
               $("sync-progress-text").textContent = "部署完成";
               setTimeout(function() {
-                btn.textContent = "🚀 同步到 GitHub";
+                btn.innerHTML = '<i class="fa-brands fa-github"></i> 同步到 GitHub';
+                btn.classList.remove("loading");
                 btn.disabled = false;
                 $("sync-progress-bar").style.background = "linear-gradient(90deg,#8b6d4a,#b39b7a)";
               }, 3000);
@@ -4936,6 +5591,47 @@ function renderExistingTags() {
 
 // ==================== 表单填充 ====================
 function $(id) { return document.getElementById(id); }
+function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+// ==================== 通用确认弹窗 ====================
+var _confirmResolver = null;
+function showConfirm(opts) {
+  opts = opts || {};
+  var modal = $('confirm-modal');
+  $('confirm-icon').textContent = opts.icon || '⚠️';
+  $('confirm-title').textContent = opts.title || '确认操作';
+  $('confirm-msg').textContent = opts.msg || '';
+  $('confirm-cancel-btn').textContent = opts.cancelText || '取消';
+  var okBtn = $('confirm-ok-btn');
+  okBtn.textContent = opts.okText || '确认';
+  okBtn.className = 'btn ' + (opts.danger === false ? 'btn-primary' : 'btn-danger');
+  modal.classList.add('open');
+  return new Promise(function(resolve) { _confirmResolver = resolve; });
+}
+function closeConfirm(result) {
+  $('confirm-modal').classList.remove('open');
+  if (_confirmResolver) { _confirmResolver(result); _confirmResolver = null; }
+}
+
+// ==================== 通用输入弹窗 ====================
+var _promptResolver = null;
+function showPrompt(opts) {
+  opts = opts || {};
+  var modal = $('prompt-modal');
+  $('prompt-title').textContent = opts.title || '请输入';
+  $('prompt-msg').textContent = opts.msg || '';
+  var input = $('prompt-input');
+  input.value = opts.value || '';
+  input.placeholder = opts.placeholder || '';
+  modal.classList.add('open');
+  setTimeout(function() { input.focus(); input.select(); }, 80);
+  return new Promise(function(resolve) { _promptResolver = resolve; });
+}
+function closePrompt(value) {
+  $('prompt-modal').classList.remove('open');
+  if (_promptResolver) { _promptResolver(value); _promptResolver = null; }
+}
+
 function populateForms() {
   // Hero
   var h = DATA.hero && DATA.hero.content;
@@ -5136,7 +5832,7 @@ async function saveProject() {
   }
 }
 async function delProject(id) {
-  if (!confirm("删除这个作品？")) return;
+  if (!await showConfirm({icon:'🗑️',title:'删除作品',msg:'删除这个作品？'})) return;
   try {
     var list = (DATA.projects && DATA.projects.content) || [];
     var newList = [];
@@ -5428,7 +6124,7 @@ async function uploadGalImage() {
   }
 }
 async function delGal(index) {
-  if (!confirm("删除这张图片？")) return;
+  if (!await showConfirm({icon:'🗑️',title:'删除图片',msg:'删除这张图片？'})) return;
   try {
     var list = (DATA.gallery && DATA.gallery.content) || [];
     list.splice(index, 1);
@@ -5618,7 +6314,7 @@ async function saveArticle(publish) {
   }
 }
 async function delArticle(id) {
-  if (!confirm("删除这篇文章？")) return;
+  if (!await showConfirm({icon:'📄',title:'删除文章',msg:'删除这篇文章？'})) return;
   try {
     var list = (DATA.articles && DATA.articles.content) || [];
     var newList = [];
@@ -5925,7 +6621,7 @@ function renderTimeline(tl) {
   var html = "";
   for (var i = 0; i < tl.length; i++) {
     var t = tl[i];
-    html += '<div class="timeline-item"><span class="del-tl" onclick="rmTimeline(' + i + ')">🗑</span>\
+    html += '<div class="tl-edit-item"><span class="del-tl" onclick="rmTimeline(' + i + ')">🗑</span>\
       <input type="text" placeholder="年份" value="' + (t.year||'') + '" data-ti="' + i + '" data-tf="year">\
       <input type="text" placeholder="标题" value="' + (t.title||'') + '" data-ti="' + i + '" data-tf="title">\
       <textarea placeholder="描述" data-ti="' + i + '" data-tf="description">' + (t.description||'') + '</textarea></div>';
@@ -5943,7 +6639,7 @@ function rmTimeline(i) {
 }
 async function saveTimeline() {
   try {
-    var items = document.querySelectorAll(".timeline-item");
+    var items = document.querySelectorAll(".tl-edit-item");
     var result = [];
     for (var i = 0; i < items.length; i++) {
       var item = items[i];
@@ -6499,7 +7195,7 @@ async function loadLogs() {
 
 // 清空日志
 async function clearLogs() {
-  if (!confirm('确定要清空所有操作日志吗？此操作不可撤销。')) return;
+  if (!await showConfirm({icon:'🧹',title:'清空日志',msg:'确定要清空所有操作日志吗？此操作不可撤销。'})) return;
   try {
     var res = await fetch('/api/logs/clear', { method: 'POST' });
     var data = await res.json();
@@ -6552,7 +7248,8 @@ function escapeHtml(str) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 // ==================== 文件管理 ====================
@@ -6604,7 +7301,7 @@ async function loadFiles() {
 
 // 删除文件
 async function deleteFile(filePath) {
-  if (!confirm('确定要删除文件 "' + filePath + '" 吗？\n\n此操作不可撤销！')) return;
+  if (!await showConfirm({icon:'🗑️',title:'删除文件',msg:'确定要删除文件 "' + filePath + '" 吗？此操作不可撤销！'})) return;
   try {
     var res = await fetch('/api/delete', {
       method: 'POST',
@@ -6684,7 +7381,7 @@ function formatBackupTime(isoTime) {
 // 创建备份
 async function createBackup() {
   var note = $('backup-note').value.trim();
-  if (!confirm('确定要创建一个手动备份吗？')) return;
+  if (!await showConfirm({icon:'💾',title:'创建备份',msg:'确定要创建一个手动备份吗？',okText:'创建',danger:false})) return;
   try {
     toast('⏳ 正在创建备份...');
     var res = await fetch('/api/backup/create', {
@@ -6707,8 +7404,8 @@ async function createBackup() {
 
 // 恢复备份
 async function restoreBackup(backupName) {
-  if (!confirm('确定要恢复备份 "' + backupName + '" 吗？\n\n⚠️ 这将覆盖当前的 data/ 目录下所有 JSON 文件！')) return;
-  if (!confirm('再次确认：恢复操作会覆盖当前数据，确定继续吗？')) return;
+  if (!await showConfirm({icon:'♻️',title:'恢复备份',msg:'确定要恢复备份 "' + backupName + '" 吗？这将覆盖当前的 data/ 目录下所有 JSON 文件！'})) return;
+  if (!await showConfirm({icon:'⚠️',title:'再次确认',msg:'恢复操作会覆盖当前数据，确定继续吗？',okText:'确定恢复'})) return;
   try {
     toast('⏳ 正在恢复备份...');
     var res = await fetch('/api/backup/restore', {
@@ -6731,7 +7428,7 @@ async function restoreBackup(backupName) {
 
 // 删除备份
 async function deleteBackup(backupName) {
-  if (!confirm('确定要删除备份 "' + backupName + '" 吗？')) return;
+  if (!await showConfirm({icon:'🗑️',title:'删除备份',msg:'确定要删除备份 "' + backupName + '" 吗？'})) return;
   try {
     var res = await fetch('/api/backup/delete', {
       method: 'POST',
@@ -6805,7 +7502,7 @@ function populateCategorySelects() {
 }
 
 // 添加分类（支持同时添加中文和英文）
-function addCategory(type) {
+async function addCategory(type) {
   var input = type === 'article' ? $("new-article-cat") : $("new-gallery-cat");
   var zhName = input.value.trim();
   if (!zhName) {
@@ -6823,8 +7520,9 @@ function addCategory(type) {
     return;
   }
   // 询问是否添加英文翻译
-  var enName = prompt("请输入该分类的英文翻译（可选，留空则使用中文）：");
+  var enName = await showPrompt({title:'英文翻译',msg:'请输入该分类的英文翻译（可选，留空则使用中文）：',value:zhName,placeholder:'English name'});
   enName = enName ? enName.trim() : zhName;
+  if (enName === null) enName = zhName;
 
   DATA_CATEGORIES[key].push({ zh: zhName, en: enName });
   input.value = '';
@@ -6834,8 +7532,8 @@ function addCategory(type) {
 }
 
 // 删除分类
-function removeCategory(type, name) {
-  if (!confirm("确定删除分类「" + name + "」吗？")) return;
+async function removeCategory(type, name) {
+  if (!await showConfirm({icon:'🏷️',title:'删除分类',msg:'确定删除分类「' + name + '」吗？'})) return;
   var key = type === 'article' ? 'article_categories' : 'gallery_categories';
   var idx = -1;
   for (var i = 0; i < DATA_CATEGORIES[key].length; i++) {
@@ -6881,15 +7579,20 @@ function escHtml(str) {
 // ==================== 数据大屏 ====================
 async function loadDashboard() {
   try {
-    // 加载所有数据
+    // 并行加载所有数据文件
     var files = ['hero','projects','about','contact','config','articles','gallery','categories'];
+    var fetches = files.map(function(f) {
+      return fetch(DATA_BASE + '/' + f + '.json').then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
+    });
+    var fileResults = await Promise.all(fetches);
     var results = {};
-    for (var i = 0; i < files.length; i++) {
-      try {
-        var r = await fetch(DATA_BASE + '/' + files[i] + '.json');
-        results[files[i]] = r.ok ? await r.json() : null;
-      } catch(e) { results[files[i]] = null; }
-    }
+    files.forEach(function(f, i) { results[f] = fileResults[i]; });
+    // 并行加载文件列表和日志
+    var fileLogsPromise = Promise.all([
+      fetch('/api/files?type=images').then(function(r) { return r.json(); }).catch(function() { return { files: [] }; }),
+      fetch('/api/files?type=docs').then(function(r) { return r.json(); }).catch(function() { return { files: [] }; }),
+      fetch('/api/logs?limit=8').then(function(r) { return r.json(); }).catch(function() { return { success: false, logs: [] }; })
+    ]);
 
     var articles = results.articles || [];
     var projects = results.projects || [];
@@ -6950,10 +7653,10 @@ async function loadDashboard() {
     // ===== 文件存储 =====
     var storageEl = $('dash-storage');
     try {
-      var imgRes = await fetch('/api/files?type=images');
-      var imgData = await imgRes.json();
-      var docRes = await fetch('/api/files?type=docs');
-      var docData = await docRes.json();
+      var fileLogsResults = await fileLogsPromise;
+      var imgData = fileLogsResults[0];
+      var docData = fileLogsResults[1];
+      var logData = fileLogsResults[2];
       var imgCount = imgData.files ? imgData.files.length : 0;
       var docCount = docData.files ? docData.files.length : 0;
       var imgSize = 0, docSize = 0;
@@ -6986,9 +7689,7 @@ async function loadDashboard() {
     // ===== 最近操作日志 =====
     var logsEl = $('dash-recent-logs');
     try {
-      var logRes = await fetch('/api/logs?limit=8');
-      var logData = await logRes.json();
-      if (logData.success && logData.logs.length > 0) {
+      if (logData.success && logData.logs && logData.logs.length > 0) {
         var logIcons = { save:'💾', upload:'📤', sync_start:'🚀', sync_done:'✅', logs_clear:'🗑️', save_error:'❌', delete:'🗑️' };
         var logLabels = { save:'保存数据', upload:'上传文件', sync_start:'开始同步', sync_done:'同步完成', logs_clear:'清空日志', save_error:'保存失败', delete:'删除文件' };
         logsEl.innerHTML = logData.logs.map(function(log) {
@@ -7024,8 +7725,8 @@ async function loadDashboard() {
         var lastTimeShort = lastBackup ? (function(){ var d = new Date(lastBackup.time); return (d.getMonth()+1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0'); })() : '无';
         backupEl.innerHTML =
           '<div class="dash-summary">' +
-            '<div class="dash-summary-item"><div class="dash-summary-num" style="color:#8b6d4a">' + manualCount + '</div><div class="dash-summary-label">手动备份</div></div>' +
-            '<div class="dash-summary-item"><div class="dash-summary-num" style="color:#8b8175">' + autoCount + '</div><div class="dash-summary-label">自动备份</div></div>' +
+            '<div class="dash-summary-item"><div class="dash-summary-num" style="color:var(--accent)">' + manualCount + '</div><div class="dash-summary-label">手动备份</div></div>' +
+            '<div class="dash-summary-item"><div class="dash-summary-num" style="color:var(--muted)">' + autoCount + '</div><div class="dash-summary-label">自动备份</div></div>' +
             '<div class="dash-summary-item"><div class="dash-summary-num">' + (totalBackupSize/1024).toFixed(1) + '<span style="font-size:12px;font-weight:400">KB</span></div><div class="dash-summary-label">总占用</div></div>' +
           '</div>' +
           '<div style="margin-top:12px;font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px">' +
@@ -7056,8 +7757,21 @@ async function loadDashboard() {
   }
 }
 
+// 读取 CSS 变量（用于 Canvas 图表主题适配）
+function cssVar(name, fallback) {
+  var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
+// 图表数据缓存（主题切换时重绘）
+var _chartData = { pie: null, bar: null };
+function redrawCharts() {
+  if (_chartData.pie) drawPieChart.apply(null, _chartData.pie);
+  if (_chartData.bar) drawBarChart.apply(null, _chartData.bar);
+}
+
 // 简单 Canvas 饼图
 function drawPieChart(articles, projects, gallery, skills) {
+  _chartData.pie = arguments;
   var canvas = $('dash-pie-chart');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
@@ -7066,17 +7780,22 @@ function drawPieChart(articles, projects, gallery, skills) {
   canvas.height = 200 * dpr;
   canvas.style.width = '300px';
   canvas.style.height = '200px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, 300, 200);
 
+  var cText = cssVar('--text', '#1f1a16');
+  var cMuted = cssVar('--muted', '#8b8175');
+  var cCard = cssVar('--card', '#ffffff');
   var data = [
-    { label: '文章', value: articles, color: '#8b6d4a' },
-    { label: '作品', value: projects, color: '#5d846c' },
-    { label: '相册', value: gallery, color: '#b58a3d' },
-    { label: '技能', value: skills, color: '#a65e6a' }
+    { label: '文章', value: articles, color: cssVar('--accent', '#8b6d4a') },
+    { label: '作品', value: projects, color: cssVar('--success', '#5d846c') },
+    { label: '相册', value: gallery, color: cssVar('--warn', '#b58a3d') },
+    { label: '技能', value: skills, color: cssVar('--danger', '#b35e57') }
   ];
   var total = data.reduce(function(s,d){ return s + d.value; }, 0);
   if (total === 0) {
-    ctx.fillStyle = '#8b8175';
+    ctx.fillStyle = cMuted;
     ctx.font = '14px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('暂无数据', 150, 105);
@@ -7096,18 +7815,18 @@ function drawPieChart(articles, projects, gallery, skills) {
     ctx.fill();
     startAngle += sliceAngle;
   });
-  // 中间白圆（环形图效果）
+  // 中间圆（环形图效果）—— 用卡片背景色适配主题
   ctx.beginPath();
   ctx.arc(cx, cy, 40, 0, Math.PI * 2);
-  ctx.fillStyle = '#fff';
+  ctx.fillStyle = cCard;
   ctx.fill();
-  ctx.fillStyle = '#1f1a16';
+  ctx.fillStyle = cText;
   ctx.font = 'bold 18px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(total, cx, cy - 6);
   ctx.font = '11px sans-serif';
-  ctx.fillStyle = '#8b8175';
+  ctx.fillStyle = cMuted;
   ctx.fillText('总计', cx, cy + 12);
 
   // 图例
@@ -7115,7 +7834,7 @@ function drawPieChart(articles, projects, gallery, skills) {
   data.forEach(function(d) {
     ctx.fillStyle = d.color;
     ctx.fillRect(lx, ly, 12, 12);
-    ctx.fillStyle = '#1f1a16';
+    ctx.fillStyle = cText;
     ctx.font = '12px sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
@@ -7126,6 +7845,7 @@ function drawPieChart(articles, projects, gallery, skills) {
 
 // 简单 Canvas 柱状图
 function drawBarChart(articles, gallery) {
+  _chartData.bar = arguments;
   var canvas = $('dash-bar-chart');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
@@ -7134,7 +7854,13 @@ function drawBarChart(articles, gallery) {
   canvas.height = 180 * dpr;
   canvas.style.width = '100%';
   canvas.style.height = '180px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, 400, 180);
+
+  var cText = cssVar('--text', '#1f1a16');
+  var cMuted = cssVar('--muted', '#8b8175');
+  var cBorder = cssVar('--border', 'rgba(139,109,74,0.06)');
 
   // 按月份统计文章
   var months = {};
@@ -7145,7 +7871,7 @@ function drawBarChart(articles, gallery) {
   });
   var monthKeys = Object.keys(months).sort().slice(-6);
   if (monthKeys.length === 0) {
-    ctx.fillStyle = '#8b8175';
+    ctx.fillStyle = cMuted;
     ctx.font = '14px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('暂无数据', 200, 95);
@@ -7154,10 +7880,17 @@ function drawBarChart(articles, gallery) {
 
   var maxVal = Math.max.apply(null, monthKeys.map(function(k){ return months[k]; }));
   var barW = 40, gap = 20, startX = 40, chartH = 120, baseY = 150;
-  var colors = ['#8b6d4a','#b39b7a','#a65e6a','#5d846c','#b58a3d','#7f8f87'];
+  var colors = [
+    cssVar('--accent', '#8b6d4a'),
+    cssVar('--accent2', '#b39b7a'),
+    cssVar('--danger', '#a65e6a'),
+    cssVar('--success', '#5d846c'),
+    cssVar('--warn', '#b58a3d'),
+    cssVar('--accent3', '#7f8f87')
+  ];
 
   // 画网格线
-  ctx.strokeStyle = 'rgba(139,109,74,0.06)';
+  ctx.strokeStyle = cBorder;
   ctx.lineWidth = 1;
   for (var i = 0; i <= 4; i++) {
     var y = baseY - (chartH / 4) * i;
@@ -7178,23 +7911,18 @@ function drawBarChart(articles, gallery) {
     ctx.roundRect(x, y, barW, barH, [4,4,0,0]);
     ctx.fill();
     // 数值
-    ctx.fillStyle = '#1f1a16';
+    ctx.fillStyle = cText;
     ctx.font = 'bold 11px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(val, x + barW/2, y - 6);
     // 月份标签
-    ctx.fillStyle = '#8b8175';
+    ctx.fillStyle = cMuted;
     ctx.font = '10px sans-serif';
     ctx.fillText(key.substring(5) + '月', x + barW/2, baseY + 16);
   });
 }
 
-// tab 切换时加载数据大屏
-var _origSwitchTab = switchTab;
-switchTab = function(tab, el) {
-  _origSwitchTab(tab, el);
-  if (tab === 'dashboard') loadDashboard();
-};
+// tab 切换时加载数据大屏（已合并到下方统一 switchTab）
 
 // ========================================================================
 // 【不加班的小刘 · 个人工作台】 新增扩展逻辑
@@ -7223,10 +7951,7 @@ switchTab = function(tab, el) {
   function afterDays(n) { var d=new Date(); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
   function daysLeft(str) { if(!str) return null; var d=new Date(str+"T00:00:00")-new Date(); return Math.ceil(d/86400000); }
   function money(v) { return "￥"+Number(v||0).toLocaleString("zh-CN"); }
-  function escapeHtml(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
   function createId() { return (crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random().toString(16).slice(2)); }
-  function $(id) { return document.getElementById(id); }
-  function $$(sel,root) { return Array.from((root||document).querySelectorAll(sel)); }
   function greetByHour() {
     var h = new Date().getHours();
     if (h < 6)  return "凌晨好";
@@ -7257,13 +7982,15 @@ switchTab = function(tab, el) {
       $$(".theme-card").forEach(function (c) { c.classList.remove("active"); });
       el.classList.add("active");
     }
+    // 主题切换后重绘 Canvas 图表以适配新配色
+    setTimeout(redrawCharts, 60);
   };
   // 主题分类与翻页
   var THEME_PAGE_SIZE = 6;
   var themeCurrentCat = "all";
   var themeCurrentPage = 1;
-  var lightThemes = ["default","青瓷","雾蓝","樱花","日落","薄荷","宣纸"];
-  var darkThemes = ["深夜","墨韵","森林","极光","焦糖","海洋","葡萄"];
+  var lightThemes = ["default","青瓷","雾蓝","樱花","日落","薄荷","宣纸","茉莉","珊瑚","薰衣草","钛灰"];
+  var darkThemes = ["深夜","墨韵","森林","极光","焦糖","海洋","葡萄","翡翠","琥珀"];
   function getThemeCat(name) {
     return darkThemes.indexOf(name) >= 0 ? "dark" : "light";
   }
@@ -7352,11 +8079,12 @@ switchTab = function(tab, el) {
     if (currentModule === "workbench") switchTab("workbench", firstA);
     else if (currentModule === "blog") switchTab(lastBlogTab || "dashboard", firstA);
     else if (currentModule === "projects") switchTab("pr-admin", firstA);
+    else if (currentModule === "xhy") switchTab("xhy-admin", firstA);
+    else if (currentModule === "scan") switchTab("scan-admin", firstA);
     else switchTab("workbench", firstA);
   };
 
-  // 重写 switchTab（支持新tab：workbench / pr-admin，同时保持旧tab兼容）
-  var _oldWrappedSwitchTab = switchTab;
+  // ========== 统一 switchTab（合并三层包装） ==========
   window.switchTab = function (tab, el, fromModule) {
     // 记忆模块默认页
     if (tab === "workbench") currentModule = "workbench";
@@ -7368,7 +8096,14 @@ switchTab = function(tab, el) {
       currentModule = "projects";
       lastPrTab = tab;
     }
-    // 左侧高亮同步（根据激活的二级导航）
+    if (tab === "xhy-admin") {
+      currentModule = "xhy";
+    }
+    if (tab === "scan-admin") {
+      currentModule = "scan";
+    }
+    // 左侧高亮同步
+    $$(".sidebar-nav a, .sub-nav a").forEach(function (a) { a.classList.remove("active"); });
     if (el && el.tagName) {
       var parent = el.closest && el.closest(".sub-nav");
       if (parent) {
@@ -7382,32 +8117,29 @@ switchTab = function(tab, el) {
         $$(".sub-nav").forEach(function (s) { s.classList.toggle("active", s.id === mod.id); });
       }
     }
-    // 隐藏所有 tab-content
+    // 隐藏所有 tab-content，显示对应 tab
     $$(".tab-content").forEach(function (t) { t.classList.add("hidden"); });
-    // 显示对应 tab
     var target = $("tab-" + tab);
     if (target) target.classList.remove("hidden");
-    // 原函数对旧 tab 的处理（原 switchTab 里有 sidebar-nav a 的 active 状态等）
+    // 激活旧 CMS 菜单项（用 data-tab 属性匹配，不再解析 onclick 字符串）
     if (["dashboard","hero","projects","gallery","articles","about","contact","software","settings","logs","files","backup"].indexOf(tab) >= 0) {
-      // 激活旧 CMS 菜单项
-      $$(".sidebar-nav a, #sub-blog a").forEach(function (a) {
-        var ok = false;
-        if (a.getAttribute("onclick")) {
-          var s = a.getAttribute("onclick");
-          if (s.indexOf("'"+tab+"'")>=0 || s.indexOf('"'+tab+'"')>=0) ok = true;
-        }
-        if (ok) a.classList.add("active");
-        else a.classList.remove("active");
+      $$("#sub-blog a").forEach(function (a) {
+        var s = a.getAttribute("onclick") || "";
+        a.classList.toggle("active", s.indexOf("'"+tab+"'") >= 0 || s.indexOf('"'+tab+'"') >= 0);
       });
     }
-    // 原有数据大屏加载 / 项目管理加载 / 工作台加载
+    // 各模块懒加载
     if (tab === "dashboard") loadDashboard();
     if (tab === "workbench") renderWorkbench();
     if (tab === "pr-admin") prRenderAll();
+    if (tab === "xhy-admin") xhyInit();
+    if (tab === "scan-admin") scanInit();
     // 博客模块专属：显示预览+同步栏
     var syncBar = $("blog-sync-bar");
     if (syncBar) syncBar.style.display = (currentModule === "blog") ? "" : "none";
-    window.scrollTo && window.scrollTo({ top:0, behavior:"smooth" });
+    // 记忆当前模块
+    localStorage.setItem(MODULE_KEY, currentModule);
+    if (window.scrollTo) window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // ========== 工作台渲染 ==========
@@ -7427,7 +8159,11 @@ switchTab = function(tab, el) {
       if ($("wb-greeting-hi")) $("wb-greeting-hi").textContent = greetByHour() + "，小刘";
     }
     tick();
-    setInterval(tick, 30 * 1000);
+    // 对齐到下一个整分钟，然后每 60 秒更新
+    setTimeout(function() {
+      tick();
+      setInterval(tick, 60 * 1000);
+    }, (60 - new Date().getSeconds()) * 1000);
   }
 
   function pickTodayQuote() {
@@ -7684,17 +8420,31 @@ switchTab = function(tab, el) {
     var t = (p.tasks||[]).find(function(x){return x.id===tid;}); if (!t) return;
     t.done = !t.done;
     if (t.done) prAddHistory(p, "完成任务：" + t.name);
-    prSave(); prRenderAll();
+    prSave();
+    // 局部更新：避免全量重绘（保留任务列表 DOM 与交互状态）
+    var pct = prProgress(p);
+    $("pr-progress-val").textContent = pct + "%";
+    var ring = $("pr-ring"); if (ring) ring.style.setProperty("--p", (pct * 3.6) + "deg");
+    var taskEl = document.querySelector('.task-item[data-task-id="' + tid + '"]');
+    if (taskEl) taskEl.classList.toggle("done", t.done);
+    // 更新动态时间线
+    var tl = $("pr-timeline");
+    if (tl) tl.innerHTML = (p.history || []).slice(0, 5).map(function (h) {
+      return '<div class="timeline-item"><div class="dot"></div><div><div class="t">' + escapeHtml(h.text) + '</div><div class="s">' + escapeHtml(h.time || "") + '</div></div></div>';
+    }).join("") || '<div class="empty">暂无动态</div>';
+    // 更新项目卡片进度条
+    var card = document.querySelector('.project-card[data-id="' + p.id + '"]');
+    if (card) { var bar = card.querySelector('.progress > span'); if (bar) bar.style.width = pct + '%'; }
   };
-  window.prDeleteTask = function(tid) {
+  window.prDeleteTask = async function(tid) {
     var p = prGetSelected(); if (!p) return;
-    if (!confirm("确定删除该任务？")) return;
+    if (!await showConfirm({icon:'📋',title:'删除任务',msg:'确定删除该任务？'})) return;
     p.tasks = (p.tasks||[]).filter(function(t){return t.id!==tid;});
     prSave(); prRenderAll();
   };
-  window.prDeleteCode = function(i) {
+  window.prDeleteCode = async function(i) {
     var p = prGetSelected(); if (!p) return;
-    if (!confirm("确定删除该代码块？")) return;
+    if (!await showConfirm({icon:'💻',title:'删除代码块',msg:'确定删除该代码块？'})) return;
     p.code.splice(i,1); prSave(); prRenderDetail();
   };
   window.prEditCode = function(i) {
@@ -7824,9 +8574,9 @@ switchTab = function(tab, el) {
     prSave(); prCloseModal("pr-code-modal"); prRenderDetail();
     toast("✅ 代码块已保存");
   };
-  window.prDelete = function() {
+  window.prDelete = async function() {
     var p = prGetSelected(); if (!p) return;
-    if (!confirm("确定删除项目【" + p.name + "】吗？此操作不可撤销。")) return;
+    if (!await showConfirm({icon:'🗑️',title:'删除项目',msg:'确定删除项目【' + p.name + '】吗？此操作不可撤销。'})) return;
     prState.projects = prState.projects.filter(function(x){return x.id!==p.id;});
     prState.selectedId = null;
     prSave(); prRenderAll();
@@ -7860,8 +8610,851 @@ switchTab = function(tab, el) {
 
   // 暴露
   window.renderWorkbench = renderWorkbench;
-  window.prRenderAll = prRenderAll;
+})();
+
+// ==================== XHY Toolbox 授权管理模块 ====================
+(function () {
+  var ADMIN_PWD = 'admin123';
+  var PAGES = { dashboard:'仪表盘', licenses:'授权管理', devices:'设备管理', activations:'激活日志', versions:'版本管理' };
+  var LS_URL = 'xhy_admin_url', LS_KEY = 'xhy_admin_key', LS_KT = 'xhy_admin_keyType';
+  var config = { url:'', key:'', keyType:'anon' };
+  var currentPage = 'dashboard';
+  // 分页与筛选状态
+  var licenseFilter = 'all', licenseSearch = '', licensePage = 0;
+  var deviceFilter = 'all', devicePage = 0;
+  var actPage = 0;
+  var LICENSE_PAGE_SIZE = 15, DEVICE_PAGE_SIZE = 15, ACT_PAGE_SIZE = 20;
+
+  // ---------- 工具 ----------
+  function toast(msg, type) {
+    if (window.showToast) return window.showToast(msg, type);
+    var c = document.getElementById('toast-container') || document.body;
+    var el = document.createElement('div');
+    el.className = 'toast toast-' + (type || 'info');
+    el.textContent = msg;
+    el.style.cssText = 'position:fixed;top:20px;right:20px;z-index:9999;padding:10px 18px;border-radius:8px;font-size:13px;color:#fff;background:' + (type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--accent)');
+    document.body.appendChild(el);
+    setTimeout(function() { el.remove(); }, 2800);
+  }
+  function fmtDate(d) {
+    if (!d) return '-';
+    var dt = new Date(d);
+    return dt.toLocaleString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+  }
+  function fmtDateShort(d) { return d ? new Date(d).toLocaleDateString('zh-CN') : '-'; }
+  function daysRemain(expiry) {
+    if (!expiry) return '-';
+    var diff = new Date(expiry) - new Date();
+    if (diff < 0) return Math.floor(diff / 86400000) + ' (已过期)';
+    return Math.ceil(diff / 86400000);
+  }
+  function trunc(s, n) { n = n || 30; return (!s) ? '-' : (s.length > n ? s.substring(0, n) + '...' : s); }
+  function esc(s) { return window.escapeHtml ? window.escapeHtml(s || '') : String(s || '').replace(/[&<>"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+
+  // ---------- API ----------
+  async function api(table, options) {
+    options = options || {};
+    var method = options.method || 'GET';
+    var url = config.url + '/rest/v1/' + table;
+    var params = [];
+    if (options.select) params.push('select=' + encodeURIComponent(options.select));
+    if (options.query) params.push(options.query);
+    if (options.order) params.push('order=' + options.order);
+    if (options.limit) params.push('limit=' + options.limit);
+    if (options.offset) params.push('offset=' + options.offset);
+    if (params.length) url += '?' + params.join('&');
+    var headers = {
+      'apikey': config.key, 'Authorization': 'Bearer ' + config.key,
+      'Content-Type': 'application/json',
+      'Prefer': options.count ? 'count=exact' : 'return=representation'
+    };
+    var fetchOpts = { method: method, headers: headers };
+    if (options.data && method !== 'GET') fetchOpts.body = JSON.stringify(options.data);
+    var res = await fetch(url, fetchOpts);
+    var range = res.headers.get('content-range');
+    var totalCount = null;
+    if (range && range.indexOf('/') >= 0) totalCount = parseInt(range.split('/').pop());
+    if (!res.ok && res.status !== 204) {
+      var err = await res.json().catch(function(){return {};});
+      throw new Error(err.message || ('HTTP ' + res.status));
+    }
+    if (res.status === 204) return { data: [], count: totalCount };
+    var result = await res.json();
+    return { data: result, count: totalCount };
+  }
+
+  // ---------- 默认凭据（本机管理系统，仅本地使用） ----------
+  var DEFAULT_SUPABASE_URL = 'https://ofdouqimwsplrhjcfdbv.supabase.co';
+  var DEFAULT_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mZG91cWltd3NwbHJoamNmZGJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgwMTEzMDgsImV4cCI6MjA4MzU4NzMwOH0.O_2n_zbZw8S1GAWJeM02RiHDxw6Ws_POPftKsOMYFoM';
+  var DEFAULT_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mZG91cWltd3NwbHJoamNmZGJ2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2ODAxMTMwOCwiZXhwIjoyMDgzNTg3MzA4fQ.Au7Mq8XTLbfATogpX7fqAXHdUhORNW-zcdXI2Jpvpvc';
+
+  // 快速连接：自动填入默认凭据
+  window.xhyQuickConnect = function (type) {
+    document.getElementById('xhy-url').value = DEFAULT_SUPABASE_URL;
+    document.getElementById('xhy-key-type').value = type;
+    document.getElementById('xhy-key').value = (type === 'service_role') ? DEFAULT_SERVICE_KEY : DEFAULT_ANON_KEY;
+    document.getElementById('xhy-pwd').focus();
+    var errEl = document.getElementById('xhy-login-error');
+    errEl.style.color = 'var(--success)';
+    errEl.textContent = '✓ 已填入' + (type === 'service_role' ? '管理凭据（可读写）' : '只读凭据（仅查询）') + '，请输入管理密码后点击「连接数据库」';
+  };
+
+  // ---------- 初始化/登录/配置 ----------
+  window.xhyInit = async function () {
+    // 从 localStorage 恢复；若无则使用默认凭据（本机管理系统自动连接）
+    var su = localStorage.getItem(LS_URL) || DEFAULT_SUPABASE_URL;
+    var sk = localStorage.getItem(LS_KEY) || DEFAULT_SERVICE_KEY;
+    var skt = localStorage.getItem(LS_KT) || 'service_role';
+    document.getElementById('xhy-url').value = su;
+    document.getElementById('xhy-key').value = sk;
+    document.getElementById('xhy-key-type').value = skt;
+    // 直接自动连接 + 测试
+    config.url = su.replace(/\/$/, '');
+    config.key = sk;
+    config.keyType = skt;
+    // 先显示 workspace + loading
+    showWorkspace();
+    document.getElementById('xhy-content').innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:40px;color:var(--muted)"><div class="xhy-spinner"></div> 正在连接 Supabase...</div>';
+    try {
+      await api('machine_codes', { select: 'id', limit: 1 });
+      xhyShowPage('dashboard');
+    } catch (e) {
+      // 自动连接失败，回到配置面板
+      config = { url:'', key:'', keyType:'anon' };
+      showSetup();
+      var errEl = document.getElementById('xhy-login-error');
+      errEl.style.color = 'var(--danger)';
+      errEl.textContent = '自动连接失败: ' + e.message + '（请检查网络或重新填写凭据）';
+    }
+  };
+
+  window.xhyLogin = async function () {
+    var url = document.getElementById('xhy-url').value.trim().replace(/\/$/, '');
+    var key = document.getElementById('xhy-key').value.trim();
+    var pwd = document.getElementById('xhy-pwd').value;
+    var kt = document.getElementById('xhy-key-type').value;
+    var errEl = document.getElementById('xhy-login-error');
+    var btn = document.getElementById('xhy-login-btn');
+    errEl.textContent = '';
+    errEl.style.color = 'var(--muted)';
+    if (!url || !key) { errEl.textContent = '请填写 URL 和 Key'; errEl.style.color = 'var(--danger)'; return; }
+    if (pwd !== ADMIN_PWD) { errEl.textContent = '管理密码错误（默认：admin123）'; errEl.style.color = 'var(--danger)'; return; }
+    // 按钮 loading 态
+    btn.disabled = true; btn.innerHTML = '<span class="xhy-spinner" style="width:14px;height:14px;border-width:2px;margin-right:8px"></span>测试连接中...';
+    errEl.textContent = '正在测试连接...';
+    // 临时设置 config 用于测试
+    config.url = url; config.key = key; config.keyType = kt;
+    try {
+      // 测试连接：尝试查询 machine_codes 表（limit=1）
+      var testResult = await api('machine_codes', { select: 'id', limit: 1 });
+      // 连接成功，保存凭据
+      localStorage.setItem(LS_URL, url);
+      localStorage.setItem(LS_KEY, key);
+      localStorage.setItem(LS_KT, kt);
+      showWorkspace();
+      xhyShowPage('dashboard');
+      toast('已连接到 Supabase', 'success');
+    } catch (e) {
+      // 连接失败，恢复 config
+      config = { url:'', key:'', keyType:'anon' };
+      errEl.style.color = 'var(--danger)';
+      var hint = '';
+      if (e.message.indexOf('401') >= 0 || e.message.indexOf('403') >= 0) hint = '（API Key 无效或权限不足，请检查 Key 类型和值）';
+      else if (e.message.indexOf('404') >= 0) hint = '（URL 错误或表不存在，请检查 Supabase URL 格式）';
+      else if (e.message.indexOf('Failed to fetch') >= 0 || e.message.indexOf('NetworkError') >= 0) hint = '（网络/CORS 错误，请检查 URL 是否正确、Supabase 是否允许跨域）';
+      else if (e.message.indexOf('CORS') >= 0) hint = '（CORS 跨域被拒，请在 Supabase Dashboard 设置允许的域名）';
+      errEl.textContent = '连接失败: ' + e.message + hint;
+    } finally {
+      btn.disabled = false; btn.innerHTML = '连接数据库';
+    }
+  };
+
+  window.xhyLogout = async function () {
+    if (!await showConfirm({ icon:'🔌', title:'断开连接', msg:'断开后需重新输入凭据才能管理授权。确定断开吗？', okText:'断开', danger:false })) return;
+    localStorage.removeItem(LS_URL);
+    localStorage.removeItem(LS_KEY);
+    localStorage.removeItem(LS_KT);
+    config = { url:'', key:'', keyType:'anon' };
+    showSetup();
+  };
+
+  window.xhyShowSettings = function () {
+    // 切换到设置（即显示 setup 面板，但保留已连接状态）
+    var setup = document.getElementById('xhy-setup');
+    var ws = document.getElementById('xhy-workspace');
+    setup.style.display = 'block';
+    ws.style.display = 'none';
+    document.getElementById('xhy-pwd').value = '';
+    document.getElementById('xhy-login-error').textContent = '修改凭据后需重新输入管理密码';
+  };
+
+  function showSetup() {
+    document.getElementById('xhy-setup').style.display = 'block';
+    document.getElementById('xhy-workspace').style.display = 'none';
+  }
+  function showWorkspace() {
+    document.getElementById('xhy-setup').style.display = 'none';
+    document.getElementById('xhy-workspace').style.display = 'block';
+  }
+
+  // ---------- 页面路由 ----------
+  window.xhyNavigate = function (page, el) {
+    // 高亮当前子菜单
+    $$('#sub-xhy a').forEach(function (a) { a.classList.remove('active'); });
+    if (el) el.classList.add('active');
+    // 直接切换到 XHY tab（不依赖 switchModule/currentModule，避免闭包变量引用错误）
+    var tab = document.getElementById('tab-xhy-admin');
+    $$('.tab-content').forEach(function (t) { t.classList.add('hidden'); });
+    tab.classList.remove('hidden');
+    // 同步一级菜单高亮（XHY Toolbox）
+    $$('.mod-tab').forEach(function (t) { t.classList.toggle('active', t.dataset.mod === 'xhy'); });
+    // 同步二级菜单显示
+    $$('.sub-nav').forEach(function (s) { s.classList.remove('active'); });
+    var sub = document.getElementById('sub-xhy');
+    if (sub) sub.classList.add('active');
+    // 处理设置页
+    if (page === 'settings') {
+      xhyShowSettings();
+      document.getElementById('xhy-page-title').textContent = '连接配置';
+      return;
+    }
+    // 未连接时显示配置面板
+    if (!config.url || !config.key) {
+      showSetup();
+      return;
+    }
+    // 已连接，显示工作区 + 渲染页面
+    showWorkspace();
+    xhyShowPage(page);
+  };
+
+  window.xhyShowPage = function (page) {
+    // 若未连接则先显示配置
+    if (!config.url || !config.key) { showSetup(); return; }
+    showWorkspace();
+    currentPage = page;
+    document.getElementById('xhy-page-title').textContent = PAGES[page] || page;
+    // 同步左侧二级菜单高亮（兼容 xhyNavigate / xhyShowPage 两种调用）
+    $$('#sub-xhy a').forEach(function (a) {
+      var s = a.getAttribute('onclick') || '';
+      var viaNav = s.indexOf("xhyNavigate('" + page + "'") >= 0;
+      var viaShow = s.indexOf("xhyShowPage('" + page + "'") >= 0;
+      var viaTab = (page === 'dashboard' && (s.indexOf("switchTab('xhy-admin'") >= 0 || s.indexOf("xhyNavigate('dashboard'") >= 0));
+      a.classList.toggle('active', viaNav || viaShow || viaTab);
+    });
+    var renderers = { dashboard: renderDashboard, licenses: renderLicenses, devices: renderDevices, activations: renderActivations, versions: renderVersions };
+    if (renderers[page]) renderers[page]();
+  };
+
+  // ---------- 仪表盘 ----------
+  async function renderDashboard() {
+    var area = document.getElementById('xhy-content');
+    area.innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:40px;color:var(--muted)"><div class="xhy-spinner"></div> 加载中...</div>';
+    try {
+      var results = await Promise.all([
+        api('machine_codes', { select:'id,machine_code,is_active,last_seen,activation_count', limit:999 }).catch(function(){return {data:[],count:0};}),
+        api('licenses', { select:'id,license_key,expiry_date,is_active,is_revoked,created_at', limit:999 }).catch(function(){return {data:[],count:0};}),
+        api('activations', { select:'id,is_success,activation_time,ip_address', order:'activation_time.desc', limit:30 }).catch(function(){return {data:[],count:0};}),
+        api('app_versions', { select:'id,version_number,is_latest', limit:999 }).catch(function(){return {data:[],count:0};})
+      ]);
+      var devices = results[0].data, licenses = results[1].data, activations = results[2].data, versions = results[3].data;
+      var activeDevices = devices.filter(function(d){return d.is_active;});
+      var activeLicenses = licenses.filter(function(l){return l.is_active && !l.is_revoked;});
+      var revokedLicenses = licenses.filter(function(l){return l.is_revoked;});
+      var expiredLicenses = licenses.filter(function(l){return !l.is_active || new Date(l.expiry_date) < new Date();});
+      var latestVersion = versions.find(function(v){return v.is_latest;});
+      latestVersion = latestVersion ? latestVersion.version_number : '-';
+
+      area.innerHTML =
+        '<div class="xhy-stats">' +
+          '<div class="xhy-stat blue"><div class="lbl">设备总数</div><div class="val">' + devices.length + '</div><div class="sub">活跃 ' + activeDevices.length + ' 台</div></div>' +
+          '<div class="xhy-stat green"><div class="lbl">有效授权</div><div class="val">' + activeLicenses.length + '</div><div class="sub">共 ' + licenses.length + ' 个授权</div></div>' +
+          '<div class="xhy-stat red"><div class="lbl">已撤销授权</div><div class="val">' + revokedLicenses.length + '</div><div class="sub">过期 ' + Math.max(0, expiredLicenses.length - revokedLicenses.length) + ' 个</div></div>' +
+          '<div class="xhy-stat yellow"><div class="lbl">当前版本</div><div class="val" style="font-size:22px">' + esc(latestVersion) + '</div><div class="sub">共 ' + versions.length + ' 个版本</div></div>' +
+        '</div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">' +
+          '<div class="xhy-card"><div class="xhy-card-head"><h3>最近激活</h3></div><div class="xhy-card-body">' +
+            '<table class="xhy-table"><thead><tr><th>时间</th><th>IP</th><th>状态</th></tr></thead><tbody>' +
+            activations.map(function(a) {
+              return '<tr><td style="font-size:12px">' + fmtDate(a.activation_time) + '</td><td style="font-family:monospace;font-size:12px">' + esc(a.ip_address || '-') + '</td><td><span class="xhy-badge ' + (a.is_success ? 'success' : 'danger') + '">' + (a.is_success ? '成功' : '失败') + '</span></td></tr>';
+            }).join('') +
+            (activations.length === 0 ? '<tr><td colspan="3"><div class="xhy-empty"><div class="ic">📋</div><p>暂无记录</p></div></td></tr>' : '') +
+            '</tbody></table>' +
+          '</div></div>' +
+          '<div class="xhy-card"><div class="xhy-card-head"><h3>即将过期（30天内）</h3></div><div class="xhy-card-body">' +
+            '<table class="xhy-table"><thead><tr><th>授权码</th><th>到期日</th><th>剩余</th></tr></thead><tbody>' +
+            activeLicenses.filter(function(l) {
+              var diff = new Date(l.expiry_date) - new Date();
+              return diff > 0 && diff <= 30 * 86400000;
+            }).map(function(l) {
+              return '<tr><td style="font-family:monospace;font-size:11px">' + esc(trunc(l.license_key, 22)) + '</td><td>' + fmtDateShort(l.expiry_date) + '</td><td><span class="xhy-badge warn">' + daysRemain(l.expiry_date) + ' 天</span></td></tr>';
+            }).join('') +
+            (activeLicenses.filter(function(l) { var diff = new Date(l.expiry_date) - new Date(); return diff > 0 && diff <= 30 * 86400000; }).length === 0 ? '<tr><td colspan="3"><div class="xhy-empty"><div class="ic">✅</div><p>暂无即将过期</p></div></td></tr>' : '') +
+            '</tbody></table>' +
+          '</div></div>' +
+        '</div>';
+    } catch (e) {
+      area.innerHTML = '<div class="xhy-empty"><div class="ic">⚠️</div><p>加载失败: ' + esc(e.message) + '</p></div>';
+    }
+  }
+
+  // ---------- 授权管理 ----------
+  function buildLicenseQuery() {
+    var parts = [];
+    if (licenseFilter === 'active') parts.push('is_active=eq.true', 'is_revoked=eq.false', 'expiry_date=gt.' + new Date().toISOString().split('T')[0]);
+    if (licenseFilter === 'revoked') parts.push('is_revoked=eq.true');
+    if (licenseFilter === 'expired') parts.push('expiry_date=lte.' + new Date().toISOString().split('T')[0]);
+    if (licenseSearch) parts.push('license_key=ilike.*' + licenseSearch + '*');
+    return parts.join('&');
+  }
+
+  async function renderLicenses() {
+    var area = document.getElementById('xhy-content');
+    area.innerHTML = '<div style="padding:40px;color:var(--muted)"><div class="xhy-spinner"></div> 加载中...</div>';
+    try {
+      var result = await api('licenses', {
+        select: 'id,license_key,machine_code_id,expiry_date,is_active,is_revoked,revoked_at,revoke_reason,created_at,machine_codes(machine_code,device_name,user_name)',
+        order: 'created_at.desc',
+        limit: LICENSE_PAGE_SIZE,
+        offset: licensePage * LICENSE_PAGE_SIZE,
+        count: true,
+        query: buildLicenseQuery()
+      });
+      var rows = result.data.map(function(l) {
+        var device = l.machine_codes || {};
+        var rem = daysRemain(l.expiry_date);
+        var badge;
+        if (l.is_revoked) badge = '<span class="xhy-badge danger">已撤销</span>';
+        else if (!l.is_active || new Date(l.expiry_date) < new Date()) badge = '<span class="xhy-badge gray">已过期</span>';
+        else if (parseInt(rem) <= 30) badge = '<span class="xhy-badge warn">' + rem + '天</span>';
+        else badge = '<span class="xhy-badge success">有效</span>';
+        return '<tr>' +
+          '<td style="font-family:monospace;font-size:11px;max-width:180px" title="' + esc(l.license_key) + '">' + esc(trunc(l.license_key, 22)) + '</td>' +
+          '<td>' + esc(device.device_name || '-') + '<br><span style="color:var(--muted);font-size:11px">' + esc(device.user_name || '-') + '</span></td>' +
+          '<td>' + fmtDateShort(l.expiry_date) + '</td>' +
+          '<td>' + rem + '</td>' +
+          '<td>' + badge + '</td>' +
+          '<td style="font-size:11px;color:var(--muted)">' + fmtDateShort(l.created_at) + '</td>' +
+          '<td style="white-space:nowrap">' +
+            '<button class="btn btn-outline btn-sm" onclick="xhyLicenseDetail(\'' + l.id + '\')">详情</button>' +
+            (!l.is_revoked ? ' <button class="btn btn-danger btn-sm" onclick="xhyRevokeLicense(\'' + l.id + '\')">撤销</button>' : ' <button class="btn btn-secondary btn-sm" onclick="xhyRestoreLicense(\'' + l.id + '\')">恢复</button>') +
+            ' <button class="btn btn-outline btn-sm" onclick="xhyExtendLicenseModal(\'' + l.id + '\',\'' + l.expiry_date + '\')">延期</button>' +
+            ' <button class="btn btn-danger btn-sm" onclick="xhyDeleteLicense(\'' + l.id + '\',\'' + esc(trunc(l.license_key, 20)) + '\')">删除</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+      area.innerHTML =
+        '<div class="xhy-filter">' +
+          '<div class="xhy-chip ' + (licenseFilter === 'all' ? 'active' : '') + '" onclick="xhySetLicenseFilter(\'all\')">全部 (' + (result.count || 0) + ')</div>' +
+          '<div class="xhy-chip ' + (licenseFilter === 'active' ? 'active' : '') + '" onclick="xhySetLicenseFilter(\'active\')">有效</div>' +
+          '<div class="xhy-chip ' + (licenseFilter === 'revoked' ? 'active' : '') + '" onclick="xhySetLicenseFilter(\'revoked\')">已撤销</div>' +
+          '<div class="xhy-chip ' + (licenseFilter === 'expired' ? 'active' : '') + '" onclick="xhySetLicenseFilter(\'expired\')">已过期</div>' +
+        '</div>' +
+        '<div class="xhy-card"><div class="xhy-card-head"><h3>授权列表</h3><div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          '<input class="xhy-search" placeholder="搜索授权码/用户名..." value="' + esc(licenseSearch) + '" oninput="licenseSearch=this.value" onkeydown="if(event.key===\'Enter\'){licensePage=0;xhyShowPage(\'licenses\')}">' +
+          '<button class="btn btn-outline btn-sm" onclick="licensePage=0;xhyShowPage(\'licenses\')">搜索</button>' +
+          '<button class="btn btn-primary btn-sm" onclick="xhyCreateLicenseModal()">+ 新建授权</button>' +
+        '</div></div><div class="xhy-card-body">' +
+          '<table class="xhy-table"><thead><tr><th>授权码</th><th>设备/用户</th><th>到期日期</th><th>剩余天数</th><th>状态</th><th>创建时间</th><th>操作</th></tr></thead><tbody>' +
+          rows +
+          (result.data.length === 0 ? '<tr><td colspan="7"><div class="xhy-empty"><div class="ic">🔑</div><p>暂无授权记录</p></div></td></tr>' : '') +
+          '</tbody></table>' +
+          renderPagination(result.count, LICENSE_PAGE_SIZE, licensePage, 'licensePage', 'xhyShowPage(\'licenses\')') +
+        '</div></div>';
+    } catch (e) {
+      area.innerHTML = '<div class="xhy-empty"><div class="ic">⚠️</div><p>加载失败: ' + esc(e.message) + '</p></div>';
+    }
+  }
+
+  window.xhySetLicenseFilter = function (f) { licenseFilter = f; licensePage = 0; xhyShowPage('licenses'); };
+
+  window.xhyCreateLicenseModal = function () {
+    var html =
+      '<div class="modal-head"><h2>新建授权</h2><button class="icon-btn" onclick="closeModal(\'xhy-modal\')"><i class="fa-solid fa-xmark"></i></button></div>' +
+      '<div class="modal-body">' +
+        '<div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">用户机器码 <span style="color:var(--danger)">*</span></label>' +
+        '<textarea id="xhy-new-mc" rows="3" placeholder="粘贴用户发来的机器码" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-family:monospace;background:var(--panel);color:var(--text);outline:none;resize:vertical"></textarea>' +
+        '<div style="font-size:11px;color:var(--muted);margin-top:4px">用户从 CAD 授权对话框里看到的「机码」文本</div></div>' +
+        '<div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">设备名称</label>' +
+        '<input type="text" id="xhy-new-dn" placeholder="如：张三的电脑" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+        '<div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">到期日期</label>' +
+        '<input type="date" id="xhy-new-exp" value="' + new Date(Date.now() + 365*86400000).toISOString().split('T')[0] + '" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+        '<div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">授权码</label>' +
+        '<input type="text" id="xhy-new-key" placeholder="XHY-SEC-xxxx... (留空自动生成)" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-family:monospace;background:var(--panel);color:var(--text);outline:none">' +
+        '<div style="font-size:11px;color:var(--muted);margin-top:4px">留空将自动生成安全的随机授权码</div></div>' +
+      '</div>' +
+      '<div class="modal-actions"><button class="btn btn-outline" onclick="closeModal(\'xhy-modal\')">取消</button><button class="btn btn-primary" onclick="xhyCreateLicense()">创建授权</button></div>';
+    openModal(html);
+    setTimeout(function() { var el = document.getElementById('xhy-new-mc'); if (el) el.focus(); }, 80);
+  };
+
+  window.xhyCreateLicense = async function () {
+    var key = document.getElementById('xhy-new-key').value.trim();
+    var expiry = document.getElementById('xhy-new-exp').value;
+    var mc = document.getElementById('xhy-new-mc').value.trim().replace(/[\r\n\s]+/g, '');
+    var dn = document.getElementById('xhy-new-dn').value.trim();
+    var un = dn ? ('公司电脑-' + dn) : '';
+    if (!mc) { toast('请输入用户机器码', 'error'); return; }
+    if (!expiry) { toast('请选择到期日期', 'error'); return; }
+    if (!key) key = 'XHY-SEC-' + randomKey(80);
+    try {
+      var existing = await api('machine_codes', { select:'id', query:'machine_code=eq.' + encodeURIComponent(mc), limit:1 });
+      var deviceId;
+      if (existing.data && existing.data.length > 0) {
+        deviceId = existing.data[0].id;
+        var patch = {};
+        if (dn) patch.device_name = dn;
+        if (un) patch.user_name = un;
+        if (Object.keys(patch).length) await api('machine_codes', { method:'PATCH', query:'id=eq.' + deviceId, data: patch });
+      } else {
+        var nd = await api('machine_codes', { method:'POST', data: { machine_code: mc, device_name: dn || null, user_name: un || null, is_active: true, activation_count: 0 } });
+        deviceId = nd.data[0].id;
+      }
+      await api('licenses', { method:'POST', data: { license_key: key, machine_code_id: deviceId, expiry_date: expiry, is_active: true, is_revoked: false } });
+      toast('授权创建成功：' + key, 'success');
+      try { await navigator.clipboard.writeText(key); } catch(e) {}
+      closeModal('xhy-modal');
+      licensePage = 0;
+      xhyShowPage('licenses');
+    } catch (e) {
+      toast('创建失败: ' + e.message, 'error');
+    }
+  };
+
+  function randomKey(len) {
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var r = '';
+    for (var i = 0; i < len; i++) r += chars.charAt(Math.floor(Math.random() * chars.length));
+    return r;
+  }
+
+  window.xhyLicenseDetail = async function (id) {
+    try {
+      var res = await api('licenses', { select:'*,machine_codes(*)', query:'id=eq.' + id });
+      var l = res.data[0];
+      if (!l) { toast('未找到授权', 'error'); return; }
+      var d = l.machine_codes || {};
+      var html =
+        '<div class="modal-head"><h2>授权详情</h2><button class="icon-btn" onclick="closeModal(\'xhy-modal\')"><i class="fa-solid fa-xmark"></i></button></div>' +
+        '<div class="modal-body">' +
+          detailRow('ID', esc(l.id)) +
+          detailRow('授权码', '<span style="font-family:monospace;font-size:11px">' + esc(l.license_key) + '</span>') +
+          detailRow('到期日期', fmtDateShort(l.expiry_date) + ' (剩余 ' + daysRemain(l.expiry_date) + ')') +
+          detailRow('状态', (l.is_active ? '激活' : '停用') + ' / ' + (l.is_revoked ? '已撤销' : '正常')) +
+          detailRow('创建时间', fmtDate(l.created_at)) +
+          detailRow('撤销时间', l.revoked_at ? fmtDate(l.revoked_at) : '-') +
+          detailRow('撤销原因', esc(l.revoke_reason || '-')) +
+          '<hr style="margin:14px 0;border:none;border-top:1px solid var(--border)">' +
+          detailRow('设备名', esc(d.device_name || '未绑定')) +
+          detailRow('用户名', esc(d.user_name || '-')) +
+          detailRow('机器码', '<span style="font-family:monospace;font-size:10px">' + esc(d.machine_code || '-') + '</span>') +
+          detailRow('IP', esc(d.ip_address || '-')) +
+          detailRow('最后上线', d.last_seen ? fmtDate(d.last_seen) : '-') +
+          detailRow('激活次数', (d.activation_count != null ? d.activation_count : '-')) +
+        '</div>' +
+        '<div class="modal-actions"><button class="btn btn-outline" onclick="closeModal(\'xhy-modal\')">关闭</button><button class="btn btn-primary" onclick="xhyCopyText(\'' + esc(l.license_key) + '\')">复制授权码</button></div>';
+      openModal(html);
+    } catch (e) {
+      toast('加载失败: ' + e.message, 'error');
+    }
+  };
+
+  function detailRow(label, value) {
+    return '<div class="xhy-detail-grid"><span class="xhy-detail-label">' + label + '</span><span class="xhy-detail-value">' + value + '</span></div>';
+  }
+
+  window.xhyRevokeLicense = async function (id) {
+    var reason = await showPrompt({ title:'撤销授权', msg:'撤销后客户端将无法通过验证。可填写撤销原因（可选）：', placeholder:'撤销原因', okText:'确认撤销' });
+    if (reason === null) return;
+    try {
+      await api('licenses', { method:'PATCH', query:'id=eq.' + id, data: { is_revoked:true, revoked_at:new Date().toISOString(), revoke_reason: reason.trim() || '管理员手动撤销' } });
+      toast('授权已撤销', 'success');
+      xhyShowPage('licenses');
+    } catch (e) { toast('撤销失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyRestoreLicense = async function (id) {
+    try {
+      await api('licenses', { method:'PATCH', query:'id=eq.' + id, data: { is_revoked:false, revoked_at:null, revoke_reason:null, is_active:true } });
+      toast('授权已恢复', 'success');
+      xhyShowPage('licenses');
+    } catch (e) { toast('恢复失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyDeleteLicense = async function (id, keyPreview) {
+    if (!await showConfirm({ icon:'🗑️', title:'删除授权', msg:'删除后授权记录将永久从数据库移除，客户端立即失效，且无法恢复。即将删除：' + keyPreview, okText:'确认删除' })) return;
+    try {
+      await api('licenses', { method:'DELETE', query:'id=eq.' + id });
+      toast('授权已删除', 'success');
+      xhyShowPage('licenses');
+    } catch (e) { toast('删除失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyExtendLicenseModal = function (id, currentExpiry) {
+    var html =
+      '<div class="modal-head"><h2>授权延期</h2><button class="icon-btn" onclick="closeModal(\'xhy-modal\')"><i class="fa-solid fa-xmark"></i></button></div>' +
+      '<div class="modal-body">' +
+        '<p style="margin-bottom:14px;color:var(--text2);font-size:13px">当前到期：<strong>' + fmtDateShort(currentExpiry) + '</strong></p>' +
+        '<div class="form-field"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">新到期日期</label>' +
+        '<input type="date" id="xhy-ext-date" value="' + currentExpiry + '" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+        '<div style="display:flex;gap:8px;margin-top:10px">' +
+          '<button class="btn btn-outline btn-sm" onclick="document.getElementById(\'xhy-ext-date\').value=\'' + new Date(Date.now()+30*86400000).toISOString().split('T')[0] + '\'">+30天</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="document.getElementById(\'xhy-ext-date\').value=\'' + new Date(Date.now()+90*86400000).toISOString().split('T')[0] + '\'">+90天</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="document.getElementById(\'xhy-ext-date\').value=\'' + new Date(Date.now()+365*86400000).toISOString().split('T')[0] + '\'">+1年</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="modal-actions"><button class="btn btn-outline" onclick="closeModal(\'xhy-modal\')">取消</button><button class="btn btn-primary" onclick="xhyExtendLicense(\'' + id + '\')">确认延期</button></div>';
+    openModal(html);
+  };
+
+  window.xhyExtendLicense = async function (id) {
+    var newDate = document.getElementById('xhy-ext-date').value;
+    if (!newDate) { toast('请选择日期', 'error'); return; }
+    try {
+      await api('licenses', { method:'PATCH', query:'id=eq.' + id, data: { expiry_date: newDate, is_active: true } });
+      toast('延期成功', 'success');
+      closeModal('xhy-modal');
+      xhyShowPage('licenses');
+    } catch (e) { toast('延期失败: ' + e.message, 'error'); }
+  };
+
+  // ---------- 设备管理 ----------
+  async function renderDevices() {
+    var area = document.getElementById('xhy-content');
+    area.innerHTML = '<div style="padding:40px;color:var(--muted)"><div class="xhy-spinner"></div> 加载中...</div>';
+    try {
+      var query = '';
+      if (deviceFilter === 'active') query = 'is_active=eq.true';
+      if (deviceFilter === 'inactive') query = 'is_active=eq.false';
+      var result = await api('machine_codes', {
+        select: 'id,machine_code,device_name,user_name,ip_address,is_active,created_at,last_seen,activation_count,licenses(id,license_key,expiry_date,is_active,is_revoked)',
+        order: 'last_seen.desc.nullslast',
+        limit: DEVICE_PAGE_SIZE,
+        offset: devicePage * DEVICE_PAGE_SIZE,
+        count: true,
+        query: query
+      });
+      var rows = result.data.map(function(d) {
+        var isOnline = d.last_seen && (new Date() - new Date(d.last_seen)) < 7 * 86400000;
+        return '<tr>' +
+          '<td><strong>' + esc(d.device_name || '未知设备') + '</strong></td>' +
+          '<td>' + esc(d.user_name || '-') + '</td>' +
+          '<td style="font-family:monospace;font-size:11px">' + esc(d.ip_address || '-') + '</td>' +
+          '<td>' + (d.is_active ? '<span class="xhy-dot ' + (isOnline ? 'online' : 'offline') + '"></span>' + (isOnline ? '在线' : '离线') : '<span class="xhy-dot offline"></span>停用') + '</td>' +
+          '<td>' + (d.activation_count != null ? d.activation_count : 0) + '</td>' +
+          '<td style="font-size:11px;color:var(--muted)">' + fmtDate(d.last_seen) + '</td>' +
+          '<td style="white-space:nowrap">' +
+            '<button class="btn btn-outline btn-sm" onclick="xhyDeviceDetail(\'' + d.id + '\')">详情</button>' +
+            '<button class="btn btn-outline btn-sm" onclick="xhyEditDeviceModal(\'' + d.id + '\',\'' + esc((d.device_name||'').replace(/'/g,"\\'")) + '\',\'' + esc((d.user_name||'').replace(/'/g,"\\'")) + '\')">编辑</button>' +
+            '<button class="btn btn-sm ' + (d.is_active ? 'btn-danger' : 'btn-secondary') + '" onclick="xhyToggleDevice(\'' + d.id + '\',' + !d.is_active + ')">' + (d.is_active ? '停用' : '启用') + '</button>' +
+            '<button class="btn btn-danger btn-sm" onclick="xhyDeleteDevice(\'' + d.id + '\',\'' + esc((d.device_name||'未知设备').replace(/'/g,"\\'")) + '\')">删除</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+      area.innerHTML =
+        '<div class="xhy-filter">' +
+          '<div class="xhy-chip ' + (deviceFilter === 'all' ? 'active' : '') + '" onclick="xhySetDeviceFilter(\'all\')">全部</div>' +
+          '<div class="xhy-chip ' + (deviceFilter === 'active' ? 'active' : '') + '" onclick="xhySetDeviceFilter(\'active\')">活跃</div>' +
+          '<div class="xhy-chip ' + (deviceFilter === 'inactive' ? 'active' : '') + '" onclick="xhySetDeviceFilter(\'inactive\')">停用</div>' +
+        '</div>' +
+        '<div class="xhy-card"><div class="xhy-card-head"><h3>设备列表</h3></div><div class="xhy-card-body">' +
+          '<table class="xhy-table"><thead><tr><th>设备名</th><th>用户</th><th>IP</th><th>状态</th><th>激活次数</th><th>最后上线</th><th>操作</th></tr></thead><tbody>' +
+          rows +
+          (result.data.length === 0 ? '<tr><td colspan="7"><div class="xhy-empty"><div class="ic">💻</div><p>暂无设备</p></div></td></tr>' : '') +
+          '</tbody></table>' +
+          renderPagination(result.count, DEVICE_PAGE_SIZE, devicePage, 'devicePage', 'xhyShowPage(\'devices\')') +
+        '</div></div>';
+    } catch (e) {
+      area.innerHTML = '<div class="xhy-empty"><div class="ic">⚠️</div><p>加载失败: ' + esc(e.message) + '</p></div>';
+    }
+  }
+
+  window.xhySetDeviceFilter = function (f) { deviceFilter = f; devicePage = 0; xhyShowPage('devices'); };
+
+  window.xhyDeviceDetail = async function (id) {
+    try {
+      var res = await api('machine_codes', { select:'*,licenses(id,license_key,expiry_date,is_active,is_revoked)', query:'id=eq.' + id });
+      var d = res.data[0];
+      if (!d) { toast('未找到设备', 'error'); return; }
+      var lics = (d.licenses || []).map(function(l) {
+        return '<div style="margin-top:8px;padding:8px 10px;background:var(--accent-bg);border-radius:6px;font-size:12px">' +
+          '<div>授权码: ' + esc(trunc(l.license_key, 32)) + '</div>' +
+          '<div style="color:var(--muted)">到期: ' + fmtDateShort(l.expiry_date) + ' | ' + (l.is_revoked ? '<span style="color:var(--danger)">已撤销</span>' : l.is_active ? '<span style="color:var(--success)">有效</span>' : '已过期') + '</div>' +
+        '</div>';
+      }).join('');
+      var html =
+        '<div class="modal-head"><h2>设备详情</h2><button class="icon-btn" onclick="closeModal(\'xhy-modal\')"><i class="fa-solid fa-xmark"></i></button></div>' +
+        '<div class="modal-body">' +
+          detailRow('ID', esc(d.id)) +
+          detailRow('设备名', esc(d.device_name || '未知')) +
+          detailRow('用户名', esc(d.user_name || '未知')) +
+          detailRow('IP', esc(d.ip_address || '-')) +
+          detailRow('状态', d.is_active ? '活跃' : '停用') +
+          detailRow('激活次数', (d.activation_count != null ? d.activation_count : 0)) +
+          detailRow('注册时间', fmtDate(d.created_at)) +
+          detailRow('最后上线', fmtDate(d.last_seen)) +
+          '<hr style="margin:14px 0;border:none;border-top:1px solid var(--border)">' +
+          detailRow('机器码', '<span style="font-family:monospace;font-size:10px">' + esc(d.machine_code) + '</span>') +
+          '<hr style="margin:14px 0;border:none;border-top:1px solid var(--border)">' +
+          '<strong style="font-size:13px">关联授权 (' + (d.licenses || []).length + ')</strong>' +
+          (lics || '<div style="margin-top:8px;color:var(--muted);font-size:13px">无关联授权</div>') +
+        '</div>' +
+        '<div class="modal-actions"><button class="btn btn-outline" onclick="closeModal(\'xhy-modal\')">关闭</button><button class="btn btn-primary" onclick="xhyCopyText(\'' + esc(d.machine_code) + '\')">复制机器码</button></div>';
+      openModal(html);
+    } catch (e) { toast('加载失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyToggleDevice = async function (id, newState) {
+    try {
+      await api('machine_codes', { method:'PATCH', query:'id=eq.' + id, data: { is_active: newState } });
+      toast(newState ? '设备已启用' : '设备已停用', 'success');
+      xhyShowPage('devices');
+    } catch (e) { toast('操作失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyDeleteDevice = async function (id, deviceName) {
+    if (!await showConfirm({ icon:'🗑️', title:'删除设备', msg:'删除设备后，该设备的机器码注册记录将被永久移除，下次使用时需重新激活。即将删除：' + deviceName, okText:'确认删除' })) return;
+    try {
+      await api('machine_codes', { method:'DELETE', query:'id=eq.' + id });
+      toast('设备已删除', 'success');
+      xhyShowPage('devices');
+    } catch (e) { toast('删除失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyEditDeviceModal = function (id, deviceName, userName) {
+    var html =
+      '<div class="modal-head"><h2>编辑设备</h2><button class="icon-btn" onclick="closeModal(\'xhy-modal\')"><i class="fa-solid fa-xmark"></i></button></div>' +
+      '<div class="modal-body">' +
+        '<div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">设备名称</label>' +
+        '<input type="text" id="xhy-edit-dn" value="' + esc(deviceName) + '" placeholder="如：张三的电脑" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+        '<div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">用户名</label>' +
+        '<input type="text" id="xhy-edit-un" value="' + esc(userName) + '" placeholder="如：公司电脑-张三的电脑" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+      '</div>' +
+      '<div class="modal-actions"><button class="btn btn-outline" onclick="closeModal(\'xhy-modal\')">取消</button><button class="btn btn-primary" onclick="xhySaveDevice(\'' + id + '\')">保存</button></div>';
+    openModal(html);
+  };
+
+  window.xhySaveDevice = async function (id) {
+    var dn = document.getElementById('xhy-edit-dn').value.trim();
+    var un = document.getElementById('xhy-edit-un').value.trim();
+    try {
+      await api('machine_codes', { method:'PATCH', query:'id=eq.' + id, data: { device_name: dn || null, user_name: un || null } });
+      toast('设备信息已更新', 'success');
+      closeModal('xhy-modal');
+      xhyShowPage('devices');
+    } catch (e) { toast('保存失败: ' + e.message, 'error'); }
+  };
+
+  // ---------- 激活日志 ----------
+  async function renderActivations() {
+    var area = document.getElementById('xhy-content');
+    area.innerHTML = '<div style="padding:40px;color:var(--muted)"><div class="xhy-spinner"></div> 加载中...</div>';
+    try {
+      var result = await api('activations', {
+        select: 'id,license_id,license_key,machine_code_id,activation_time,is_success,failure_reason,ip_address,machine_codes(device_name,user_name)',
+        order: 'activation_time.desc',
+        limit: ACT_PAGE_SIZE,
+        offset: actPage * ACT_PAGE_SIZE,
+        count: true
+      });
+      var rows = result.data.map(function(a) {
+        var d = a.machine_codes || {};
+        return '<tr>' +
+          '<td style="font-size:11px;white-space:nowrap">' + fmtDate(a.activation_time) + '</td>' +
+          '<td>' + esc(d.device_name || '-') + '<br><span style="color:var(--muted);font-size:11px">' + esc(d.user_name || '-') + '</span></td>' +
+          '<td style="font-family:monospace;font-size:11px">' + esc(a.ip_address || '-') + '</td>' +
+          '<td><span class="xhy-badge ' + (a.is_success ? 'success' : 'danger') + '">' + (a.is_success ? '成功' : '失败') + '</span></td>' +
+          '<td style="font-family:monospace;font-size:10px;max-width:150px" title="' + esc(a.license_key || '') + '">' + esc(trunc(a.license_key, 18)) + '</td>' +
+          '<td style="font-size:11px;color:var(--danger)">' + esc(a.failure_reason || '-') + '</td>' +
+          '<td><button class="btn btn-danger btn-sm" onclick="xhyDeleteActivation(\'' + a.id + '\')">删除</button></td>' +
+        '</tr>';
+      }).join('');
+      area.innerHTML =
+        '<div class="xhy-card"><div class="xhy-card-head"><h3>激活日志</h3><button class="btn btn-danger btn-sm" onclick="xhyClearActivations()">🗑 清空全部日志</button></div><div class="xhy-card-body">' +
+          '<table class="xhy-table"><thead><tr><th>时间</th><th>设备/用户</th><th>IP</th><th>状态</th><th>授权码</th><th>失败原因</th><th>操作</th></tr></thead><tbody>' +
+          rows +
+          (result.data.length === 0 ? '<tr><td colspan="7"><div class="xhy-empty"><div class="ic">📋</div><p>暂无激活日志</p></div></td></tr>' : '') +
+          '</tbody></table>' +
+          renderPagination(result.count, ACT_PAGE_SIZE, actPage, 'actPage', 'xhyShowPage(\'activations\')') +
+        '</div></div>';
+    } catch (e) {
+      area.innerHTML = '<div class="xhy-empty"><div class="ic">⚠️</div><p>加载失败: ' + esc(e.message) + '</p></div>';
+    }
+  }
+
+  window.xhyDeleteActivation = async function (id) {
+    if (!await showConfirm({ icon:'🗑️', title:'删除日志', msg:'确定删除这条激活日志吗？', okText:'删除' })) return;
+    try {
+      await api('activations', { method:'DELETE', query:'id=eq.' + id });
+      toast('日志已删除', 'success');
+      xhyShowPage('activations');
+    } catch (e) { toast('删除失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyClearActivations = async function () {
+    if (!await showConfirm({ icon:'⚠️', title:'清空全部激活日志', msg:'将清除所有激活日志记录，清空后无法找回任何历史激活数据。确定要清空全部吗？', okText:'确认清空' })) return;
+    try {
+      await api('activations', { method:'DELETE', query:'id=not.is.null' });
+      toast('全部激活日志已清空', 'success');
+      actPage = 0;
+      xhyShowPage('activations');
+    } catch (e) { toast('清空失败: ' + e.message, 'error'); }
+  };
+
+  // ---------- 版本管理 ----------
+  async function renderVersions() {
+    var area = document.getElementById('xhy-content');
+    area.innerHTML = '<div style="padding:40px;color:var(--muted)"><div class="xhy-spinner"></div> 加载中...</div>';
+    try {
+      var result = await api('app_versions', { select:'*', order:'release_date.desc', limit:999 });
+      var rows = result.data.map(function(v) {
+        return '<tr>' +
+          '<td><strong>' + esc(v.version_number) + '</strong></td>' +
+          '<td>' + fmtDateShort(v.release_date) + '</td>' +
+          '<td style="max-width:300px" title="' + esc(v.description || '') + '">' + esc(trunc(v.description, 55)) + '</td>' +
+          '<td>' + (v.is_latest ? '<span class="xhy-badge success">最新版</span>' : '<span class="xhy-badge gray">历史版</span>') + '</td>' +
+          '<td style="white-space:nowrap">' +
+            (!v.is_latest ? '<button class="btn btn-primary btn-sm" onclick="xhySetLatest(\'' + v.id + '\')">设为最新</button>' : '') +
+            '<button class="btn btn-outline btn-sm" onclick="xhyEditVersionModal(\'' + v.id + '\',\'' + esc(v.version_number) + '\',\'' + v.release_date + '\')">编辑</button>' +
+            '<button class="btn btn-danger btn-sm" onclick="xhyDeleteVersion(\'' + v.id + '\',\'' + esc(v.version_number) + '\',' + v.is_latest + ')">删除</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+      area.innerHTML =
+        '<div class="xhy-card"><div class="xhy-card-head"><h3>版本列表</h3><button class="btn btn-primary btn-sm" onclick="xhyCreateVersionModal()">+ 新建版本</button></div><div class="xhy-card-body">' +
+          '<table class="xhy-table"><thead><tr><th>版本号</th><th>发布日期</th><th>说明</th><th>状态</th><th>操作</th></tr></thead><tbody>' +
+          rows +
+          (result.data.length === 0 ? '<tr><td colspan="5"><div class="xhy-empty"><div class="ic">🚀</div><p>暂无版本</p></div></td></tr>' : '') +
+          '</tbody></table>' +
+        '</div></div>';
+    } catch (e) {
+      area.innerHTML = '<div class="xhy-empty"><div class="ic">⚠️</div><p>加载失败: ' + esc(e.message) + '</p></div>';
+    }
+  }
+
+  window.xhyCreateVersionModal = function () {
+    var html =
+      '<div class="modal-head"><h2>新建版本</h2><button class="icon-btn" onclick="closeModal(\'xhy-modal\')"><i class="fa-solid fa-xmark"></i></button></div>' +
+      '<div class="modal-body">' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">' +
+          '<div class="form-field"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">版本号</label>' +
+          '<input type="text" id="xhy-ver-num" placeholder="V2.1.4" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+          '<div class="form-field"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">发布日期</label>' +
+          '<input type="date" id="xhy-ver-date" value="' + new Date().toISOString().split('T')[0] + '" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+        '</div>' +
+        '<div class="form-field" style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">更新说明</label>' +
+        '<textarea id="xhy-ver-desc" rows="4" placeholder="1.xxx；2.xxx；3.xxx" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit;resize:vertical"></textarea></div>' +
+        '<div class="form-field" style="display:flex;align-items:center;gap:8px">' +
+          '<input type="checkbox" id="xhy-ver-latest" checked><label for="xhy-ver-latest" style="margin:0;font-size:13px;color:var(--text2)">设为最新版本</label>' +
+        '</div>' +
+      '</div>' +
+      '<div class="modal-actions"><button class="btn btn-outline" onclick="closeModal(\'xhy-modal\')">取消</button><button class="btn btn-primary" onclick="xhyCreateVersion()">创建</button></div>';
+    openModal(html);
+  };
+
+  window.xhyCreateVersion = async function () {
+    var num = document.getElementById('xhy-ver-num').value.trim();
+    var date = document.getElementById('xhy-ver-date').value;
+    var desc = document.getElementById('xhy-ver-desc').value.trim();
+    var isLatest = document.getElementById('xhy-ver-latest').checked;
+    if (!num || !date) { toast('请填写版本号和日期', 'error'); return; }
+    try {
+      if (isLatest) await api('app_versions', { method:'PATCH', data: { is_latest:false }, query:'is_latest=eq.true' });
+      await api('app_versions', { method:'POST', data: { version_number:num, release_date:date, description:desc, is_latest:isLatest } });
+      toast('版本创建成功', 'success');
+      closeModal('xhy-modal');
+      xhyShowPage('versions');
+    } catch (e) { toast('创建失败: ' + e.message, 'error'); }
+  };
+
+  window.xhySetLatest = async function (id) {
+    try {
+      await api('app_versions', { method:'PATCH', data: { is_latest:false }, query:'is_latest=eq.true' });
+      await api('app_versions', { method:'PATCH', query:'id=eq.' + id, data: { is_latest:true } });
+      toast('已设为最新版', 'success');
+      xhyShowPage('versions');
+    } catch (e) { toast('操作失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyEditVersionModal = function (id, num, date, desc) {
+    var html =
+      '<div class="modal-head"><h2>编辑版本</h2><button class="icon-btn" onclick="closeModal(\'xhy-modal\')"><i class="fa-solid fa-xmark"></i></button></div>' +
+      '<div class="modal-body">' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">' +
+          '<div class="form-field"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">版本号</label>' +
+          '<input type="text" id="xhy-edit-ver-num" value="' + esc(num) + '" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+          '<div class="form-field"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">发布日期</label>' +
+          '<input type="date" id="xhy-edit-ver-date" value="' + date + '" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit"></div>' +
+        '</div>' +
+        '<div class="form-field"><label style="display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">更新说明</label>' +
+        '<textarea id="xhy-edit-ver-desc" rows="4" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--panel);color:var(--text);outline:none;font-family:inherit;resize:vertical">' + esc(desc) + '</textarea></div>' +
+      '</div>' +
+      '<div class="modal-actions"><button class="btn btn-outline" onclick="closeModal(\'xhy-modal\')">取消</button><button class="btn btn-primary" onclick="xhySaveVersion(\'' + id + '\')">保存</button></div>';
+    openModal(html);
+  };
+
+  window.xhySaveVersion = async function (id) {
+    var num = document.getElementById('xhy-edit-ver-num').value.trim();
+    var date = document.getElementById('xhy-edit-ver-date').value;
+    var desc = document.getElementById('xhy-edit-ver-desc').value.trim();
+    if (!num || !date) { toast('请填写完整', 'error'); return; }
+    try {
+      await api('app_versions', { method:'PATCH', query:'id=eq.' + id, data: { version_number:num, release_date:date, description:desc } });
+      toast('保存成功', 'success');
+      closeModal('xhy-modal');
+      xhyShowPage('versions');
+    } catch (e) { toast('保存失败: ' + e.message, 'error'); }
+  };
+
+  window.xhyDeleteVersion = async function (id, num, isLatest) {
+    var extra = isLatest ? '\n⚠️ 这是当前「最新版本」，删除后将没有最新版本标记，请提前设置其他版本为最新。' : '';
+    if (!await showConfirm({ icon:'🗑️', title:'删除版本', msg:'删除后版本记录将从数据库永久移除。即将删除版本：' + num + extra, okText:'确认删除' })) return;
+    try {
+      await api('app_versions', { method:'DELETE', query:'id=eq.' + id });
+      toast('版本 ' + num + ' 已删除', 'success');
+      xhyShowPage('versions');
+    } catch (e) { toast('删除失败: ' + e.message, 'error'); }
+  };
+
+  // ---------- 通用工具：分页/Modal/复制 ----------
+  function renderPagination(totalCount, pageSize, cp, stateKey, renderCall) {
+    if (!totalCount || totalCount <= pageSize) return '';
+    var totalPages = Math.ceil(totalCount / pageSize);
+    var btns = '';
+    for (var i = 0; i < totalPages && i < 10; i++) {
+      btns += '<button class="xhy-page-btn ' + (i === cp ? 'active' : '') + '" onclick="' + stateKey + '=' + i + ';' + renderCall + '">' + (i + 1) + '</button>';
+    }
+    if (totalPages > 10) btns += '<span style="padding:4px 8px;color:var(--muted)">...</span>';
+    return '<div class="xhy-pagination"><div class="xhy-page-info">共 ' + totalCount + ' 条，第 ' + (cp + 1) + '/' + totalPages + ' 页</div><div class="xhy-page-btns">' +
+      '<button class="xhy-page-btn" ' + (cp <= 0 ? 'disabled' : '') + ' onclick="' + stateKey + '=' + (cp - 1) + ';' + renderCall + '">&lt;</button>' +
+      btns +
+      '<button class="xhy-page-btn" ' + (cp >= totalPages - 1 ? 'disabled' : '') + ' onclick="' + stateKey + '=' + (cp + 1) + ';' + renderCall + '">&gt;</button>' +
+    '</div></div>';
+  }
+
+  // 暴露分页状态变量（onclick 内联调用需要全局访问）
+  window.licensePage = 0; Object.defineProperty(window, 'licensePage', { get:function(){return licensePage;}, set:function(v){licensePage=v;} });
+  window.devicePage = 0; Object.defineProperty(window, 'devicePage', { get:function(){return devicePage;}, set:function(v){devicePage=v;} });
+  window.actPage = 0; Object.defineProperty(window, 'actPage', { get:function(){return actPage;}, set:function(v){actPage=v;} });
+  window.licenseSearch = ''; Object.defineProperty(window, 'licenseSearch', { get:function(){return licenseSearch;}, set:function(v){licenseSearch=v;} });
+
+  function openModal(html) {
+    var card = document.getElementById('xhy-modal-card');
+    if (!card) return;
+    card.innerHTML = html;
+    document.getElementById('xhy-modal').classList.add('open');
+  }
+  window.closeModal = function (id) {
+    var m = document.getElementById(id);
+    if (m) m.classList.remove('open');
+  };
+
+  window.xhyCopyText = function (text) {
+    navigator.clipboard.writeText(text).then(function() { toast('已复制到剪贴板', 'success'); }).catch(function() { toast('复制失败', 'error'); });
+  };
 })();
 </script>
+<!-- 散线转文字 CAD授权管理模块 -->
+<script src="scan_admin.js"></script>
 </body>
 </html>
