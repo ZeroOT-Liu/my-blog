@@ -451,19 +451,28 @@ section[id]{scroll-margin-top:80px}
 }
 .filter-btn.active,.filter-btn:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
 
+/* 相册：瀑布流，按图片原始比例展示，不裁切 */
 .gallery-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;
-  background:var(--border);border:1px solid var(--border);
+  columns:3;column-gap:2px;
+  background:transparent;border:none;   /* 不能用背景色做缝：列高不齐会露出大片色块 */
 }
 .gal-item{
-  position:relative;aspect-ratio:4/3;background:var(--bg2);overflow:hidden;cursor:pointer;
-  border:0;transition:transform .4s cubic-bezier(.22,.72,.24,1),z-index 0s;
+  position:relative;background:var(--bg2);overflow:hidden;cursor:pointer;
+  border:0;margin:0 0 2px;display:block;break-inside:avoid;
+  transition:transform .4s cubic-bezier(.22,.72,.24,1),z-index 0s;
   transform-style:preserve-3d;
 }
 .gal-item:hover{z-index:3}
-.gal-item img,.gal-ph{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,.72,.24,1)}
-.gal-item:hover img{transform:scale(1.05)}
-.gal-ph{display:flex;align-items:center;justify-content:center;font-size:2.4rem;background:var(--bg2)}
+.gal-item img{
+  width:100%;height:auto;display:block;
+  max-height:640px;          /* 超长竖图限高，避免单张霸屏；object-fit 保证不变形 */
+  object-fit:contain;
+  background:var(--bg2);
+  min-height:120px;          /* 图片没加载出来时不要塌成一条线 */
+  transition:transform .6s cubic-bezier(.22,.72,.24,1);
+}
+.gal-item:hover img{transform:scale(1.04)}
+.gal-ph{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:2.4rem;background:var(--bg2)}
 .gal-overlay{
   position:absolute;bottom:0;left:0;right:0;padding:1.1rem 1rem .9rem;
   background:linear-gradient(to top,rgba(10,18,26,.82),rgba(10,18,26,.35) 60%,transparent);
@@ -964,7 +973,7 @@ footer{
   .projects-grid{grid-template-columns:1fr}
   .proj-thumb{height:190px}
   .contact-grid{grid-template-columns:1fr}
-  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{columns:2}
   .art-card{grid-template-columns:1fr}
   .art-thumb{height:190px;min-height:0}
   .art-card:hover{transform:none}
@@ -977,7 +986,7 @@ footer{
   .lb-nav{display:none}
 }
 @media(max-width:480px){
-  .gallery-grid{grid-template-columns:1fr}
+  .gallery-grid{columns:1}
   .footer-grid{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;text-align:center}
   .sec-header{gap:10px}
@@ -1292,7 +1301,7 @@ footer{
 <!-- ?v= 用于打破浏览器缓存，改了 js 记得把这个版本号往上加 -->
 <script defer src="vendor/prism.bundle.js"></script>
 <script defer src="marked.min.js"></script>
-<script defer src="index.js?v=20261019f"></script>
-<script defer src="blog3d.js?v=20261019f"></script>
+<script defer src="index.js?v=20261019g"></script>
+<script defer src="blog3d.js?v=20261019g"></script>
 </body>
 </html>
