@@ -10,12 +10,16 @@
         "label": "一群（已满）"
       },
       {
-        "url": "images/sw_img_1782955640174_1.jpg",
+        "url": "images/sw_img_1792391390319_0.jpg",
         "label": "二群（已满）"
       },
       {
         "url": "images/sw_img_1786516571808_0.jpg",
-        "label": "三群（推荐申请）"
+        "label": "三群（已满）"
+      },
+      {
+        "url": "images/sw_img_1792391396641_0.jpg",
+        "label": "四群（推荐申请）"
       }
     ]
   },
