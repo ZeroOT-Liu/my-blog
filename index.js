@@ -1802,13 +1802,18 @@
       readTimeEl.innerHTML = '📖 ' + t('reading_time').replace('{n}', readMin);
     }
 
+    // 正文自己以 "# 标题" 开头时就不再重复插一个 h1（老文章都是这种写法）
+    var startsWithH1 = /^\s*#\s/.test(a.content || '');
+    var titleHtml = startsWithH1 ? '' :
+      '<h1 style="margin:.6rem 0 1rem;font-size:1.8rem;line-height:1.3">' + esc(a.title) + '</h1>';
+
     // 优先从 doc_url 加载文档内容
     if (a.doc_url) {
       content.innerHTML = '<div style="color:var(--muted);font-size:.88rem;">' + t('loading') + '</div>';
       fetchDocContent(a.doc_url, function(docContent) {
         content.innerHTML =
           '<p style="color:var(--muted);font-size:.88rem;">' + date + ' · ' + esc(getCatTranslation(a.category, 'article') || '其他') + '</p>' +
-          '<h1 style="margin:.6rem 0 1rem;font-size:1.8rem;line-height:1.3">' + esc(a.title) + '</h1>' +
+          titleHtml +
           (tags ? '<div style="margin-bottom:1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;">' + tags + '</div>' : '') +
           (docContent ? md2html(docContent) : '<p style="color:var(--err);">' + t('doc_error') + '</p>');
         appendTOC(content);
@@ -1816,7 +1821,7 @@
     } else {
       content.innerHTML =
         '<p style="color:var(--muted);font-size:.88rem;">' + date + ' · ' + esc(getCatTranslation(a.category, 'article') || '其他') + '</p>' +
-        '<h1 style="margin:.6rem 0 1rem;font-size:1.8rem;line-height:1.3">' + esc(a.title) + '</h1>' +
+        titleHtml +
         (tags ? '<div style="margin-bottom:1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;">' + tags + '</div>' : '') +
         md2html(a.content || '');
       appendTOC(content);
