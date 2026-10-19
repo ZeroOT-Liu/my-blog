@@ -1259,90 +1259,125 @@
   // ===========================
   // 使用说明弹窗（加载 MD/TXT 文件并渲染）
   // ===========================
+  // ===========================
+  // 使用说明（复用文章阅读器：左侧目录 + 右侧正文，和文章完全一致）
+  // ===========================
+  var _docTextCache = {};  // 文档内容缓存，第二次打开秒开
+
   window.openProjectDoc = function (docUrl, title) {
-    // 移除已有弹窗
+    if (!docUrl) return;
+
+    // PDF 交给浏览器原生渲染，走独立弹窗
+    if (/\.pdf$/i.test(docUrl)) { openPdfDoc(docUrl, title); return; }
+
+    var modal = document.getElementById('art-modal');
+    var content = document.getElementById('art-modal-content');
+    var readTimeEl = document.getElementById('art-reading-time');
+    if (!modal || !content) return;
+
+    // 清掉上一篇留下的目录
+    var aside = document.getElementById('art-toc-aside');
+    if (aside) { aside.innerHTML = ''; aside.classList.remove('has-toc'); }
+
+    // 标题用 div 不用 h1：文档自身通常已有 "# 一级标题"，避免两个大标题撞在一起
+    if (readTimeEl) readTimeEl.innerHTML = '📄 ' + esc(title);
+    content.innerHTML =
+      '<div style="color:var(--muted);font-size:.82rem;letter-spacing:.04em">使用说明</div>' +
+      '<div style="font-size:1.42rem;font-weight:700;line-height:1.35;margin:.35rem 0 1.1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)">' + esc(title) + '</div>' +
+      '<div id="doc-inline-loading" style="text-align:center;padding:2.4rem;color:var(--text2);font-size:.88rem">' + t('loading') + '</div>' +
+      '<div id="doc-inline-body" style="display:none"></div>';
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    var mb = modal.querySelector('.modal-body');
+    if (mb) mb.scrollTop = 0;
+
+    loadDocText(docUrl, function (txt) {
+      var loading = document.getElementById('doc-inline-loading');
+      var body = document.getElementById('doc-inline-body');
+      if (!body) return;
+      if (!txt) {
+        if (loading) loading.innerHTML = '<span style="color:var(--err)">' + t('doc_error') + '</span>';
+        return;
+      }
+      body.innerHTML = md2html(txt);
+      body.style.display = 'block';
+      if (loading) loading.style.display = 'none';
+      if (readTimeEl) {
+        var n = txt.replace(/\s/g, '').length;
+        readTimeEl.innerHTML = '📖 ' + t('reading_time').replace('{n}', Math.max(1, Math.ceil(n / 400)));
+      }
+      appendTOC(content);
+    });
+  };
+
+  // 文档加载：同源优先（文件就在自己站点上，还吃浏览器缓存），每个源最多等 4 秒
+  function loadDocText(docUrl, cb) {
+    if (_docTextCache[docUrl]) { cb(_docTextCache[docUrl]); return; }
+
+    var sameOrigin = location.origin + (BASE ? BASE + '/' : '/') + docUrl;
+    var urls = IS_LOCAL ? [sameOrigin] : [
+      sameOrigin,
+      'https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main/' + docUrl,
+      'https://raw.githubusercontent.com/ZeroOT-Liu/my-blog/main/' + docUrl
+    ];
+
+    function tryNext(i) {
+      if (i >= urls.length) { cb(null); return; }
+
+      var done = false, timer = null;
+      var ctrl = window.AbortController ? new AbortController() : null;
+
+      function finish(ok, txt) {
+        if (done) return;   // 超时和成功/失败可能同时触发，只认第一个
+        done = true;
+        if (timer) clearTimeout(timer);
+        if (ok && txt) {
+          _docTextCache[docUrl] = txt;
+          cb(txt);
+        } else {
+          tryNext(i + 1);
+        }
+      }
+
+      timer = setTimeout(function () {
+        if (ctrl) { try { ctrl.abort(); } catch (e) {} }
+        finish(false);
+      }, 4000);
+
+      var opts = { cache: 'no-cache' };
+      if (ctrl) opts.signal = ctrl.signal;
+      fetch(urls[i], opts)
+        .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status)); })
+        .then(function (txt) { finish(true, txt); })
+        .catch(function () { finish(false); });
+    }
+    tryNext(0);
+  }
+
+  // PDF 预览：独立弹窗，浏览器原生渲染（边下边看）
+  function openPdfDoc(docUrl, title) {
     var old = document.getElementById('doc-modal');
     if (old) old.remove();
-    // 判断是否为 PDF 文件
-    var isPdf = /\.pdf$/i.test(docUrl);
     var fullUrl = getDocUrl(docUrl);
-    // 创建弹窗
     var modal = document.createElement('div');
     modal.id = 'doc-modal';
     modal.className = 'modal';
-    if (isPdf) {
-      // PDF：用 iframe 全屏预览，浏览器原生 PDF 渲染（边下边看）
-      modal.innerHTML =
-        '<div class="modal-box" style="max-width:960px;height:88vh;padding:0;display:flex;flex-direction:column">' +
-          '<div style="display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.2rem;border-bottom:1px solid var(--border);flex-shrink:0">' +
-            '<h2 style="margin:0;font-size:1.1rem">' + esc(title) + ' - ' + t('btn_docs') + '</h2>' +
-            '<div style="display:flex;gap:.5rem;align-items:center">' +
-              '<a href="' + esc(fullUrl) + '" target="_blank" download style="font-size:.82rem;color:var(--accent);text-decoration:none;padding:.3rem .7rem;border-radius:6px;background:var(--soft);border:1px solid transparent">' + t('btn_download') + '</a>' +
-              '<button class="modal-close" onclick="closeDocModal()" style="position:static">&times;</button>' +
-            '</div>' +
+    modal.innerHTML =
+      '<div class="modal-box" style="max-width:960px;height:88vh;padding:0;display:flex;flex-direction:column">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.2rem;border-bottom:1px solid var(--border);flex-shrink:0">' +
+          '<h2 style="margin:0;font-size:1.1rem">' + esc(title) + ' - ' + t('btn_docs') + '</h2>' +
+          '<div style="display:flex;gap:.5rem;align-items:center">' +
+            '<a href="' + esc(fullUrl) + '" target="_blank" download style="font-size:.82rem;color:var(--accent);text-decoration:none;padding:.3rem .7rem;border-radius:6px;background:var(--soft);border:1px solid transparent">' + t('btn_download') + '</a>' +
+            '<button class="modal-close" onclick="closeDocModal()" style="position:static">&times;</button>' +
           '</div>' +
-          '<iframe src="' + esc(fullUrl) + '" style="flex:1;border:none;width:100%;min-height:0" loading="lazy"></iframe>' +
-        '</div>';
-    } else {
-      // MD/TXT：fetch 加载后用 marked 渲染
-      modal.innerHTML =
-        '<div class="modal-box" style="max-width:860px">' +
-          '<button class="modal-close" onclick="closeDocModal()">&times;</button>' +
-          '<div class="modal-body">' +
-            '<h2 style="margin-bottom:1rem;font-size:1.4rem">' + esc(title) + ' - ' + t('btn_docs') + '</h2>' +
-            '<div id="doc-modal-loading" style="text-align:center;padding:3rem;color:var(--text2)">' + t('loading') + '</div>' +
-            '<div id="doc-modal-content" class="md-content" style="display:none"></div>' +
-          '</div>' +
-        '</div>';
-    }
+        '</div>' +
+        '<iframe src="' + esc(fullUrl) + '" style="flex:1;border:none;width:100%;min-height:0" loading="lazy"></iframe>' +
+      '</div>';
     document.body.appendChild(modal);
     requestAnimationFrame(function () { modal.classList.add('show'); });
     modal.addEventListener('click', function (e) { if (e.target === modal) closeDocModal(); });
     document.addEventListener('keydown', docEscHandler);
-    // 非PDF时才 fetch 加载文档内容
-    if (!isPdf) {
-      // 加载文档内容：jsDelivr 支持跨域且全球加速，最可靠
-      var urls = [];
-      if (IS_LOCAL) {
-        urls.push(fullUrl);
-      } else {
-        // jsDelivr 首选：免费、支持 CORS、速度快
-        urls.push('https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main/' + docUrl);
-        // GitHub raw 备用（也支持 CORS）
-        urls.push('https://raw.githubusercontent.com/ZeroOT-Liu/my-blog/main/' + docUrl);
-        // 同源加载备用（GitHub Pages 自身）
-        urls.push(location.origin + (BASE ? BASE + '/' : '/') + docUrl);
-      }
-      fetchWithFallback(urls, 0);
-    }
-  };
-
-  // 多 CDN 自动降级加载
-  function fetchWithFallback(urls, index) {
-    if (index >= urls.length) {
-      var loading = document.getElementById('doc-modal-loading');
-      if (loading) loading.textContent = t('doc_error');
-      return;
-    }
-    fetch(urls[index])
-      .then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.text();
-      })
-      .then(function (text) {
-        var loading = document.getElementById('doc-modal-loading');
-        var content = document.getElementById('doc-modal-content');
-        if (!text) {
-          fetchWithFallback(urls, index + 1);
-          return;
-        }
-        content.innerHTML = md2html(text);
-        loading.style.display = 'none';
-        content.style.display = 'block';
-      })
-      .catch(function () {
-        fetchWithFallback(urls, index + 1);
-      });
   }
 
   window.closeDocModal = function () {
