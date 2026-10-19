@@ -727,29 +727,68 @@ footer{
 .md-content th,.md-content td{border:1px solid var(--border);padding:.5rem .7rem;text-align:left}
 .md-content th{background:var(--bg2);font-weight:600}
 
-/* ============ 文章目录 ============ */
-.md-content .art-toc{
+/* 思源导出时丢失的图片附件占位 */
+.doc-img-missing{
+  display:inline-block;padding:2px 9px;margin:2px 0;
+  font-size:.74rem;color:var(--muted);background:var(--bg2);
+  border:1px dashed var(--border-strong);border-radius:3px;
+  font-family:var(--font-mono);letter-spacing:.02em;
+}
+
+/* ============ 文章弹窗：左侧目录 + 右侧正文 ============ */#art-modal .modal-box{
+  max-width:1140px;
+  height:calc(100vh - 4rem);max-height:900px;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+#art-modal .modal-header{flex-shrink:0}
+.art-modal-main{
+  display:grid;grid-template-columns:232px minmax(0,1fr);
+  flex:1;min-height:0;
+}
+#art-toc-aside{
+  display:none;overflow-y:auto;
+  padding:1.5rem .85rem 2rem 1.15rem;
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  border-left:2px solid var(--accent2);
+  scrollbar-width:thin;
+}
+#art-toc-aside.has-toc{display:block}
+#art-toc-aside::-webkit-scrollbar{width:5px}
+#art-toc-aside::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px}
+#art-toc-aside::-webkit-scrollbar-track{background:transparent}
+#art-modal .modal-body{max-height:none;height:100%;overflow-y:auto;padding:1.8rem 2.2rem}
+
+/* 窄屏：目录回到正文顶部 */
+.art-toc-inline{
   margin:0 0 1.6rem;padding:.85rem 1rem .85rem 1.1rem;
   background:var(--bg2);border-left:2px solid var(--accent2);
   border-radius:0 var(--r) var(--r) 0;
-  max-height:300px;overflow-y:auto;   /* 长文目录限高，别把正文挤下去 */
-  scrollbar-width:thin;
+  max-height:260px;overflow-y:auto;scrollbar-width:thin;
 }
-.md-content .art-toc::-webkit-scrollbar{width:5px}
-.md-content .art-toc::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px}
-.md-content .art-toc::-webkit-scrollbar-track{background:transparent}
+.art-toc-inline::-webkit-scrollbar{width:5px}
+.art-toc-inline::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px}
+
 .art-toc-h{
   font-family:var(--font-mono);font-size:.6rem;letter-spacing:.16em;
-  color:var(--muted);margin-bottom:.45rem;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5rem;text-transform:uppercase;
 }
-.md-content .art-toc a{
-  display:block;color:var(--text2);font-size:.82rem;line-height:1.95;
+.art-toc a,.md-content .art-toc a{
+  display:block;color:var(--text2);font-size:.82rem;line-height:1.9;
   cursor:pointer;text-decoration:none;border:none;
-  transition:color .18s ease,transform .18s ease,padding-left .18s ease;
+  transition:color .18s ease,padding-left .18s ease;
 }
-.md-content .art-toc a:hover{color:var(--accent);padding-left:3px}
-.md-content .art-toc a.active{color:var(--accent2);font-weight:600}
-.md-content .art-toc .toc-l3{padding-left:1.05rem;font-size:.78rem;opacity:.85}
+.art-toc a:hover,.md-content .art-toc a:hover{color:var(--accent);padding-left:3px}
+.art-toc a.active,.md-content .art-toc a.active{color:var(--accent2);font-weight:600}
+.art-toc .toc-l3{padding-left:1rem;font-size:.78rem;opacity:.85}
+.art-toc .toc-l2{font-weight:500}
+
+@media (max-width:880px){
+  .art-modal-main{grid-template-columns:minmax(0,1fr)}
+  #art-toc-aside{display:none !important}
+  #art-modal .modal-box{height:calc(100vh - 2rem)}
+  #art-modal .modal-body{padding:1.4rem 1.2rem}
+}
 
 /* ============ 站内搜索 ============ */
 .search-overlay{
@@ -1214,8 +1253,11 @@ footer{
       <div class="reading-time" id="art-reading-time"></div>
       <button class="modal-close" id="art-close">×</button>
     </div>
-    <div class="modal-body">
-      <div id="art-modal-content" class="md-content"></div>
+    <div class="art-modal-main">
+      <aside class="art-toc" id="art-toc-aside"></aside>
+      <div class="modal-body">
+        <div id="art-modal-content" class="md-content"></div>
+      </div>
     </div>
   </div>
 </div>
