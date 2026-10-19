@@ -1497,8 +1497,9 @@
           img = '<img data-src="' + imgSrc + '" alt="' + esc(g.title || '') + '" style="opacity:0"' + fallbackAttr + ' onload="this.classList.remove(\'img-skeleton\');this.classList.add(\'img-loaded\');this.style.opacity=\'\'" onerror="window._blogImgFallback(this)">';
         } else {
           // 首屏图片：骨架屏占位 + 加载完成后淡入
+          // 注意不要写死 height:100% / object-fit:cover，否则会把图片裁掉、也会破坏瀑布流高度
           img = '<span class="img-skeleton" style="position:absolute;inset:0;width:100%;height:100%;z-index:1"></span>' +
-                '<img src="' + imgSrc + '" alt="' + esc(g.title || '') + '" style="position:relative;z-index:2;opacity:0;width:100%;height:100%;object-fit:cover"' + fallbackAttr + ' onload="this.style.opacity=\'1\';this.style.objectFit=\'cover\';this.previousElementSibling.style.display=\'none\'" onerror="window._blogImgFallback(this);this.style.opacity=\'1\';this.previousElementSibling.style.display=\'none\'">';
+                '<img src="' + imgSrc + '" alt="' + esc(g.title || '') + '" style="position:relative;z-index:2;opacity:0;display:block;width:100%;height:auto"' + fallbackAttr + ' onload="this.style.opacity=\'1\';this.previousElementSibling.style.display=\'none\'" onerror="window._blogImgFallback(this);this.style.opacity=\'1\';this.previousElementSibling.style.display=\'none\'">';
         }
       }
       var ph = !imgSrc ? '<div class="gal-ph">🖼️</div>' : '';
