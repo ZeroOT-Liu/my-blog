@@ -745,6 +745,8 @@ footer{
   display:grid;grid-template-columns:232px minmax(0,1fr);
   flex:1;min-height:0;
 }
+/* 没有目录时（txt / 标题太少的文档）：aside 不占位，正文单列铺满 */
+.art-modal-main.no-toc{grid-template-columns:minmax(0,1fr)}
 #art-toc-aside{
   display:none;overflow-y:auto;
   padding:1.5rem .85rem 2rem 1.15rem;
@@ -1290,7 +1292,7 @@ footer{
 <!-- ?v= 用于打破浏览器缓存，改了 js 记得把这个版本号往上加 -->
 <script defer src="vendor/prism.bundle.js"></script>
 <script defer src="marked.min.js"></script>
-<script defer src="index.js?v=20261019e"></script>
-<script defer src="blog3d.js?v=20261019e"></script>
+<script defer src="index.js?v=20261019f"></script>
+<script defer src="blog3d.js?v=20261019f"></script>
 </body>
 </html>
