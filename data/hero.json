@@ -12,17 +12,17 @@
   "btn_2_link": "#articles",
   "stats": [
     {
-      "number": 1,
+      "number": "1K",
       "suffix": "+",
       "label": "活跃用户"
     },
     {
-      "number": 20,
+      "number": "20",
       "suffix": "+",
       "label": "功能模块"
     },
     {
-      "number": 99,
+      "number": "99",
       "suffix": "%",
       "label": "用户好评"
     }
