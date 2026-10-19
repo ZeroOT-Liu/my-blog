@@ -642,7 +642,9 @@
   var _jsonCache = {};
   function fetchJson(name) {
     if (!_jsonCache[name]) {
-      _jsonCache[name] = fetch(DATA + '/' + name + '.json')
+      // cache:'no-cache' = 每次都向服务器确认（未变时走 304，开销极小）
+      // 不加的话 GitHub Pages 会给 JSON 缓存 10 分钟，后台改完刷新看不到新数据
+      _jsonCache[name] = fetch(DATA + '/' + name + '.json', { cache: 'no-cache' })
         .then(function (r) { return r.ok ? r.json() : null; })
         .catch(function () { return null; });
     }
