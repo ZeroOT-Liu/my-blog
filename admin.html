@@ -5733,10 +5733,11 @@ async function saveHero() {
   }
 }
 function statRow(s, i) {
+  var num = (s.number === undefined || s.number === null) ? "" : String(s.number);
   return '<div class="stat-row">\
-    <input type="text" placeholder="数值" value="' + (s.number||0) + '" data-stat-i="' + i + '" data-sf="number">\
-    <input type="text" placeholder="后缀" value="' + (s.suffix||'') + '" data-stat-i="' + i + '" data-sf="suffix">\
-    <input type="text" placeholder="标签" value="' + (s.label||'') + '" data-stat-i="' + i + '" data-sf="label">\
+    <input type="text" placeholder="数值（可含字母，如 500+/10万）" value="' + escHtml(num) + '" data-stat-i="' + i + '" data-sf="number">\
+    <input type="text" placeholder="后缀" value="' + escHtml(s.suffix || '') + '" data-stat-i="' + i + '" data-sf="suffix">\
+    <input type="text" placeholder="标签" value="' + escHtml(s.label || '') + '" data-stat-i="' + i + '" data-sf="label">\
   </div>';
 }
 function renderStats(stats) {
@@ -5750,7 +5751,8 @@ function getStatsData() {
   for (var i = 0; i < rows.length; i++) {
     var r = rows[i];
     result.push({
-      number: parseInt(r.querySelector('[data-sf="number"]').value) || 0,
+      // 原样保留，不再 parseInt —— 否则 "500ABC" 会被砍成 500，"10万" 会变成 10
+      number: (r.querySelector('[data-sf="number"]').value || "").trim(),
       suffix: r.querySelector('[data-sf="suffix"]').value || "",
       label: r.querySelector('[data-sf="label"]').value || ""
     });
