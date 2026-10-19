@@ -24,11 +24,11 @@
     "logo": "🔧 不加班的小刘",
     "footer_bottom": "© 2026 不加班的小刘",
     "footer_desc": "CAD二次开发 · 效率工具",
-    "logo_icon": "images/logo_icon.png"
+    "logo_icon": "images/logo_icon.webp"
   },
   "background": {
     "type": "image",
-    "image_url": "images/bg_custom.png",
+    "image_url": "images/bg_custom.webp",
     "opacity": 0.3,
     "blur": 10
   }
