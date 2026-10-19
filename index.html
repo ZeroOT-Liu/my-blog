@@ -687,8 +687,8 @@ footer{
 
 /* ---- 代码高亮（Prism），代码块固定深底，配色不随主题变 ---- */
 .md-content pre{position:relative}
-.md-content pre[class*="language-"]{padding-top:1.6rem}
-.md-content pre[class*="language-"]::before{
+.md-content pre[data-lang]{padding-top:1.6rem}
+.md-content pre[data-lang]::before{
   content:attr(data-lang);position:absolute;top:0;left:0;
   padding:2px 9px;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
   color:#7c93a6;background:rgba(255,255,255,.045);
@@ -732,7 +732,12 @@ footer{
   margin:0 0 1.6rem;padding:.85rem 1rem .85rem 1.1rem;
   background:var(--bg2);border-left:2px solid var(--accent2);
   border-radius:0 var(--r) var(--r) 0;
+  max-height:300px;overflow-y:auto;   /* 长文目录限高，别把正文挤下去 */
+  scrollbar-width:thin;
 }
+.md-content .art-toc::-webkit-scrollbar{width:5px}
+.md-content .art-toc::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px}
+.md-content .art-toc::-webkit-scrollbar-track{background:transparent}
 .art-toc-h{
   font-family:var(--font-mono);font-size:.6rem;letter-spacing:.16em;
   color:var(--muted);margin-bottom:.45rem;text-transform:uppercase;
