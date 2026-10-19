@@ -522,19 +522,33 @@
   // ===========================
   var THEMES = ['indigo', 'rose', 'emerald', 'amber', 'ocean', 'purple', 'sunset', 'mint', 'dark'];
   // 换成新 key：配色体系整体重做，旧偏好不再沿用，默认落在「图纸蓝」
-  var curTheme = localStorage.getItem('blog-theme-v2') || 'indigo';
+  // 首次访问跟随系统深浅色；手动选过就以手动为准
+  var _savedTheme = localStorage.getItem('blog-theme-v2');
+  var curTheme = _savedTheme || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'indigo');
 
-  function applyTheme(t) {
+  function applyTheme(t, persist) {
     curTheme = t;
     document.documentElement.setAttribute('data-theme', t);
-    localStorage.setItem('blog-theme-v2', t);
+    if (persist !== false) localStorage.setItem('blog-theme-v2', t);
     document.querySelectorAll('.tp-opt').forEach(function (o) {
       o.classList.toggle('active', o.getAttribute('data-t') === t);
     });
   }
 
+  // 用户没手动选过主题时，跟随系统深浅色实时切换
+  if (window.matchMedia) {
+    var _themeMQ = window.matchMedia('(prefers-color-scheme: dark)');
+    var _onSchemeChange = function (e) {
+      if (localStorage.getItem('blog-theme-v2')) return; // 手动选过就不跟着变
+      applyTheme(e.matches ? 'dark' : 'indigo', false);
+    };
+    if (_themeMQ.addEventListener) _themeMQ.addEventListener('change', _onSchemeChange);
+    else if (_themeMQ.addListener) _themeMQ.addListener(_onSchemeChange);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
-    applyTheme(curTheme);
+    // 只有用户之前手动选过，才把当前主题写回 localStorage
+    applyTheme(curTheme, !!_savedTheme);
     applyLanguage(currentLang);
 
     // 语言切换
@@ -1733,6 +1747,7 @@
           '<h1 style="margin:.6rem 0 1rem;font-size:1.8rem;line-height:1.3">' + esc(a.title) + '</h1>' +
           (tags ? '<div style="margin-bottom:1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;">' + tags + '</div>' : '') +
           (docContent ? md2html(docContent) : '<p style="color:var(--err);">' + t('doc_error') + '</p>');
+        appendTOC(content);
       });
     } else {
       content.innerHTML =
@@ -1740,6 +1755,7 @@
         '<h1 style="margin:.6rem 0 1rem;font-size:1.8rem;line-height:1.3">' + esc(a.title) + '</h1>' +
         (tags ? '<div style="margin-bottom:1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;">' + tags + '</div>' : '') +
         md2html(a.content || '');
+      appendTOC(content);
     }
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -1755,6 +1771,78 @@
         rp.style.width = (scrollHeight > 0 ? (scrollTop / scrollHeight * 100) : 0) + '%';
       };
     }
+  }
+
+  // ===========================
+  // 文章目录（从正文 h2/h3 生成，点击跳转 + 滚动高亮）
+  // ===========================
+  function appendTOC(contentEl) {
+    if (!contentEl) return;
+    var old = contentEl.querySelector('.art-toc');
+    if (old) old.remove();
+
+    var hs = contentEl.querySelectorAll('h2, h3');
+    if (hs.length < 2) return; // 标题太少不值得做目录
+
+    var items = [];
+    Array.prototype.forEach.call(hs, function (h, i) {
+      if (!h.id) h.id = 'sec-' + i + '-' + Math.random().toString(36).slice(2, 6);
+      items.push({ id: h.id, text: h.textContent.trim(), lv: h.tagName === 'H2' ? 2 : 3 });
+    });
+
+    var nav = document.createElement('nav');
+    nav.className = 'art-toc';
+    nav.innerHTML =
+      '<div class="art-toc-h">目录 / INDEX</div>' +
+      items.map(function (it) {
+        return '<a class="toc-l' + it.lv + '" data-toc="' + it.id + '">' + esc(it.text) + '</a>';
+      }).join('');
+
+    nav.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-toc]');
+      if (!a) return;
+      var target = document.getElementById(a.getAttribute('data-toc'));
+      if (!target) return;
+      var body = document.querySelector('#art-modal .modal-body');
+      if (body) {
+        var top = target.getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop - 16;
+        body.scrollTo({ top: top, behavior: 'smooth' });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    // 插到第一个 h2 前面（正文开头，标题区之后）
+    var firstH2 = contentEl.querySelector('h2');
+    if (firstH2 && firstH2.parentNode === contentEl) contentEl.insertBefore(nav, firstH2);
+    else contentEl.appendChild(nav);
+
+    // 滚动时高亮当前章节（用 addEventListener，避免覆盖阅读进度条的 onscroll）
+    var body = document.querySelector('#art-modal .modal-body');
+    if (!body) return;
+    var linkMap = {};
+    nav.querySelectorAll('a[data-toc]').forEach(function (a) { linkMap[a.getAttribute('data-toc')] = a; });
+    var ticking = false;
+    var onScroll = function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        var cur = null;
+        var bodyTop = body.getBoundingClientRect().top;
+        for (var i = 0; i < items.length; i++) {
+          var el = document.getElementById(items[i].id);
+          if (!el) continue;
+          if (el.getBoundingClientRect().top - bodyTop <= 60) cur = items[i].id;
+          else break;
+        }
+        nav.querySelectorAll('a').forEach(function (a) { a.classList.remove('active'); });
+        if (cur && linkMap[cur]) linkMap[cur].classList.add('active');
+      });
+    };
+    if (body._tocScrollHandler) body.removeEventListener('scroll', body._tocScrollHandler);
+    body._tocScrollHandler = onScroll;
+    body.addEventListener('scroll', onScroll, { passive: true });
   }
 
   // 加载外部文档内容
