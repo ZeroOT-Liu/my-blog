@@ -1300,7 +1300,7 @@
         if (loading) loading.innerHTML = '<span style="color:var(--err)">' + t('doc_error') + '</span>';
         return;
       }
-      body.innerHTML = md2html(txt);
+      body.innerHTML = /\.txt$/i.test(docUrl) ? txtToHtml(txt) : md2html(txt);
       body.style.display = 'block';
       if (loading) loading.style.display = 'none';
       if (readTimeEl) {
@@ -1310,6 +1310,22 @@
       appendTOC(content);
     });
   };
+
+  // 纯文本(.txt)渲染：不走 Markdown
+  // 原因：txt 行首常有 tab/空格缩进，marked 会把这些行当代码块 → 不换行、横向滚动，
+  //       看起来就是"文字全挤在左边被截断"
+  function txtToHtml(txt) {
+    if (!txt) return '';
+    var clean = String(txt)
+      .replace(/\r\n?/g, '\n')
+      .replace(/^[ \t\u3000]+/gm, '')   // 去掉行首缩进（含全角空格）
+      .replace(/[ \t\u3000]+$/gm, '')   // 行尾空白
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+    return clean.split(/\n{2,}/).map(function (para) {
+      return '<p>' + esc(para).replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+  }
 
   // 文档加载：同源优先（文件就在自己站点上，还吃浏览器缓存），每个源最多等 4 秒
   function loadDocText(docUrl, cb) {
@@ -1832,6 +1848,10 @@
     var aside = document.getElementById('art-toc-aside');
     if (aside) { aside.innerHTML = ''; aside.classList.remove('has-toc'); }
 
+    // 默认先按「无目录」布局：aside 不占那 232px，否则正文会被挤进左侧窄列
+    var mainEl = document.querySelector('.art-modal-main');
+    if (mainEl) mainEl.classList.add('no-toc');
+
     var hs = contentEl.querySelectorAll('h2, h3');
     if (hs.length < 2) return; // 标题太少不值得做目录
 
@@ -1866,6 +1886,9 @@
       items.map(function (it) {
         return '<a class="toc-l' + it.lv + '" data-toc="' + it.id + '">' + esc(it.text) + '</a>';
       }).join('');
+
+    // 目录有了，恢复两栏布局
+    if (mainEl) mainEl.classList.remove('no-toc');
 
     host.addEventListener('click', function (e) {
       var a = e.target.closest('a[data-toc]');
