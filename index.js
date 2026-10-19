@@ -1099,11 +1099,11 @@
       btnsEl.innerHTML = html;
     }
 
-    // 统计
+    // 统计（number 允许带字母，如 500+ / 10万 / A500BC，不能当数字处理）
     var statsEl = document.getElementById('hero-stats');
     if (statsEl && hero.stats && hero.stats.length > 0) {
       statsEl.innerHTML = hero.stats.map(function (s) {
-        return '<div class="stat-item"><div class="stat-num">' + s.number + (s.suffix || '') + '</div><div class="stat-lbl">' + esc(s.label) + '</div></div>';
+        return '<div class="stat-item"><div class="stat-num">' + esc(s.number) + esc(s.suffix || '') + '</div><div class="stat-lbl">' + esc(s.label) + '</div></div>';
       }).join('');
       statsEl.style.display = '';
     }
@@ -1953,10 +1953,12 @@
   // ===========================
   // 数字滚动动画（统计数字）
   // ===========================
-  function animateCounter(el, target, suffix, duration) {
+  // animateCounter：只对数字部分做滚动，前缀/后缀原样保留
+  // finalText 传原文，动画结束精确还原（避免 "007" 变 "7"、带字母的丢字）
+  function animateCounter(el, target, suffix, duration, prefix, finalText) {
     suffix = suffix || '';
+    prefix = prefix || '';
     duration = duration || 1500;
-    var start = 0;
     var startTime = null;
 
     function step(timestamp) {
@@ -1965,11 +1967,11 @@
       // easeOutExpo 缓动
       var eased = 1 - Math.pow(1 - progress, 3);
       var current = Math.floor(eased * target);
-      el.textContent = current + suffix;
+      el.textContent = prefix + current + suffix;
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        el.textContent = target + suffix;
+        el.textContent = finalText != null ? finalText : (prefix + target + suffix);
       }
     }
     requestAnimationFrame(step);
@@ -1990,12 +1992,14 @@
           var nums = statsEl.querySelectorAll('.stat-num');
           nums.forEach(function(numEl) {
             var text = numEl.textContent.trim();
-            var match = text.match(/^(\d+)(.*)$/);
-            if (match) {
-              var target = parseInt(match[1]);
-              var sfx = match[2] || '';
-              animateCounter(numEl, target, sfx);
-            }
+            // 抓第一个数字块，前后缀原样保留 —— 支持 "500+" / "10万" / "A500BC"
+            var match = text.match(/(\d+)/);
+            if (!match) return; // 纯字母 / 纯中文就不做滚动
+            var prefix = text.slice(0, match.index);
+            var sfx = text.slice(match.index + match[1].length);
+            var target = parseInt(match[1], 10);
+            if (!isFinite(target)) return;
+            animateCounter(numEl, target, sfx, 1500, prefix, text);
           });
         }
       });
