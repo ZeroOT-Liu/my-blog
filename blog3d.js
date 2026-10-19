@@ -49,12 +49,21 @@
       ' rotateX(' + (-py * max).toFixed(2) + 'deg)' +
       ' translateY(-3px)' +
       ' translateZ(10px)';
+
+    // 分层浮起：内部元素按 -1~1 的归一化坐标各自位移（CSS 里消费 --px/--py）
+    tiltEl.style.setProperty('--px', px.toFixed(3));
+    tiltEl.style.setProperty('--py', py.toFixed(3));
+    // 光标聚光：光斑跟着指针走
+    tiltEl.style.setProperty('--mx', (e.clientX - r.left).toFixed(0) + 'px');
+    tiltEl.style.setProperty('--my', (e.clientY - r.top).toFixed(0) + 'px');
   }
 
   function clearTilt() {
     if (tiltEl) {
       tiltEl.classList.remove('tilting');
       tiltEl.style.transform = '';
+      tiltEl.style.setProperty('--px', 0);
+      tiltEl.style.setProperty('--py', 0);
       tiltEl.style.removeProperty('--mx');
       tiltEl.style.removeProperty('--my');
     }
@@ -259,6 +268,69 @@
     var pts = new THREE.Points(pGeo, ptsMat);
     root.add(pts);
 
+    // --- 工程标注：引线 + 尺寸文字（模拟图纸标注）---
+    var annoMats = [];
+    var annoLabels = [];
+
+    function annoLine(pts, opacity) {
+      var arr = [];
+      for (var pi = 0; pi < pts.length; pi++) {
+        arr.push(new THREE.Vector3(pts[pi][0], pts[pi][1], pts[pi][2]));
+      }
+      var g = new THREE.BufferGeometry().setFromPoints(arr);
+      var m = new THREE.LineBasicMaterial({ color: C.accent2, transparent: true, opacity: opacity });
+      annoMats.push(m);
+      return new THREE.Line(g, m);
+    }
+
+    // 文字标签：canvas 画白字，靠 material.color 上色，主题切换只改 color
+    function makeLabel(text, opacity) {
+      var font = '600 30px ui-monospace, "Cascadia Mono", Consolas, monospace';
+      var meas = document.createElement('canvas').getContext('2d');
+      meas.font = font;
+      var tw = Math.ceil(meas.measureText(text).width);
+
+      var cv = document.createElement('canvas');
+      cv.width = tw + 16;
+      cv.height = 44;
+      var ctx = cv.getContext('2d');
+      ctx.font = font;
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, 8, cv.height / 2 + 1);
+
+      var tex = new THREE.CanvasTexture(cv);
+      tex.minFilter = THREE.LinearFilter;
+      var mat = new THREE.SpriteMaterial({
+        map: tex, transparent: true, opacity: opacity,
+        depthWrite: false, color: C.accent2
+      });
+      var sp = new THREE.Sprite(mat);
+      var s = 0.0038;
+      sp.scale.set(cv.width * s, cv.height * s, 1);
+      annoLabels.push(mat);
+      return sp;
+    }
+
+    // 标注一：核心球半径（顶部引出）
+    root.add(annoLine([[0.28, 1.0, 0], [0.28, 1.8, 0], [0.98, 1.8, 0]], 0.45));
+    root.add(annoLine([[0.28, 1.68, 0], [0.28, 1.92, 0]], 0.35));
+    var lbR = makeLabel('R1.05', 0.5);
+    lbR.position.set(1.42, 1.8, 0);
+    root.add(lbR);
+
+    // 标注二：中层包围盒边长（左下引出）
+    root.add(annoLine([[-1.2, -1.2, 1.2], [-1.2, -1.74, 1.2], [-0.5, -1.74, 1.2]], 0.4));
+    var lbB = makeLabel('2.4', 0.45);
+    lbB.position.set(-0.12, -1.74, 1.2);
+    root.add(lbB);
+
+    // 标注三：外层虚线盒（右下引出）
+    root.add(annoLine([[1.55, -1.55, -1.55], [1.55, -1.86, -1.55], [2.0, -1.86, -1.55]], 0.32));
+    var lbO = makeLabel('3.1', 0.38);
+    lbO.position.set(2.34, -1.86, -1.55);
+    root.add(lbO);
+
     // --- 摆放 ---
     function layout() {
       var w = window.innerWidth, h = window.innerHeight;
@@ -291,6 +363,9 @@
       dashMat.color.set(nc.muted);
       grid.material.color.set(nc.accent);
       ptsMat.color.set(nc.accent);
+      // 工程标注同步换色
+      for (var ai = 0; ai < annoMats.length; ai++) annoMats[ai].color.set(nc.accent2);
+      for (var li = 0; li < annoLabels.length; li++) annoLabels[li].color.set(nc.accent2);
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
