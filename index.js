@@ -644,6 +644,8 @@
     if (lbClose) lbClose.addEventListener('click', closeLightbox);
     if (lightbox) lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
 
+    initSearch();
+
     // 加载数据
     loadAll();
   });
@@ -690,6 +692,9 @@
 
       // 观察所有淡入元素
       document.querySelectorAll('.fade-in').forEach(function (el) { io.observe(el); });
+
+      // 地址栏带 #article/xxx 时直接打开对应文章（分享链接直达）
+      setTimeout(openArticleFromHash, 80);
     }).catch(function (err) {
       console.error('[博客] 数据加载失败:', err);
     });
@@ -1131,6 +1136,7 @@
   function renderProjects(list) {
     var el = document.getElementById('projects-grid');
     if (!el) return;
+    _projectsData = Array.isArray(list) ? list : []; // 供站内搜索使用
     if (!Array.isArray(list) || list.length === 0) {
       el.innerHTML = '<p style="color:var(--muted);text-align:center;grid-column:1/-1;padding:3rem;">' + t('empty_projects') + '</p>';
       return;
@@ -1723,6 +1729,12 @@
   function openArticle(id) {
     var a = _articles.find(function (x) { return x.id == id; });
     if (!a) return;
+
+    // 写入地址栏，文章可直接分享/收藏
+    if (location.hash !== '#article/' + id) {
+      try { history.replaceState(null, '', '#article/' + encodeURIComponent(id)); } catch (e) {}
+    }
+
     var modal = document.getElementById('art-modal');
     var content = document.getElementById('art-modal-content');
     var readTimeEl = document.getElementById('art-reading-time');
@@ -1864,7 +1876,31 @@
     document.body.style.overflow = '';
     var rp = document.getElementById('reading-progress');
     if (rp) rp.style.width = '0%';
+    // 清掉地址栏里的文章锚点
+    if (location.hash.indexOf('#article/') === 0) {
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    }
   }
+
+  // 从地址栏还原文章（支持直接打开分享链接）
+  function openArticleFromHash() {
+    var m = (location.hash || '').match(/^#article\/(.+)$/);
+    if (!m || !_articles || !_articles.length) return false;
+    var id = decodeURIComponent(m[1]);
+    var exist = _articles.some(function (a) { return String(a.id) === String(id); });
+    if (!exist) return false;
+    openArticle(id);
+    return true;
+  }
+
+  // 浏览器前进/后退
+  window.addEventListener('hashchange', function () {
+    var m = (location.hash || '').match(/^#article\/(.+)$/);
+    if (m) openArticle(decodeURIComponent(m[1]));
+    else if (document.getElementById('art-modal') && document.getElementById('art-modal').classList.contains('show')) {
+      closeArticle();
+    }
+  });
 
   // ===========================
   // 灯箱（支持上下切换）
@@ -2007,6 +2043,171 @@
     ta.select();
     try { document.execCommand('copy'); done(); } catch (e) { /* 静默失败 */ }
     document.body.removeChild(ta);
+  }
+
+  // ===========================
+  // 站内搜索（Ctrl+K）
+  // ===========================
+  var _projectsData = [];
+  var _searchIndex = null;
+  var _searchHits = [];
+  var _searchSel = -1;
+
+  function stripMd(s) {
+    return String(s || '')
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+      .replace(/```[\s\S]*?```/g, ' ')
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/[#>*`_~|]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function buildSearchIndex() {
+    if (_searchIndex) return _searchIndex;
+    var idx = [];
+
+    (_articles || []).forEach(function (a) {
+      if (a.published === false) return;
+      idx.push({
+        type: '文章',
+        title: a.title || '',
+        desc: stripMd(a.summary || a.content || '').slice(0, 80),
+        hay: ((a.title || '') + ' ' + (a.summary || '') + ' ' + stripMd(a.content || '') + ' ' + (a.tags || []).join(' ')).toLowerCase(),
+        go: function () { openArticle(a.id); }
+      });
+    });
+
+    (_projectsData || []).forEach(function (p) {
+      idx.push({
+        type: '作品',
+        title: p.title || '',
+        desc: p.description || '',
+        hay: ((p.title || '') + ' ' + (p.description || '') + ' ' + (p.tags || []).join(' ')).toLowerCase(),
+        go: function () { location.hash = '#projects'; }
+      });
+    });
+
+    (_galData || []).forEach(function (g) {
+      idx.push({
+        type: '相册',
+        title: g.title || '',
+        desc: g.description || '',
+        hay: ((g.title || '') + ' ' + (g.description || '')).toLowerCase(),
+        go: function () { if (g.image_url) openLightbox(g); }
+      });
+    });
+
+    _searchIndex = idx.length ? idx : null; // 数据没加载完就缓存，避免建出空索引
+    return idx;
+  }
+
+  function hlKey(text, q) {
+    if (!q) return text;
+    var safe = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return String(text).replace(new RegExp('(' + safe + ')', 'ig'), '<mark>$1</mark>');
+  }
+
+  function runSearch(q) {
+    var box = document.getElementById('search-results');
+    if (!box) return;
+    q = (q || '').trim();
+    _searchSel = -1;
+    if (!q) { box.innerHTML = ''; _searchHits = []; return; }
+
+    var lower = q.toLowerCase();
+    var hits = buildSearchIndex().filter(function (it) { return it.hay.indexOf(lower) >= 0; });
+
+    if (!hits.length) {
+      box.innerHTML = '<div class="sr-empty">没有找到「' + esc(q) + '」</div>';
+      _searchHits = [];
+      return;
+    }
+
+    _searchHits = hits.slice(0, 20);
+    box.innerHTML = _searchHits.map(function (it, i) {
+      return '<div class="sr-item" data-i="' + i + '">' +
+        '<span class="sr-tag">' + it.type + '</span>' +
+        '<div class="sr-main">' +
+          '<div class="sr-title">' + hlKey(esc(it.title), q) + '</div>' +
+          '<div class="sr-desc">' + hlKey(esc(it.desc), q) + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    box.querySelectorAll('.sr-item').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var it = _searchHits[+el.getAttribute('data-i')];
+        if (!it) return;
+        closeSearch();
+        it.go();
+      });
+    });
+  }
+
+  function moveSearchSel(dir) {
+    if (!_searchHits.length) return;
+    var box = document.getElementById('search-results');
+    _searchSel += dir;
+    if (_searchSel < 0) _searchSel = _searchHits.length - 1;
+    if (_searchSel >= _searchHits.length) _searchSel = 0;
+    box.querySelectorAll('.sr-item').forEach(function (el, i) {
+      el.classList.toggle('sel', i === _searchSel);
+      if (i === _searchSel) el.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  function openSearch() {
+    var overlay = document.getElementById('search-overlay');
+    var input = document.getElementById('search-input');
+    if (!overlay) return;
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    if (input) {
+      input.value = '';
+      setTimeout(function () { input.focus(); }, 40);
+    }
+    runSearch('');
+  }
+
+  function closeSearch() {
+    var overlay = document.getElementById('search-overlay');
+    if (overlay) overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function initSearch() {
+    var btn = document.getElementById('search-btn');
+    var overlay = document.getElementById('search-overlay');
+    var input = document.getElementById('search-input');
+    if (!overlay || !input) return;
+
+    if (btn) btn.addEventListener('click', openSearch);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeSearch(); });
+    input.addEventListener('input', function () { runSearch(this.value); });
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeSearch(); return; }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        moveSearchSel(e.key === 'ArrowDown' ? 1 : -1);
+        return;
+      }
+      if (e.key === 'Enter' && _searchHits.length) {
+        var it = _searchHits[_searchSel < 0 ? 0 : _searchSel];
+        closeSearch();
+        it.go();
+      }
+    });
+
+    // Ctrl/Cmd + K 随时唤起
+    document.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        if (overlay.classList.contains('show')) closeSearch();
+        else openSearch();
+      }
+    });
   }
 
   // ===========================
