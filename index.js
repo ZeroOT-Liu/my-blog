@@ -1799,7 +1799,13 @@
     var items = [];
     Array.prototype.forEach.call(hs, function (h, i) {
       if (!h.id) h.id = 'sec-' + i + '-' + Math.random().toString(36).slice(2, 6);
-      items.push({ id: h.id, text: h.textContent.trim(), lv: h.tagName === 'H2' ? 2 : 3 });
+      // 去掉标题里的 emoji，目录更干净
+      var txt = h.textContent.trim()
+        .replace(/[\u2190-\u21FF\u2300-\u27BF\u2B00-\u2BFF]/g, '')
+        .replace(/[\uD83C-\uD83E][\uDC00-\uDFFF]/g, '')
+        .trim();
+      if (!txt) txt = h.textContent.trim();
+      items.push({ id: h.id, text: txt, lv: h.tagName === 'H2' ? 2 : 3 });
     });
 
     var nav = document.createElement('nav');
@@ -2001,8 +2007,8 @@
         var codeCls = l ? ' class="language-' + l + '"' : '';
         return '<pre' + cls + '><button class="code-copy" type="button" onclick="window._copyCode(this)">复制</button><code' + codeCls + '>';
       });
-    // 无语言标记的也补一个 pre 容器属性，便于显示复制按钮
-    html = html.replace(/<pre><code>/g, '<pre><button class="code-copy" type="button" onclick="window._copyCode(this)">复制</button><code>');
+    // 无语言标记的也补 data-lang="text"，保证每个代码块都有标签和复制按钮
+    html = html.replace(/<pre><code>/g, '<pre data-lang="text"><button class="code-copy" type="button" onclick="window._copyCode(this)">复制</button><code>');
 
     if (window.Prism) {
       try {
