@@ -1868,7 +1868,57 @@
       var fallbackAttr = fallbacks.length ? ' data-fallback="' + esc(fallbacks.join('|')) + '"' : '';
       return '<img ' + before + 'src="' + fullUrl + '"' + after + fallbackAttr + ' onerror="window._blogImgFallback(this)">';
     });
+
+    // 代码块：加语言标签 + 复制按钮，再交给 Prism 上色
+    html = html.replace(/<pre(?:\s+class="([^"]*)")?>\s*<code(?:\s+class="language-([\w+#-]+)")?>/g,
+      function (m, preCls, lang) {
+        var l = (lang || '').toLowerCase();
+        var cls = l ? ' class="language-' + l + '" data-lang="' + l + '"' : '';
+        var codeCls = l ? ' class="language-' + l + '"' : '';
+        return '<pre' + cls + '><button class="code-copy" type="button" onclick="window._copyCode(this)">复制</button><code' + codeCls + '>';
+      });
+    // 无语言标记的也补一个 pre 容器属性，便于显示复制按钮
+    html = html.replace(/<pre><code>/g, '<pre><button class="code-copy" type="button" onclick="window._copyCode(this)">复制</button><code>');
+
+    if (window.Prism) {
+      try {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        Prism.highlightAllUnder(tmp);
+        html = tmp.innerHTML;
+      } catch (e) {
+        console.warn('[博客] 代码高亮失败，降级为纯文本', e);
+      }
+    }
     return html;
+  }
+
+  // 一键复制代码
+  window._copyCode = function (btn) {
+    var pre = btn.closest('pre');
+    if (!pre) return;
+    var code = pre.querySelector('code') || pre;
+    var text = code.innerText || code.textContent || '';
+    var done = function () {
+      btn.textContent = '已复制';
+      btn.classList.add('done');
+      setTimeout(function () { btn.textContent = '复制'; btn.classList.remove('done'); }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  };
+
+  function fallbackCopy(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* 静默失败 */ }
+    document.body.removeChild(ta);
   }
 
   // ===========================
