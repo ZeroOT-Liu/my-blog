@@ -1587,7 +1587,8 @@
     filterAndRenderArticles();
   }
 
-  function filterAndRenderArticles() {
+  // 按当前标签/搜索条件过滤，只算列表，不渲染也不碰页码
+  function getFilteredArticles() {
     var result = _artFiltered;
 
     // 标签筛选
@@ -1608,13 +1609,19 @@
       });
     }
 
+    return result;
+  }
+
+  function filterAndRenderArticles() {
+    var result = getFilteredArticles();
+
     // 更新计数
     var countEl = document.getElementById('art-count');
     if (countEl) {
       countEl.textContent = result.length + '/' + _artFiltered.length;
     }
 
-    // 分页渲染
+    // 筛选条件变了才回到第一页
     _artPage = 0;
     renderArticlePage(result);
   }
@@ -1682,8 +1689,11 @@
   }
 
   window.loadMoreArticles = function () {
+    // 直接拿过滤后的完整列表继续往后翻，不能再走 filterAndRenderArticles（它会重置页码）
+    var result = getFilteredArticles();
+    if ((_artPage + 1) * _artPageSize >= result.length) return; // 已经到底
     _artPage++;
-    filterAndRenderArticles();
+    renderArticlePage(result);
   };
 
   // ===========================
