@@ -680,6 +680,41 @@ footer{
   border:1px solid rgba(255,255,255,.06);
 }
 .md-content pre code{background:none;padding:0;color:inherit;border:none}
+
+/* ---- 代码高亮（Prism），代码块固定深底，配色不随主题变 ---- */
+.md-content pre{position:relative}
+.md-content pre[class*="language-"]{padding-top:1.6rem}
+.md-content pre[class*="language-"]::before{
+  content:attr(data-lang);position:absolute;top:0;left:0;
+  padding:2px 9px;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+  color:#7c93a6;background:rgba(255,255,255,.045);
+  border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r) 0 2px 0;font-family:var(--font-mono);
+}
+.md-content .token.comment,.md-content .token.prolog,.md-content .token.doctype,.md-content .token.cdata{color:#63798b;font-style:italic}
+.md-content .token.punctuation{color:#8fa3b3}
+.md-content .token.namespace{opacity:.7}
+.md-content .token.property,.md-content .token.tag,.md-content .token.constant,.md-content .token.symbol,.md-content .token.deleted{color:#e0a3a3}
+.md-content .token.boolean,.md-content .token.number{color:#e3a76b}
+.md-content .token.selector,.md-content .token.attr-name,.md-content .token.string,.md-content .token.char,.md-content .token.builtin,.md-content .token.inserted{color:#9ed3a6}
+.md-content .token.operator,.md-content .token.entity,.md-content .token.url{color:#a8bccb}
+.md-content .token.atrule,.md-content .token.attr-value,.md-content .token.keyword{color:#7fb2e0}
+.md-content .token.function,.md-content .token.class-name{color:#e8cb8a}
+.md-content .token.regex,.md-content .token.important,.md-content .token.variable{color:#d99a86}
+.md-content .token.important,.md-content .token.bold{font-weight:700}
+.md-content .token.italic{font-style:italic}
+
+/* 代码块右上角一键复制 */
+.code-copy{
+  position:absolute;top:5px;right:6px;z-index:2;
+  padding:2px 8px;font-size:.62rem;font-family:var(--font-mono);
+  color:#8fa3b3;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);border-radius:2px;
+  cursor:pointer;opacity:0;transition:opacity .18s ease,color .18s ease,background .18s ease;
+}
+.md-content pre:hover .code-copy{opacity:1}
+.code-copy:hover{color:#d9e2ea;background:rgba(255,255,255,.1)}
+.code-copy.done{color:#9ed3a6;border-color:rgba(158,211,166,.4)}
 .md-content blockquote{
   border-left:2px solid var(--accent2);padding-left:1rem;margin:.9rem 0;
   color:var(--text2);font-style:italic;
@@ -687,6 +722,38 @@ footer{
 .md-content table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
 .md-content th,.md-content td{border:1px solid var(--border);padding:.5rem .7rem;text-align:left}
 .md-content th{background:var(--bg2);font-weight:600}
+
+/* ============ 卡片：分层浮起 + 光标聚光 ============ */
+.proj-card,.art-card,.gal-item{--px:0;--py:0;--mx:50%;--my:50%}
+
+/* 光斑跟随指针 */
+.proj-card::after,.art-card::after,.gal-item::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:5;
+  background:radial-gradient(260px circle at var(--mx) var(--my),rgba(27,74,117,.09),transparent 62%);
+  opacity:0;transition:opacity .3s ease;
+}
+[data-theme="dark"] .proj-card::after,
+[data-theme="dark"] .art-card::after,
+[data-theme="dark"] .gal-item::after{
+  background:radial-gradient(260px circle at var(--mx) var(--my),rgba(111,168,214,.13),transparent 62%);
+}
+.proj-card:hover::after,.art-card:hover::after,.gal-item:hover::after{opacity:1}
+
+/* 内部元素分层：缩略图浮得最高，标题次之，标签最低 */
+.proj-thumb,.proj-body h3,.proj-tags,.proj-actions,
+.art-thumb,.art-body h3,.art-meta,
+.gal-overlay{transition:transform .34s cubic-bezier(.22,.72,.24,1)}
+
+.proj-card.tilting .proj-thumb{transform:translate3d(calc(var(--px)*7px),calc(var(--py)*7px),0)}
+.proj-card.tilting .proj-body h3{transform:translate3d(calc(var(--px)*3.5px),calc(var(--py)*3.5px),0)}
+.proj-card.tilting .proj-tags,
+.proj-card.tilting .proj-actions{transform:translate3d(calc(var(--px)*2px),calc(var(--py)*2px),0)}
+
+.art-card.tilting .art-thumb{transform:translate3d(calc(var(--px)*6px),calc(var(--py)*6px),0)}
+.art-card.tilting .art-body h3{transform:translate3d(calc(var(--px)*3px),calc(var(--py)*3px),0)}
+.art-card.tilting .art-meta{transform:translate3d(calc(var(--px)*1.6px),calc(var(--py)*1.6px),0)}
+
+.gal-item.tilting .gal-overlay{transform:translate3d(calc(var(--px)*4px),calc(var(--py)*4px),0)}
 
 /* 视频弹窗 */
 .video-modal{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s ease}
@@ -1084,10 +1151,13 @@ footer{
   <div class="lb-caption" id="lb-caption"></div>
 </div>
 
+<!-- Prism 设为手动模式：文章打开时才高亮，避免页面加载时全量扫描 -->
+<script>window.Prism = window.Prism || {}; window.Prism.manual = true;</script>
 <!-- marked 本地化（35KB，同源 0.3s），defer 不阻塞首屏解析 -->
 <!-- ?v= 用于打破浏览器缓存，改了 js 记得把这个版本号往上加 -->
+<script defer src="vendor/prism.bundle.js"></script>
 <script defer src="marked.min.js"></script>
-<script defer src="index.js?v=20261019b"></script>
-<script defer src="blog3d.js?v=20261019b"></script>
+<script defer src="index.js?v=20261019c"></script>
+<script defer src="blog3d.js?v=20261019c"></script>
 </body>
 </html>
