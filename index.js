@@ -31,30 +31,45 @@
         return Promise.resolve(null);
       }
       
-      // 生成当前 CDN 的 URL
-      var cdnBase = CDN_IMG[cdnIndex];
-      var cdnUrl = url.replace(CDN_IMG[0], cdnBase);  // 用当前 CDN 替换原 URL
-      
-      return new Promise((resolve) => {
-        var self = this;
-        var img = new Image();
-        var timeoutId = setTimeout(() => {
-          img.src = '';
-          // 当前 CDN 超时，尝试下一个
-          console.log('⏳ CDN' + (cdnIndex + 1) + '超时，尝试下一个...', url.split('/').pop());
-          self.preload(url, 0, cdnIndex + 1).then(resolve);
-        }, 8000); // 8秒超时
+      // 生成当前 CDN 的 URL：从首选 CDN 前缀剥离出相对路径，再拼到目标 CDN
+      var cdnUrl;
+      if (url.indexOf(CDN_IMG[0] + '/') === 0) {
+        cdnUrl = CDN_IMG[cdnIndex] + url.slice(CDN_IMG[0].length);
+      } else {
+        cdnUrl = url; // 已是完整外部 URL，原样使用
+      }
 
-        img.onload = function() {
+      var self = this;
+      return new Promise(function (resolve) {
+        var img = new Image();
+        // Gitee 防盗链：必须不带 Referer，否则 403
+        img.referrerPolicy = 'no-referrer';
+
+        var settled = false;
+        var timeoutId = setTimeout(function () {
+          if (settled) return;
+          settled = true;
+          img.onload = null;
+          img.onerror = null;
+          img.src = '';
+          // 3 秒还没下来就换下一个 CDN，不再干等 8 秒
+          console.log('⏳ CDN' + (cdnIndex + 1) + '超时(3s)，换下一个 →', url.split('/').pop());
+          self.preload(url, 0, cdnIndex + 1).then(resolve);
+        }, 3000);
+
+        img.onload = function () {
+          if (settled) return;
+          settled = true;
           clearTimeout(timeoutId);
           self.cache.set(url, img);
           self.loading.delete(url);
           resolve(img);
         };
-        img.onerror = function() {
+        img.onerror = function () {
+          if (settled) return;
+          settled = true;
           clearTimeout(timeoutId);
-          // 当前 CDN 失败，尝试下一个
-          console.log('⚠️ CDN' + (cdnIndex + 1) + '失败，尝试下一个...', url.split('/').pop());
+          console.log('⚠️ CDN' + (cdnIndex + 1) + '失败，换下一个 →', url.split('/').pop());
           self.preload(url, 0, cdnIndex + 1).then(resolve);
         };
         img.src = cdnUrl;
@@ -113,16 +128,20 @@
   var DATA = BASE + '/data';
   // 判断是否为本地环境（localhost）
   var IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  // CDN 配置：图片/文档用 Gitee（国内快），静态文件用 GitHub
-  var CDN_IMG = [  // 图片+文档 CDN：Gitee 优先
+  // CDN 配置
+  // ⚠️ Gitee 有防盗链：请求带 Referer 会直接 403。
+  //    已在 index.html 加 <meta name="referrer" content="no-referrer">，并在 new Image() 上显式设 referrerPolicy，
+  //    所以 Gitee 仍可作为首选（实测 1.5s，是最快的一条）。
+  //    ghproxy.net 实测只有 ~14KB/s，降到末位兜底。
+  var CDN_IMG = [  // 图片+文档 CDN
     'https://gitee.com/LYT666999-luck/my-blog/raw/master',
-    'https://ghproxy.net/https://github.com/ZeroOT-Liu/my-blog/raw/main',
-    'https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main'
+    'https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main',
+    'https://ghproxy.net/https://github.com/ZeroOT-Liu/my-blog/raw/main'
   ];
-  var CDN_STATIC = [  // 静态文件 CDN：GitHub 优先
-    'https://ghproxy.net/https://github.com/ZeroOT-Liu/my-blog/raw/main',
+  var CDN_STATIC = [  // 静态文件 CDN（jsDelivr 有全球缓存，比 ghproxy 稳）
+    'https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main',
     'https://gitee.com/LYT666999-luck/my-blog/raw/master',
-    'https://cdn.jsdelivr.net/gh/ZeroOT-Liu/my-blog@main'
+    'https://ghproxy.net/https://github.com/ZeroOT-Liu/my-blog/raw/main'
   ];
   var CDN_IMG_PRIMARY = CDN_IMG[0];
   var CDN_STATIC_PRIMARY = CDN_STATIC[0];
@@ -155,6 +174,18 @@
       return cdn + '/' + path;
     });
   }
+
+  // 备用地址列表：其它 CDN + 最后兜一层 WebP→PNG 原图降级
+  // （首屏大图已换成 .webp，老浏览器不认 webp 时能退回原 png）
+  function getImgFallbackUrls(path) {
+    if (!path) return [];
+    if (path.startsWith('http')) return [];
+    var list = getCdnFallbacks(path);
+    var pngFallback = getImgFallbackUrl(path);
+    if (pngFallback && list.indexOf(pngFallback) === -1) list.push(pngFallback);
+    return list;
+  }
+
   // 获取图片完整 URL：本地用相对路径，线上用 CDN
   function getImgUrl(path) {
     if (!path) return '';
@@ -163,14 +194,7 @@
     var base = IS_LOCAL ? (BASE ? BASE + '/' + path : path) : (cdn + '/' + path);
     return base;
   }
-  
-  // 获取图片的备用 CDN URL（用于 HTML data-fallback 属性）
-  function getImgFallbackUrls(path) {
-    if (!path) return [];
-    if (path.startsWith('http')) return [];
-    return getCdnFallbacks(path);
-  }
-  
+
   // 获取图片的备用格式 URL（用于不支持 WebP 时降级）
   function getImgFallbackUrl(path) {
     if (!path) return '';
@@ -611,15 +635,26 @@
   });
 
   // ===========================
+  // JSON 请求去重
+  // preloadBeforeRender 与 loadAll 都要读同一批 json，
+  // 缓存 Promise 后首屏请求数从 12 个降到 8 个
+  // ===========================
+  var _jsonCache = {};
+  function fetchJson(name) {
+    if (!_jsonCache[name]) {
+      _jsonCache[name] = fetch(DATA + '/' + name + '.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    }
+    return _jsonCache[name];
+  }
+
+  // ===========================
   // 加载所有数据
   // ===========================
   function loadAll() {
     var files = ['config', 'hero', 'projects', 'gallery', 'articles', 'about', 'contact'];
-    var promises = files.map(function (f) {
-      return fetch(DATA + '/' + f + '.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .catch(function () { return null; });
-    });
+    var promises = files.map(fetchJson);
     Promise.all(promises).then(function (res) {
       var cfg      = res[0] || {};
       var hero     = res[1] || {};
@@ -644,9 +679,7 @@
     });
 
     // 单独加载分类数据
-    fetch(DATA + '/categories.json')
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; })
+    fetchJson('categories')
       .then(function (cats) {
         if (cats) _categories = cats;
       });
@@ -769,13 +802,9 @@
   // 在数据加载前预先启动（抢占先机）
   (function preloadBeforeRender() {
     console.log('[博客] 开始预加载关键图片...');
-    // 先获取 URL 列表（不阻塞）
+    // 先获取 URL 列表（不阻塞），走 fetchJson 复用缓存，不再重复请求
     var files = ['projects', 'gallery', 'articles', 'about'];
-    Promise.all(files.map(function (f) {
-      return fetch(DATA + '/' + f + '.json')
-        .then(function (r) { return r.ok ? r.json() : Promise.resolve(null); })
-        .catch(function () { return null; });
-    })).then(function (res) {
+    Promise.all(files.map(fetchJson)).then(function (res) {
       var projects = res[0] || [];
       var gallery = res[1] || [];
       var articles = res[2] || [];
@@ -896,6 +925,7 @@
         }
         var candUrl = bgCandidates[bgTryIdx];
         var testImg = new Image();
+        testImg.referrerPolicy = 'no-referrer'; // Gitee 防盗链：不带 Referer
         testImg.onload = function() {
           layer.style.backgroundImage = 'url("' + candUrl + '")';
           console.log('✅ 背景图片加载成功:', candUrl);
@@ -986,8 +1016,10 @@
     gallery.innerHTML = '';
 
     images.forEach(function(img, idx) {
-      var url = img.url || img;
+      var raw = img.url || img;
       var label = img.label || '';
+      // 必须走统一 CDN：直连 GitHub Pages 同源时，140KB 的图要 5 秒以上
+      var url = /^https?:\/\//i.test(raw) ? raw : getImgUrl(raw);
       var card = document.createElement('div');
       card.className = 'software-img-card';
       card.innerHTML = '<img src="' + url + '" alt="' + (label || '图片 ' + (idx + 1)) + '">' +
