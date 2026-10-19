@@ -497,12 +497,13 @@
   // 主题切换
   // ===========================
   var THEMES = ['indigo', 'rose', 'emerald', 'amber', 'ocean', 'purple', 'sunset', 'mint', 'dark'];
-  var curTheme = localStorage.getItem('blog-theme') || 'rose';
+  // 换成新 key：配色体系整体重做，旧偏好不再沿用，默认落在「图纸蓝」
+  var curTheme = localStorage.getItem('blog-theme-v2') || 'indigo';
 
   function applyTheme(t) {
     curTheme = t;
     document.documentElement.setAttribute('data-theme', t);
-    localStorage.setItem('blog-theme', t);
+    localStorage.setItem('blog-theme-v2', t);
     document.querySelectorAll('.tp-opt').forEach(function (o) {
       o.classList.toggle('active', o.getAttribute('data-t') === t);
     });
@@ -1087,7 +1088,7 @@
       return;
     }
     list.sort(function (a, b) { return (a.order || 99) - (b.order || 99); });
-    el.innerHTML = list.map(function (p) {
+    el.innerHTML = list.map(function (p, idx) {
       var tags = (p.tags || []).slice(0, 4).map(function (t) { return '<span class="proj-tag">' + esc(t) + '</span>'; }).join('');
       var gradient = p.gradient || 'var(--g1)';
       var href = p.link && p.link !== '#' ? ' href="' + p.link + '" target="_blank"' : '';
@@ -1148,8 +1149,8 @@
       } else {
         iconHtml = '<span style="position:relative;z-index:1;font-size:4rem;">' + (p.emoji || '📦') + '</span>';
       }
-      return '<div class="proj-card fade-in">' +
-        '<div class="proj-thumb" style="background:' + (p.icon_url ? '#f0f0f0' : gradient) + '">' +
+      return '<div class="proj-card fade-in' + (idx === 0 ? ' featured' : '') + '">' +
+        '<div class="proj-thumb" style="background:' + (p.icon_url ? 'var(--bg2)' : gradient) + '">' +
           iconHtml +
         '</div>' +
         '<div class="proj-body">' +
@@ -1534,16 +1535,16 @@
         var imgUrl = getImgUrl(a.cover_image);
         var isCached = ImagePreloader.cache.has(imgUrl);
         if (isCached) {
-          thumb = '<img src="' + imgUrl + '" alt="" class="img-loaded" style="opacity:1;position:relative;z-index:2" onerror="this.style.display=\'none\'">';
+          thumb = '<img src="' + imgUrl + '" alt="" class="img-loaded" onerror="this.style.display=\'none\'">';
         } else {
-          thumb = '<span class="img-skeleton" style="position:absolute;inset:0;width:100%;height:100%;z-index:1"></span>' +
-                  '<img src="' + imgUrl + '" alt="" style="position:relative;z-index:2;opacity:0" onload="this.style.opacity=\'1\';this.previousElementSibling.style.display=\'none\'" onerror="this.style.display=\'none\'">';
+          thumb = '<span class="img-skeleton"></span>' +
+                  '<img src="' + imgUrl + '" alt="" data-src="' + imgUrl + '" onload="this.style.opacity=\'1\';this.previousElementSibling.style.display=\'none\'" onerror="this.style.display=\'none\'">';
         }
       } else {
-        thumb = '<span style="position:relative;z-index:1;font-size:2.5rem;">📄</span>';
+        thumb = '<span class="art-thumb-fallback">📄</span>';
       }
       return '<article class="art-card fade-in" data-id="' + a.id + '">' +
-        '<div class="art-thumb" style="position:relative;background:#f0f0f0">' + thumb + '</div>' +
+        '<div class="art-thumb">' + thumb + '</div>' +
         '<div class="art-body">' +
           '<div class="art-meta"><span class="cat">' + esc(getCatTranslation(a.category, 'article') || '其他') + '</span><span>' + date + '</span></div>' +
           '<h3>' + esc(a.title) + '</h3>' +
@@ -1863,8 +1864,27 @@
   // ===========================
   // Hero 打字机效果
   // ===========================
-  function typewriterEffect(el, text, callback) {
-    if (!el || !text) { if (callback) callback(); return; }
+  function typewriterEffect(el, html, callback) {
+    if (!el || !html) { if (callback) callback(); return; }
+
+    // 【修复】原实现按字符扫描 HTML，遇到未闭合的 <span class="hl"> 会被
+    // createContextualFragment 自动闭合，导致高亮词掉到标签外面（标题高亮一直失效）。
+    // 改为：先把 HTML 解析成节点树，文本节点逐字排队，元素节点整体插入。
+    var tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    var queue = [];
+    Array.prototype.forEach.call(tmp.childNodes, function (node) {
+      if (node.nodeType === 3) {
+        Array.from(node.nodeValue).forEach(function (ch) {
+          queue.push(document.createTextNode(ch));
+        });
+      } else if (node.nodeType === 1) {
+        // 元素（如 <span class="hl">、<br>）整体插入，保证结构完整
+        queue.push(node.cloneNode(true));
+      }
+    });
+
     el.innerHTML = '';
     var i = 0;
     var cursor = document.createElement('span');
@@ -1872,27 +1892,15 @@
     el.appendChild(cursor);
 
     function type() {
-      if (i < text.length) {
-        // 遇到 HTML 标签时整体插入
-        if (text[i] === '<') {
-          var closeIdx = text.indexOf('>', i);
-          if (closeIdx !== -1) {
-            var tag = text.substring(i, closeIdx + 1);
-            el.insertBefore(document.createRange().createContextualFragment(tag), cursor);
-            i = closeIdx + 1;
-            setTimeout(type, 30);
-            return;
-          }
-        }
-        el.insertBefore(document.createTextNode(text[i]), cursor);
+      if (i < queue.length) {
+        el.insertBefore(queue[i], cursor);
         i++;
-        setTimeout(type, 60 + Math.random() * 40);
+        setTimeout(type, i % 3 === 0 ? 70 : 45);
       } else {
-        // 打字完成，1秒后移除光标
-        setTimeout(function() {
+        setTimeout(function () {
           if (cursor.parentNode) cursor.remove();
           if (callback) callback();
-        }, 1000);
+        }, 800);
       }
     }
     type();
@@ -1903,12 +1911,11 @@
   renderHero = function(hero) {
     _originalRenderHero(hero);
 
-    // 打字机效果：对 hero h1 应用
+    // 打字机效果：对 hero h1 应用（尊重"减少动效"偏好）
     var titleEl = document.getElementById('hero-title');
-    if (titleEl && titleEl.innerHTML.trim()) {
-      var html = titleEl.innerHTML;
-      typewriterEffect(titleEl, html);
-    }
+    if (!titleEl || !titleEl.innerHTML.trim()) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    typewriterEffect(titleEl, titleEl.innerHTML);
   };
 
   // ===========================
@@ -1977,40 +1984,8 @@
   // 10秒后停止监听，防止永远跑
   setTimeout(function() { clearInterval(_statsWatchTimer); }, 10000);
 
-  // ===========================
-  // 3D 倾斜卡片效果
-  // ===========================
-  function initTiltCards() {
-    var selector = '.proj-card, .art-card, .gal-item, .contact-card';
-    document.querySelectorAll(selector).forEach(function(card) {
-      if (card._tiltInit) return;
-      card._tiltInit = true;
-      card.classList.add('tilt-card');
-
-      card.addEventListener('mousemove', function(e) {
-        var rect = card.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
-        var centerX = rect.width / 2;
-        var centerY = rect.height / 2;
-        var rotateX = (y - centerY) / centerY * -6;
-        var rotateY = (x - centerX) / centerX * 6;
-        card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
-      });
-
-      card.addEventListener('mouseleave', function() {
-        card.style.transform = '';
-      });
-    });
-  }
-
-  // 用 MutationObserver 监听卡片出现后初始化
-  var _tiltObserver = new MutationObserver(function() {
-    initTiltCards();
-  });
-  _tiltObserver.observe(document.body, { childList: true, subtree: true });
-  // 首次也执行一次
-  setTimeout(initTiltCards, 500);
+  // 3D 倾斜卡片已禁用（极简化改造）
+  function initTiltCards() {}
 
   // ===========================
   // 颜色调色板（所有动效共用）
@@ -2040,216 +2015,11 @@
     };
   }
 
-  // ===========================
-  // Hero 粒子动画（Canvas）
-  // ===========================
-  function initParticles() {
-    var canvas = document.getElementById('particles-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var particles = [];
-    var mouse = { x: -1000, y: -1000 };
-    var PARTICLE_COUNT = 60;
-    var CONNECT_DIST = 140;
-    var dpr = window.devicePixelRatio || 1;
-
-    function resize() {
-      var hero = canvas.parentElement;
-      canvas.width = hero.offsetWidth * dpr;
-      canvas.height = hero.offsetHeight * dpr;
-      canvas.style.width = hero.offsetWidth + 'px';
-      canvas.style.height = hero.offsetHeight + 'px';
-      ctx.scale(dpr, dpr);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    // 创建粒子
-    var w = canvas.parentElement.offsetWidth;
-    var h = canvas.parentElement.offsetHeight;
-    for (var i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        r: Math.random() * 2 + 1
-      });
-    }
-
-    // 鼠标跟踪
-    canvas.parentElement.addEventListener('mousemove', function(e) {
-      var rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    });
-    canvas.parentElement.addEventListener('mouseleave', function() {
-      mouse.x = -1000; mouse.y = -1000;
-    });
-
-    function getAccentRGB() {
-      var style = getComputedStyle(document.documentElement);
-      var accent = style.getPropertyValue('--accent').trim() || '#6366f1';
-      var hex = accent.replace('#', '');
-      if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-      return {
-        r: parseInt(hex.substring(0,2), 16),
-        g: parseInt(hex.substring(2,4), 16),
-        b: parseInt(hex.substring(4,6), 16)
-      };
-    }
-
-    function animate() {
-      var w2 = canvas.parentElement.offsetWidth;
-      var h2 = canvas.parentElement.offsetHeight;
-      ctx.clearRect(0, 0, w2, h2);
-
-      var rgb = getColorByTime();
-
-      // 更新和绘制粒子
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > w2) p.vx *= -1;
-        if (p.y < 0 || p.y > h2) p.vy *= -1;
-
-        // 鼠标吸引
-        var dx = mouse.x - p.x;
-        var dy = mouse.y - p.y;
-        var dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 200) {
-          p.x += dx * 0.008;
-          p.y += dy * 0.008;
-        }
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',0.4)';
-        ctx.fill();
-
-        // 连线
-        for (var j = i + 1; j < particles.length; j++) {
-          var p2 = particles[j];
-          var d = Math.sqrt((p.x-p2.x)*(p.x-p2.x) + (p.y-p2.y)*(p.y-p2.y));
-          if (d < CONNECT_DIST) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + (0.15 * (1 - d/CONNECT_DIST)) + ')';
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-  }
-  window.addEventListener('load', function() { setTimeout(initParticles, 300); });
+  // Hero 粒子动画已禁用（极简化改造）
+  function initParticles() {}
 
   // ===========================
-  // 鼠标拖尾粒子效果
-  // ===========================
-  (function() {
-    var canvas = document.getElementById('trail-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var particles = [];
-    var mouse = { x: -100, y: -100 };
-    var prevMouse = { x: -100, y: -100 };
-    var dpr = window.devicePixelRatio || 1;
-
-    function resize() {
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.scale(dpr, dpr);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    document.addEventListener('mousemove', function(e) {
-      prevMouse.x = mouse.x;
-      prevMouse.y = mouse.y;
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-
-      var dx = mouse.x - prevMouse.x;
-      var dy = mouse.y - prevMouse.y;
-      var speed = Math.sqrt(dx * dx + dy * dy);
-      var count = Math.min(Math.floor(speed / 5), 3);
-
-      for (var i = 0; i < count; i++) {
-        var t = i / count;
-        particles.push({
-          x: prevMouse.x + dx * t + (Math.random() - 0.5) * 4,
-          y: prevMouse.y + dy * t + (Math.random() - 0.5) * 4,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          life: 1,
-          decay: 0.025 + Math.random() * 0.025,
-          size: 2 + Math.random() * 2
-        });
-      }
-    });
-
-    function getAccentColor() {
-      var style = getComputedStyle(document.documentElement);
-      var accent = style.getPropertyValue('--accent').trim() || '#6366f1';
-      var hex = accent.replace('#', '');
-      if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-      return {
-        r: parseInt(hex.substring(0,2), 16),
-        g: parseInt(hex.substring(2,4), 16),
-        b: parseInt(hex.substring(4,6), 16)
-      };
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      var rgb = getColorByTime();
-
-      for (var i = particles.length - 1; i >= 0; i--) {
-        var p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life -= p.decay;
-        p.vx *= 0.98;
-        p.vy *= 0.98;
-
-        if (p.life <= 0) { particles.splice(i, 1); continue; }
-
-        var alpha = p.life * 0.7;
-        var size = p.size * p.life;
-
-        // 外发光
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, size * 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + (alpha * 0.2) + ')';
-        ctx.fill();
-
-        // 内核
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + alpha + ')';
-        ctx.fill();
-
-        // 白色高光
-        if (p.life > 0.5) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, size * 0.4, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,' + (alpha * 0.6) + ')';
-          ctx.fill();
-        }
-      }
-
-      if (particles.length > 150) particles = particles.slice(-150);
-      requestAnimationFrame(animate);
-    }
-    animate();
-  })();
+  // 鼠标拖尾粒子效果已禁用（极简化改造）
 
   // ===========================
   // 交错入场动画（卡片依次出现）
@@ -2270,42 +2040,42 @@
     document.querySelectorAll('.proj-card').forEach(function(card, i) {
       if (card.classList.contains('vis')) return;
       card.classList.add('stagger-item');
-      card.setAttribute('data-delay', String(i * 120));
+      card.setAttribute('data-delay', String(i * 60));
       io2.observe(card);
     });
     // 文章卡片
     document.querySelectorAll('.art-card').forEach(function(card, i) {
       if (card.classList.contains('vis')) return;
       card.classList.add('stagger-item');
-      card.setAttribute('data-delay', String(i * 120));
+      card.setAttribute('data-delay', String(i * 60));
       io2.observe(card);
     });
     // 相册卡片
     document.querySelectorAll('.gal-item').forEach(function(item, i) {
       if (item.classList.contains('vis')) return;
       item.classList.add('stagger-item');
-      item.setAttribute('data-delay', String(i * 80));
+      item.setAttribute('data-delay', String(i * 40));
       io2.observe(item);
     });
     // 联系卡片（从两侧交错进入）
     document.querySelectorAll('.contact-card').forEach(function(card, i) {
       if (card.classList.contains('vis')) return;
       card.classList.add(i % 2 === 0 ? 'stagger-left' : 'stagger-right');
-      card.setAttribute('data-delay', String(i * 150));
+      card.setAttribute('data-delay', String(i * 80));
       io2.observe(card);
     });
     // 时间线（从左滑入）
     document.querySelectorAll('.tl-item').forEach(function(item, i) {
       if (item.classList.contains('vis')) return;
       item.classList.add('stagger-left');
-      item.setAttribute('data-delay', String(i * 150));
+      item.setAttribute('data-delay', String(i * 80));
       io2.observe(item);
     });
     // 技能标签（缩放淡入）
     document.querySelectorAll('.skill-tag').forEach(function(tag, i) {
       if (tag.classList.contains('vis')) return;
       tag.classList.add('stagger-scale');
-      tag.setAttribute('data-delay', String(i * 60));
+      tag.setAttribute('data-delay', String(i * 40));
       io2.observe(tag);
     });
   }
@@ -2321,85 +2091,15 @@
   var _staggerMO = new MutationObserver(function() { initStaggerReveal(); });
   _staggerMO.observe(document.body, { childList: true, subtree: true });
 
-  // ===========================
-  // 点击涟漪效果
-  // ===========================
-  document.addEventListener('click', function(e) {
-    // 不在弹窗、灯箱、导航按钮上触发
-    if (e.target.closest('.modal, .lightbox, .video-modal, .theme-panel, .theme-btn, .lang-btn, .hamburger, button, a, input, select, textarea')) return;
-    var ripple = document.createElement('div');
-    ripple.className = 'ripple';
-    ripple.style.left = e.clientX + 'px';
-    ripple.style.top = e.clientY + 'px';
-    document.body.appendChild(ripple);
-    setTimeout(function() { ripple.remove(); }, 650);
-  });
+  // 点击涟漪效果已禁用（极简化改造）
 
   // ===========================
-  // 磁性按钮效果
-  // ===========================
-  function initMagneticBtns() {
-    document.querySelectorAll('.btn, .proj-link, .proj-video-link, .proj-doc-link, .filter-btn').forEach(function(btn) {
-      if (btn._magInit) return;
-      btn._magInit = true;
-      btn.classList.add('mag-btn');
+  // 磁性按钮效果已禁用（极简化改造）
+  function initMagneticBtns() {}
 
-      btn.addEventListener('mousemove', function(e) {
-        var rect = btn.getBoundingClientRect();
-        var x = e.clientX - rect.left - rect.width / 2;
-        var y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = 'translate(' + (x * 0.2) + 'px,' + (y * 0.2) + 'px)';
-      });
-      btn.addEventListener('mouseleave', function() {
-        btn.style.transform = '';
-      });
-    });
-  }
-  var _magTimer = setInterval(function() {
-    if (document.querySelectorAll('.btn').length > 0) {
-      clearInterval(_magTimer);
-      initMagneticBtns();
-    }
-  }, 500);
-  setTimeout(function() { clearInterval(_magTimer); }, 10000);
-  var _magMO = new MutationObserver(function() { initMagneticBtns(); });
-  _magMO.observe(document.body, { childList: true, subtree: true });
+  // 联系卡片鼠标跟随光晕已禁用（极简化改造）
 
-  // ===========================
-  // 联系卡片鼠标跟随光晕
-  // ===========================
-  document.querySelectorAll('.contact-grid').forEach(function(grid) {
-    grid.addEventListener('mousemove', function(e) {
-      var card = e.target.closest('.contact-card');
-      if (!card) return;
-      var rect = card.getBoundingClientRect();
-      var x = ((e.clientX - rect.left) / rect.width * 100);
-      var y = ((e.clientY - rect.top) / rect.height * 100);
-      card.style.setProperty('--mx', x + '%');
-      card.style.setProperty('--my', y + '%');
-    });
-  });
-
-  // ===========================
-  // 视差滚动（区块错位移动）
-  // ===========================
-  function initParallax() {
-    var sections = document.querySelectorAll('.parallax-section');
-    if (sections.length === 0) {
-      // 首次给各区块添加类
-      document.querySelectorAll('.section').forEach(function(s, i) {
-        if (i % 2 === 1) s.classList.add('parallax-section');
-      });
-    }
-    window.addEventListener('scroll', function() {
-      var scrollY = window.scrollY;
-      document.querySelectorAll('.parallax-section').forEach(function(s) {
-        var rect = s.getBoundingClientRect();
-        var offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.04;
-        s.style.transform = 'translateY(' + offset + 'px)';
-      });
-    }, { passive: true });
-  }
-  initParallax();
+  // 视差滚动已禁用（极简化改造）
+  function initParallax() {}
 
 })();
