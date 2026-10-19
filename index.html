@@ -345,12 +345,14 @@ section[id]{scroll-margin-top:80px}
 .hero-stats{
   display:flex;margin-top:56px;padding-top:22px;
   border-top:1px solid var(--border);max-width:520px;
+  flex-wrap:wrap;row-gap:18px;   /* 数值带字母/中文变长时换行，不挤压成竖排 */
 }
-.stat-item{padding-right:34px;margin-right:34px;border-right:1px solid var(--border)}
+.stat-item{padding-right:34px;margin-right:34px;border-right:1px solid var(--border);flex:0 0 auto;max-width:100%}
 .stat-item:last-child{border-right:none;margin-right:0;padding-right:0}
 .stat-num{
   font-size:1.85rem;font-weight:800;color:var(--text);
   display:inline-block;line-height:1.1;letter-spacing:-.03em;
+  white-space:nowrap;            /* "10万+" 这类不拆行 */
 }
 .stat-lbl{color:var(--text2);font-size:.7rem;margin-top:.35rem;letter-spacing:.06em;font-family:var(--font-mono);opacity:.9}
 
