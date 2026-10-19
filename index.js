@@ -1790,8 +1790,12 @@
   // ===========================
   function appendTOC(contentEl) {
     if (!contentEl) return;
-    var old = contentEl.querySelector('.art-toc');
-    if (old) old.remove();
+
+    // 清掉上一次的目录（正文内联版 + 左侧栏）
+    var oldInline = contentEl.querySelector('.art-toc');
+    if (oldInline) oldInline.remove();
+    var aside = document.getElementById('art-toc-aside');
+    if (aside) { aside.innerHTML = ''; aside.classList.remove('has-toc'); }
 
     var hs = contentEl.querySelectorAll('h2, h3');
     if (hs.length < 2) return; // 标题太少不值得做目录
@@ -1808,15 +1812,27 @@
       items.push({ id: h.id, text: txt, lv: h.tagName === 'H2' ? 2 : 3 });
     });
 
-    var nav = document.createElement('nav');
-    nav.className = 'art-toc';
-    nav.innerHTML =
+    // 宽屏走左侧固定栏，窄屏退回正文顶部
+    var useAside = window.innerWidth >= 880 && !!aside;
+    var host;
+    if (useAside) {
+      host = aside;
+      aside.classList.add('has-toc');
+    } else {
+      host = document.createElement('nav');
+      host.className = 'art-toc art-toc-inline';
+      var firstH2 = contentEl.querySelector('h2');
+      if (firstH2 && firstH2.parentNode === contentEl) contentEl.insertBefore(host, firstH2);
+      else contentEl.appendChild(host);
+    }
+
+    host.innerHTML =
       '<div class="art-toc-h">目录 / INDEX</div>' +
       items.map(function (it) {
         return '<a class="toc-l' + it.lv + '" data-toc="' + it.id + '">' + esc(it.text) + '</a>';
       }).join('');
 
-    nav.addEventListener('click', function (e) {
+    host.addEventListener('click', function (e) {
       var a = e.target.closest('a[data-toc]');
       if (!a) return;
       var target = document.getElementById(a.getAttribute('data-toc'));
@@ -1830,16 +1846,11 @@
       }
     });
 
-    // 插到第一个 h2 前面（正文开头，标题区之后）
-    var firstH2 = contentEl.querySelector('h2');
-    if (firstH2 && firstH2.parentNode === contentEl) contentEl.insertBefore(nav, firstH2);
-    else contentEl.appendChild(nav);
-
     // 滚动时高亮当前章节（用 addEventListener，避免覆盖阅读进度条的 onscroll）
     var body = document.querySelector('#art-modal .modal-body');
     if (!body) return;
     var linkMap = {};
-    nav.querySelectorAll('a[data-toc]').forEach(function (a) { linkMap[a.getAttribute('data-toc')] = a; });
+    host.querySelectorAll('a[data-toc]').forEach(function (a) { linkMap[a.getAttribute('data-toc')] = a; });
     var ticking = false;
     var onScroll = function () {
       if (ticking) return;
@@ -1854,8 +1865,17 @@
           if (el.getBoundingClientRect().top - bodyTop <= 60) cur = items[i].id;
           else break;
         }
-        nav.querySelectorAll('a').forEach(function (a) { a.classList.remove('active'); });
-        if (cur && linkMap[cur]) linkMap[cur].classList.add('active');
+        host.querySelectorAll('a').forEach(function (a) { a.classList.remove('active'); });
+        if (cur && linkMap[cur]) {
+          linkMap[cur].classList.add('active');
+          // 左侧栏里跟着滚动到可见区域
+          if (useAside) {
+            var lk = linkMap[cur], as = aside;
+            if (lk.offsetTop < as.scrollTop || lk.offsetTop + lk.offsetHeight > as.scrollTop + as.clientHeight) {
+              as.scrollTo({ top: lk.offsetTop - as.clientHeight / 2, behavior: 'smooth' });
+            }
+          }
+        }
       });
     };
     if (body._tocScrollHandler) body.removeEventListener('scroll', body._tocScrollHandler);
@@ -1882,6 +1902,10 @@
     document.body.style.overflow = '';
     var rp = document.getElementById('reading-progress');
     if (rp) rp.style.width = '0%';
+    // 清掉左侧目录，避免下次打开残留
+    var aside = document.getElementById('art-toc-aside');
+    if (aside) { aside.innerHTML = ''; aside.classList.remove('has-toc'); }
+
     // 清掉地址栏里的文章锚点
     if (location.hash.indexOf('#article/') === 0) {
       try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
@@ -1976,8 +2000,44 @@
   // ===========================
   // Markdown → HTML（使用 marked.js）
   // ===========================
+  // 清理思源笔记导出的私有语法：
+  //   [[#标题]]        → 锚点，导出后是死链，直接去掉包裹
+  //   开头那一坨锚点列表 → 那是思源自带的目录，我们有自己的 TOC，整块删掉
+  //   <div page-break>  → 分页符
+  function cleanDocSyntax(md) {
+    if (!md) return md;
+    var lines = md.split(/\r?\n/);
+
+    // 移除开头的纯锚点目录块（连续 ≥3 行都是 "- [[#...]]"）
+    var i = 0;
+    while (i < lines.length && !lines[i].trim()) i++;
+    var start = i;
+    while (i < lines.length) {
+      var l = lines[i];
+      if (!l.trim()) { i++; continue; }
+      if (/^\s*-\s*\[\[#[^\]]*\]\]\s*$/.test(l)) { i++; continue; }
+      break;
+    }
+    var tocLines = lines.slice(start, i).filter(function (x) { return x.trim(); }).length;
+    if (tocLines >= 3) lines.splice(start, i - start);
+    md = lines.join('\n');
+
+    // 剩余的行内锚点 [[#标题]] → 标题文字
+    md = md.replace(/\[\[#([^\]]+)\]\]/g, '$1');
+    // 思源块引用 ((id "文本")) → 文本
+    md = md.replace(/\(\([^)]*?"([^"]*)"\)\)/g, '$1');
+    // 思源图片附件 ![[file-xxx.png]] —— 导出时附件常丢失，给个占位标签
+    md = md.replace(/!\[\[([^\]]+)\]\]/g, function (m, name) {
+      return '<span class="doc-img-missing" title="原始附件：' + name + '">🖼 图片未导出</span>';
+    });
+    // 分页符
+    md = md.replace(/<div[^>]*page-break[^>]*>\s*<\/div>/gi, '');
+    return md;
+  }
+
   function md2html(text) {
     if (!text) return '';
+    text = cleanDocSyntax(text);
     if (typeof marked === 'undefined') {
       console.error('marked.js 未加载');
       return '<pre>' + esc(text) + '</pre>';
